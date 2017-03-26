@@ -1,0 +1,10 @@
+﻿
+.loginBox {
+    background: red;
+    width: 74%;
+	max-width: 100%;
+	float: left;
+	border-radius: 20px;
+	padding: 25px;
+	box-sizing: border-box;
+}
