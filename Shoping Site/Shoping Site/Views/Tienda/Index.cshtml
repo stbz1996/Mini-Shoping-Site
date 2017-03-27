@@ -4,53 +4,23 @@
 @model List<Shoping_Site.Controllers.Clases.ObjetoVenta>
 
 <div class="contenedorPrimario" id="pagInicio">
-   
-    
-     <section class="carrito" id="comun">
-         <br><h3>Mi Carrito de Compras</h3><br>
-        <ul>
-            <li id="objetoVenta">
-                <p>Nombre: xxxxxx</p>
-                <p>Precio: xxxxxC</p>
-                <img src="http://www.humordeanimales.com/wp-content/uploads/2015/07/perro-esponjoso.jpg">
-                <p>Agregar al carro</p>
-            </li>
-            <li id="objetoVenta">
-                <p>Nombre: xxxxxx</p>
-                <p>Precio: xxxxxC</p>
-                <img src="http://www.humordeanimales.com/wp-content/uploads/2015/07/perro-esponjoso.jpg">
-                <p>Agregar al carro</p>
-            </li>
-            <li id="objetoVenta">
-                <p>Nombre: xxxxxx</p>
-                <p>Precio: xxxxxC</p>
-                <img src="http://www.humordeanimales.com/wp-content/uploads/2015/07/perro-esponjoso.jpg">
-                <p>Agregar al carro</p>
-            </li>
-            <li id="objetoVenta">
-                <p>Nombre: xxxxxx</p>
-                <p>Precio: xxxxxC</p>
-                <img src="http://www.humordeanimales.com/wp-content/uploads/2015/07/perro-esponjoso.jpg">
-                <p>Agregar al carro</p>
-            </li>
-        </ul>
-     </section>
-    
-    
      <section class="articulos" id="comun">
         <br><h3>Tienda</h3><br>
         <ul>
             @foreach (var item in Model)
             {
-                <li id="objetoVenta">
-                    <p>Nombre: @Html.DisplayFor(ModelItem => item.nombre)</p>
-                    <p>Precio: @Html.DisplayFor(ModelItem => item.precio)</p>
-                    <img src="http://www.humordeanimales.com/wp-content/uploads/2015/07/perro-esponjoso.jpg">
-                    <p>Agregar al carro</p>
+                <li id=@item.ID onclick="ejemplo(this)">
+                    <form action="../Tienda/ArticuloAlCarrito" method="POST">
+                        <p>Nombre: @Html.DisplayFor(ModelItem => item.nombre)</p>
+                        <p>Precio: @Html.DisplayFor(ModelItem => item.precio)</p>
+                        <img src="http://www.humordeanimales.com/wp-content/uploads/2015/07/perro-esponjoso.jpg" id="imagenVenta">
+                        <p>Agregar al carro</p>
+                        <!-- elemento oculto para el paso de datos -->
+                        <input id="oculto" name="articulo" type="text" value=@item.ID />
+                        <p><input id="botonCentrado" type="submit" value="Añadir" /></p>
+                    </form>
                 </li>
             }
         </ul>
-    </section >
-
-    
+    </section>
 </div>

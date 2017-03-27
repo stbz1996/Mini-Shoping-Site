@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Shoping_Site.Controllers.Clases;
+
 namespace Shoping_Site.Controllers
 {
     public class TiendaController : Controller
@@ -11,19 +12,31 @@ namespace Shoping_Site.Controllers
         // GET: Tienda
         public ActionResult Index()
         {
+            
             // creo lista de objetos a la venta
-            List<ObjetoVenta> data = new List<ObjetoVenta>();
-            data.Add(new ObjetoVenta("Cocina", 25000, "https://ayudawp.com/wp-content/uploads/2013/10/miniatura-wordpress.jpg"));
-            data.Add(new ObjetoVenta("Refrigerador", 25000, "https://ayudawp.com/wp-content/uploads/2013/10/miniatura-wordpress.jpg"));
-            data.Add(new ObjetoVenta("Moto", 25000, "https://ayudawp.com/wp-content/uploads/2013/10/miniatura-wordpress.jpg"));
-            data.Add(new ObjetoVenta("Auto", 25000, "https://ayudawp.com/wp-content/uploads/2013/10/miniatura-wordpress.jpg"));
-            data.Add(new ObjetoVenta("Plancha", 25000, "https://ayudawp.com/wp-content/uploads/2013/10/miniatura-wordpress.jpg"));
-            data.Add(new ObjetoVenta("Sarten", 25000, "https://ayudawp.com/wp-content/uploads/2013/10/miniatura-wordpress.jpg"));
-            data.Add(new ObjetoVenta("Ropa usada", 25000, "https://ayudawp.com/wp-content/uploads/2013/10/miniatura-wordpress.jpg"));
-            data.Add(new ObjetoVenta("Billetera", 25000, "https://ayudawp.com/wp-content/uploads/2013/10/miniatura-wordpress.jpg"));
-            data.Add(new ObjetoVenta("Balon", 25000, "https://ayudawp.com/wp-content/uploads/2013/10/miniatura-wordpress.jpg"));
+            List<ObjetoVenta> dataTienda = new List<ObjetoVenta>();
+            AlmacenArticulos.llenar();
+            dataTienda = AlmacenArticulos.todosObjetosTienda();
 
-            return View(data);
+            // envia la tienda y el carrito
+
+            return View(dataTienda);
+        }
+
+        public ActionResult ArticuloAlCarrito(FormCollection form){
+            // agrega un articulo de la tienda al carrito de compras
+            var articulo = form["articulo"];// aqui está el ID del articulo
+            CarritoCompras.agregarAlCarrito(articulo);
+            return Redirect("../Tienda/Index");
+        }
+
+        public ActionResult carrito()
+        {
+            // establece lo que hay en el carrito de compras
+            List<ObjetoVenta> dataCarrito = new List<ObjetoVenta>();
+            //CarritoCompras.llenar();
+            dataCarrito = CarritoCompras.todosObjetosCarrito();
+            return View(dataCarrito);
         }
     }
 }

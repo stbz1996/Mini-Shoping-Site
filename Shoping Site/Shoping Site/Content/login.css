@@ -44,7 +44,8 @@ body{
 	overflow: hidden;
 }
 
-#objetoVenta img{
+
+#imagenVenta{
 	width: 80%;
 	margin: 1% 5% 1% 8%;
 	height: auto;
@@ -67,51 +68,69 @@ body{
 }
 
 .articulos{
-	width: 70%;
+	width: 97%;
     background: rgba(255, 0, 0, 0.6);
 	
 }
 .articulos li{
     background: rgba(255, 255, 255, 0.6);
-	margin: 1% 1% 1% 1%;
-	padding: 1% 0% 1% 0%;
-	width: 31.2%;
-	font-size: 20px;
+	margin: 1% 2% 1% 1%;
+	padding: 1% 1% 1% 1%;
+	width: 15%;
+	font-size: 15px;
 	float: left;
 	border-radius: 20px;
 	overflow: hidden;
 }
+
+
 .carrito{
-	float: left;
-	width: 25%;
+	width: 60%;
+    float: left;
 	background: rgba(255, 255, 255, 0.6);
 	height: auto;
-
+    margin: 1% 0% 1% 10%;
 }
 .carrito ul{
-	width: 96%;
-	max-width: 96%;
-	padding: 1% 1% 1% 1%;
+	width: 100%;
+	padding: 1% 1% 1% 4%;
 	margin: 1%; 
 	text-align: center;
 	border-radius: 20px;
 	overflow: hidden;
-
 }
 .carrito li{
 	font-size: 5px;
 	margin: 1% 1% 1% 1%;
 	padding: 1% 0% 1% 0%;
-	width: 48%;
+	width: 20%;
 	font-size: 20px;
 	float: left;
 	border-radius: 10px;
 	overflow: hidden;
     background: rgba(255, 0, 0, 0.5);
 }
+.carrito img{
+    width: 80%;
+	margin: 1% 5% 1% 8%;
+	height: auto;
+	padding: 1% 1% 1% 1%;
+	border-radius: 15px;
+	float: left;
+}
+
 .carrito p{
     font-size: 13px;
 }
+
+
+
+
+
+
+
+
+
 
 .contenido{
 	background: rgba(255, 0, 0, 0.5);
@@ -178,7 +197,12 @@ a {
     text-align:center;
     align-items: center;
     width: 50%;
-    margin: 10% 0% 1% 0%;
+    margin: 3% 0% 1% 0%;
     padding: 3%;
     border-radius: 20px;
+}
+
+
+#oculto{
+    display: none;
 }

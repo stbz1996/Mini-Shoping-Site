@@ -18,3 +18,8 @@ function mostrarContenido() {
 }
 
 
+
+function ejemplo(elemento) {
+    alert('Gracias por pinchar ' + elemento.id + ' ' + elemento.title);
+
+}
