@@ -18,7 +18,7 @@ body{
 
 .navBar{
 	width: 80%;
-	margin: 0% 10% 1% 10%; 
+	margin: 0% 10% 0% 10%; 
 	overflow: hidden;
 }
 
@@ -26,21 +26,93 @@ body{
 	width: 96%;
 	max-width: 96%;
 	padding: 1% 1% 1% 1%;
-	margin: 0%; 
+	margin: 1%; 
 	text-align: center;
 	border-radius: 20px;
 	overflow: hidden;
 }
+
 .navBar li{
-	background: rgba(255, 0, 0, 0.5);
+    background: rgba(255, 255, 255, 0.5);
 	margin: 1% 1% 1% 1%;
 	padding: 1% 0% 1% 0%;
-	width: 30.8%;
+	width: 30.5%;
 	font-size: 20px;
 	float: left;
 	border-radius: 20px;
-	border: white 2px ridge;
+    border: solid white;
+	overflow: hidden;
 }
+
+#objetoVenta img{
+	width: 80%;
+	margin: 1% 5% 1% 8%;
+	height: auto;
+	padding: 1% 1% 1% 1%;
+	border-radius: 15px;
+	float: left;
+}
+
+#etiquetasMenu{
+    background: rgba(255, 0, 0, 0.6);
+}
+
+#comun{
+	margin: 1%;
+	float: left;
+	border-radius: 20px;
+	text-align: center;
+	overflow: hidden;
+
+}
+
+.articulos{
+	width: 70%;
+    background: rgba(255, 0, 0, 0.6);
+	
+}
+.articulos li{
+    background: rgba(255, 255, 255, 0.6);
+	margin: 1% 1% 1% 1%;
+	padding: 1% 0% 1% 0%;
+	width: 31.2%;
+	font-size: 20px;
+	float: left;
+	border-radius: 20px;
+	overflow: hidden;
+}
+.carrito{
+	float: left;
+	width: 25%;
+	background: rgba(255, 255, 255, 0.6);
+	height: auto;
+
+}
+.carrito ul{
+	width: 96%;
+	max-width: 96%;
+	padding: 1% 1% 1% 1%;
+	margin: 1%; 
+	text-align: center;
+	border-radius: 20px;
+	overflow: hidden;
+
+}
+.carrito li{
+	font-size: 5px;
+	margin: 1% 1% 1% 1%;
+	padding: 1% 0% 1% 0%;
+	width: 48%;
+	font-size: 20px;
+	float: left;
+	border-radius: 10px;
+	overflow: hidden;
+    background: rgba(255, 0, 0, 0.5);
+}
+.carrito p{
+    font-size: 13px;
+}
+
 .contenido{
 	background: rgba(255, 0, 0, 0.5);
 	text-align: center;
@@ -91,3 +163,22 @@ a {
     display: none;
 }
 
+#error{
+    text-align: center;
+    margin: 1% 1% 0% 2% ;
+    float:left;
+}
+
+#textoJustificado{
+    text-align: center;
+    margin: 1%;
+}
+
+#botonCentrado{
+    text-align:center;
+    align-items: center;
+    width: 50%;
+    margin: 10% 0% 1% 0%;
+    padding: 3%;
+    border-radius: 20px;
+}
