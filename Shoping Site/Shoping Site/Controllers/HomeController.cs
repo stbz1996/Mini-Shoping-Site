@@ -4,11 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Mini_Shoping_Site.Controllers
+namespace Shoping_Site.Controllers
 {
-    public class LoginController : Controller
+    public class HomeController : Controller
     {
-        // GET: Login
+        // GET: Home
         public ActionResult Index()
         {
             return View();

@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace Mini_Shoping_Site
+namespace Shoping_Site
 {
     public class MvcApplication : System.Web.HttpApplication
     {

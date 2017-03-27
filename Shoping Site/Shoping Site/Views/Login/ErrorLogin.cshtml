@@ -1,0 +1,17 @@
+﻿<body onload="mostrarContenido()">
+    <section class="contenido" id="contenido">
+        <h1> Login </h1>
+        <img src="http://img05.deviantart.net/806b/i/2015/246/6/0/laika_by_mightygraph-d988x97.jpg"></img>
+
+        <!-- este form toma los datos y los envia a la capa de controller  -->
+        <form action="../Login/VerificaLogin" method="POST">
+            <p>
+                Usuario: @Html.TextBox("txtuser")
+                Contraseña: @Html.TextBox("txtcont")
+                <input type="submit" value="Guardar" />
+            </p>
+            <h1>Error en el login, datos invalidos</h1>
+        </form>
+    </section>
+</body>
+
