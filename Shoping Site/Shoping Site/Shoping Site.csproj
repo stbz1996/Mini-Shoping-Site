@@ -169,6 +169,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Tienda\carrito.cshtml" />
+    <Content Include="Views\Tienda\EliminarArticuloCarrito.cshtml" />
+    <Content Include="Views\Login\establecerCuenta.cshtml" />
+    <Content Include="Views\Login\cuentaNoCreada.cshtml" />
+    <Content Include="Views\Login\errorContrasenas.cshtml" />
+    <Content Include="Views\Tienda\IndexArticulos.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -20,15 +20,19 @@ namespace Shoping_Site.Controllers.Clases
             return carrito;
         }
 
-        public static void llenar()
-        {
-            // este metodo se debe cambiar para que tome los objetos de la BD
-            carrito.Add(new ObjetoVenta("id1", "Cocina", 25000, "https://ayudawp.com/wp-content/uploads/2013/10/miniatura-wordpress.jpg"));
-            carrito.Add(new ObjetoVenta("id2", "Cocina", 25000, "https://ayudawp.com/wp-content/uploads/2013/10/miniatura-wordpress.jpg"));
-            carrito.Add(new ObjetoVenta("id3", "Cocina", 25000, "https://ayudawp.com/wp-content/uploads/2013/10/miniatura-wordpress.jpg"));
-            carrito.Add(new ObjetoVenta("id4", "Cocina", 25000, "https://ayudawp.com/wp-content/uploads/2013/10/miniatura-wordpress.jpg"));
-            carrito.Add(new ObjetoVenta("id5", "Cocina", 25000, "https://ayudawp.com/wp-content/uploads/2013/10/miniatura-wordpress.jpg"));
-         }
+        public static void eliminarDelCarrito(string id){
+            // debo agregar al carrito el objeto con ese id de la tienda
+            ObjetoVenta obj = null;
+            foreach (var item in carrito)
+            {
+                if (item.ID == id){
+                    obj = item;
+                    break;
+                }
+            }
+            // Cuando encuentra el articulo lo agrega al carrito
+            carrito.Remove(obj);
+        }
 
  
         public static void agregarAlCarrito(string id){

@@ -67,10 +67,34 @@ body{
 
 }
 
-.articulos{
-	width: 97%;
+#navCategorias{
     background: rgba(255, 0, 0, 0.6);
-	
+    width: 50%;
+    margin: 1% 0% 1% 20%;
+    border-radius: 20px;
+    text-align: center;
+    padding: 1%;
+    overflow: hidden;
+}
+#navCategorias h3{
+    padding: 4%;
+    border-radius: 20px;
+}
+
+#botonCategoria{
+    background: rgba(255, 255, 255, 0.6);
+    width:29%;
+    float: left;
+    padding: 2%;
+    margin: 1% 2% 1% 2%;
+    border-radius: 20px;
+ 
+}
+
+.articulos{
+	width: 98%;
+    background: rgba(255, 0, 0, 0.6);
+	float: left;
 }
 .articulos li{
     background: rgba(255, 255, 255, 0.6);
@@ -79,7 +103,7 @@ body{
 	width: 15%;
 	font-size: 15px;
 	float: left;
-	border-radius: 20px;
+	border-radius: 29px;
 	overflow: hidden;
 }
 
@@ -163,6 +187,8 @@ a {
 
 #pagCrearCuenta{
     display: none;
+    overflow: hidden;
+
 }
 
 #contenido{
@@ -189,11 +215,47 @@ a {
     align-items: center;
     width: 50%;
     margin: 3% 0% 1% 0%;
-    padding: 3%;
-    border-radius: 20px;
+    padding: 2% 4% 2% 4%;
+    border-radius: 15px;
 }
 
 
 #oculto{
     display: none;
 }
+
+
+.hiperlink{
+    font-size: 11px;
+    color: white;
+    text-decoration:underline;
+}
+
+#boton{
+    float: right;
+    padding: 2% 4% 2% 4%;
+    border-radius: 15px;
+    margin: 1% 1% 1% 10%;
+}
+
+#textspace {
+    border-radius: 10px;
+    width: 100%;
+}
+
+
+#mostrartxt{
+    background: rgba(255, 0, 0, 0.5);
+	text-align: center;
+	width: 50%;
+	border-radius: 20px;
+	padding: 25px;
+	margin: 1% 25% 5% 25%;
+	box-sizing: border-box;
+	border: white 2px ridge;
+}
+
+#txtparrafo{
+    text-align: left;
+}
+

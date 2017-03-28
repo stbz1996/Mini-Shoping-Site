@@ -9,9 +9,8 @@ namespace Shoping_Site.Controllers.Clases
     {
                                         // atributos generales
         static List<ObjetoVenta> objetosTienda = new List<ObjetoVenta>();
-
-
-                                        // metodos generales
+        
+        // metodos generales
         public static List<ObjetoVenta> todosObjetosTienda(){
             // retorna todos los objetos de la tineda, objetos tienda es el almacen donde se encuantran
             // todos los objetos que existen en la tienda. 
@@ -42,5 +41,5 @@ namespace Shoping_Site.Controllers.Clases
         }
 
 
-    }
+        }
 }
