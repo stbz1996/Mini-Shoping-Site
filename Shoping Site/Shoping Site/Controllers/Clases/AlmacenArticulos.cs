@@ -23,6 +23,9 @@ namespace Shoping_Site.Controllers.Clases
         }
 
         public static void llenar(){
+            // la limpia para que no se haga enorme
+            objetosTienda.Clear();
+
             // este metodo se debe cambiar para que tome los objetos de la BD
             objetosTienda.Add(new ObjetoVenta("id1", "Cocina", 25000, "https://ayudawp.com/wp-content/uploads/2013/10/miniatura-wordpress.jpg"));
             objetosTienda.Add(new ObjetoVenta("id2", "Cocina", 25000, "https://ayudawp.com/wp-content/uploads/2013/10/miniatura-wordpress.jpg"));

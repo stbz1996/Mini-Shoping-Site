@@ -171,6 +171,7 @@
     <Content Include="Views\Login\establecerCuenta.cshtml" />
     <Content Include="Views\Login\cuentaNoCreada.cshtml" />
     <Content Include="Views\Login\errorContrasenas.cshtml" />
+    <Content Include="Views\Login\errorDatos.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

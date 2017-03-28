@@ -42,6 +42,11 @@ namespace Shoping_Site.Controllers
             var cont = form["cont"];
             var confirmarCont = form["rcont"];
 
+            if ((nombre=="")|| (usuario == "")|| (cont == "")|| (confirmarCont == ""))
+            {
+                return RedirectToAction("errorDatos", "Login");
+            }
+
             if (cont != confirmarCont){
                 return RedirectToAction("errorContrasenas", "Login");
             }
@@ -65,12 +70,6 @@ namespace Shoping_Site.Controllers
         {
             return View();
         }
-
-
-
-
-
-
 
 
         public ActionResult Tienda()
@@ -117,6 +116,11 @@ namespace Shoping_Site.Controllers
 
 
         public ActionResult LoginCorrecto()
+        {
+            return View();
+        }
+
+        public ActionResult errorDatos()
         {
             return View();
         }
