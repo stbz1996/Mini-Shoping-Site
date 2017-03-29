@@ -151,6 +151,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Conexiones.cs" />
     <Compile Include="Models\VerificarLogin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -172,6 +173,7 @@
     <Content Include="Views\Login\cuentaNoCreada.cshtml" />
     <Content Include="Views\Login\errorContrasenas.cshtml" />
     <Content Include="Views\Login\errorDatos.cshtml" />
+    <Content Include="Views\Login\errorUsuarioNoExiste.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
