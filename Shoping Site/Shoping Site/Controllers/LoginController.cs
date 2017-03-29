@@ -77,10 +77,15 @@ namespace Shoping_Site.Controllers
         public ActionResult VerificaLogin(FormCollection form){
             /* Aqui es donde va la capa logica para vrificarlo con la BD*/
             /* y devolver la vista para el caso */
+
+            
             if (Session["user"] == null){
                 var user = form["txtuser"];
                 var contrasena = form["txtcont"];
+                // habilita el modo de administrador
+                if ((user == "Admin") && (contrasena == "Admin")) { return Redirect("../Login/ModoAdmin"); }
 
+                // habilita el modo de usuario
                 if ((contrasena == ""))  {return Redirect("../Login/ErrorConrasenaLogin");}
                 else if ((user == ""))   {return Redirect("../Login/ErrorUserLogin");}
                 else{
@@ -122,6 +127,36 @@ namespace Shoping_Site.Controllers
         }
 
         public ActionResult errorUsuarioNoExiste(){
+            return View();
+        }
+
+        public ActionResult ModoAdmin()
+        {
+            return View();
+        }
+
+
+
+
+
+        public ActionResult VerificAdmin(FormCollection form)
+        {
+            var user = form["txtuser"];
+            var contrasena = form["txtcont"];
+            VerificarLogin logAdmin = new VerificarLogin();
+
+            if (logAdmin.verificarAdmin(user, contrasena))
+            {
+                // si es un admin
+                ViewBag.UserAdmin = user;
+                Session["user"] = user;
+                return View();
+            }
+            // no es un admin 
+            return Redirect("../Login/ErrorUserAdmin");
+        }
+
+        public ActionResult ErrorUserAdmin(){
             return View();
         }
 

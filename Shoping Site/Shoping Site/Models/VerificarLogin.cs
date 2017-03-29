@@ -20,6 +20,11 @@ namespace Shoping_Site.Models
             return true;
         }
 
+        public Boolean verificarAdmin(string user, string contrasena)
+        {
+            // conecta con base y retorna true si es un admin o false si no es un admin
+            return true;
+        }
 
     }
 }
