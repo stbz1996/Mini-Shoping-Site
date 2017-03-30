@@ -1,0 +1,18 @@
+﻿
+
+
+<body onload="mostrarCrearCuenta()">
+    <section class="contenido" id="pagCrearCuenta">
+        <h1> Añadir Objetos Al Inventario </h1>
+        <form action="../Tienda/anadirArticuloAlInventario" method="POST">
+            <p>
+                Nombre <input type="text" maxlength="10" value="" id="textspace" name="nombre" />
+                Precio  <input type="number" value="" id="textspace" name="precio" />
+                Cantidad <input type="number" value="" id="textspace" name="cantidad" />
+                Imagen <input type="file" id="textoJustificado" name="img"><br><br>
+                <input type="submit" value="Insertar Producto" id="boton" /><br>
+            </p>
+        </form>
+        <h3 style="padding: 5% 0% 10% 45%;">No se logró ingresar el producto al inventario, intentelo mas tarde</h3>
+    </section>
+</body>

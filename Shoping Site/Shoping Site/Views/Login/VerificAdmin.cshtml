@@ -5,11 +5,19 @@
         <h1 id="textoJustificado">Bienvenido @ViewBag.UserAdmin ya puedes usar el modo de administrador</h1>
         <br><br>
         <!-- Aqui van todas las funcionalidades del admin  -->
-        <form action="" method="POST">
-            <p><input id="boton" type="submit" value="xxx" /></p>
+        <form action="../Login/creaNuevoAdmin" method="POST" id="botonAdmin">
+            <p><input type="submit" value="Establecer Nuevo Administrador" id="boton" /></p>
         </form>
-        <form action="" method="POST">
-            <p><input id="boton" type="submit" value="Cerrar Sesión" /></p>
+        <form action="../Tienda/incluirArticuloAlInventario" method="POST" id="botonAdmin">
+            <p><input type="submit" value="Añadir Articulo(s) al Inventario " id="boton"/></p>
+        </form>
+
+        <form action="../Tienda/verDeInventario" method="POST" id="botonAdmin">
+            <p><input type="submit" value="Eliminar Articulo del Inventario " id="boton" /></p>
+        </form>
+
+        <form action="../Login/cerrarSesion" method="POST" id="botonAdmin">
+            <p><input type="submit" value="Cerrar Sesión Del Administrador" id="boton"/></p>
         </form>
         <br>
     </section>

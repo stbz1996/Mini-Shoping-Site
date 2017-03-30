@@ -259,3 +259,12 @@ a {
     text-align: left;
 }
 
+
+#botonAdmin{
+    float: left;
+    width: 100%;
+    border-radius: 20px;
+    text-align: center;
+    padding: 1% 1% 1% 31%;
+}
+

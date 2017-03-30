@@ -1,0 +1,2 @@
+1. Registrar administradores
+2. Insertar nuevos productos al inventario (imegen, y demas datos)

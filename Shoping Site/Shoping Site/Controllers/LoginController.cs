@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Shoping_Site.Controllers.Clases;
 using Shoping_Site.Models;
 
 namespace Shoping_Site.Controllers
@@ -30,7 +29,9 @@ namespace Shoping_Site.Controllers
             return View();
         }
 
+        
 
+       
         public ActionResult establecerCuenta(FormCollection form){
             var nombre = form["nombre"];
             var usuario = form["txtuser"];
@@ -110,8 +111,41 @@ namespace Shoping_Site.Controllers
         }
 
 
+        public ActionResult creaNuevoAdmin()
+        {
+            return View();
+        }
+
+        public ActionResult estableceNuevoAdmin(FormCollection form){
+            var nombre = form["nombre"];
+            var usuario = form["txtuser"];
+            var cont = form["cont"];
+            var confirmarCont = form["rcont"];
+            // debe retornar las vistas especiales
+            if ((nombre == "") || (usuario == "") || (cont == "") || (confirmarCont == "")){
+                return RedirectToAction("ErrorDatosAdmin", "Login");
+            }
+            if (cont != confirmarCont){
+                return RedirectToAction("ErrorConrasenaAdmin", "Login");
+            }
+            // manda a crear la cuenta a la base 
+            if (log.crearCuentaAdministrador(nombre, usuario, cont)){
+                ViewBag.nombre = nombre;
+                ViewBag.usuario = usuario;
+                ViewBag.cont = cont;
+                return View();
+            }
+            // si no se creo la cuenta
+            return RedirectToAction("cuentaNoCreadaAdmin", "Login");
+        }
+
+        public ActionResult cuentaNoCreadaAdmin() { return View(); }
 
         public ActionResult ErrorConrasenaLogin() { return View(); }
+
+        public ActionResult ErrorConrasenaAdmin() { return View(); }
+
+        public ActionResult ErrorDatosAdmin() { return View(); }
 
         public ActionResult ErrorUserLogin() { return View(); }
 

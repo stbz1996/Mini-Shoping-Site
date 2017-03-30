@@ -8,9 +8,14 @@ namespace Shoping_Site.Models
 {
     public class Tienda
     {
-        public void insertarEnTienda(Articulo obj){
-            // inserta objetos a la tienda
+        public bool insertarEnInventario(string nombre, int precio, int cantidad, string img){
+            // inserta objetos en el inventario
             // se conecta en la base para crear un objeto en la tienda
+            return true;
+        }
+
+        public bool eliminarArticuloDelInventario(string id){
+            return true;
         }
 
         public List<Articulo> articulosTienda(){

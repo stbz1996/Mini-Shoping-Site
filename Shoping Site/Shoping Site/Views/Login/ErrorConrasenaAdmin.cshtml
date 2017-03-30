@@ -1,0 +1,17 @@
+﻿
+
+<body onload="mostrarCrearCuenta()">
+    <section class="contenido" id="pagCrearCuenta">
+        <h1> Crear Cuenta De Administrador</h1>
+        <form action="../Login/estableceNuevoAdmin" method="POST">
+            <p>
+                Nombre <input type="text" maxlength="25" value="" id="textspace" name="nombre" />
+                Usuario <input type="text" maxlength="25" value="" id="textspace" name="txtuser" />
+                Contraseña <input type="password" maxlength="12" value="" id="textspace" name="cont" />
+                Confirme Contraseña <input type="password" maxlength="12" value="" id="textspace" name="rcont" />
+                <input type="submit" value="Crear" id="botonCentrado" /><br>
+            </p>
+        </form>
+        <h3 style="padding: 5% 0% 10% 45%;">Las contraseñas no son iguales</h3>
+    </section>
+</body>

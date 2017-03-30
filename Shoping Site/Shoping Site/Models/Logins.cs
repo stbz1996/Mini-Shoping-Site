@@ -24,5 +24,12 @@ namespace Shoping_Site.Models
             return true;
         }
 
+
+        public Boolean crearCuentaAdministrador(string nombre, string user, string contrasena)
+        {
+            // conecta con base y retorna true si se logra crear el administrador, false si no
+            return true;
+        }
+
     }
 }
