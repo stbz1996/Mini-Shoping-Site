@@ -5,9 +5,8 @@ using System.Web;
 
 namespace Shoping_Site.Models
 {
-    public class VerificarLogin
+    public class Logins
     {
-
 
         public Boolean verificarUsuario(string user, string contrasena){
             // conecta con base y retorna true si es un usuario o false si no es un usuario
@@ -20,8 +19,7 @@ namespace Shoping_Site.Models
             return true;
         }
 
-        public Boolean verificarAdmin(string user, string contrasena)
-        {
+        public Boolean verificarAdmin(string user, string contrasena){
             // conecta con base y retorna true si es un admin o false si no es un admin
             return true;
         }

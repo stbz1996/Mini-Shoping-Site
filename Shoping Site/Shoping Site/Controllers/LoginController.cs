@@ -10,8 +10,12 @@ namespace Shoping_Site.Controllers
 {
     public class LoginController : Controller
     {
+        // Atributos generales
+        Logins log = new Logins();
+
+
         public ActionResult Index(){
-            if (Session["user"] == null) {return View();}
+            if (Session["user"] == null) { return View(); }
             return RedirectToAction("VerificaLogin", "Login");
         }
 
@@ -27,25 +31,18 @@ namespace Shoping_Site.Controllers
         }
 
 
-        public ActionResult establecerCuenta(FormCollection form)
-        {
+        public ActionResult establecerCuenta(FormCollection form){
             var nombre = form["nombre"];
             var usuario = form["txtuser"];
             var cont = form["cont"];
             var confirmarCont = form["rcont"];
 
             if ((nombre=="")|| (usuario == "")|| (cont == "")|| (confirmarCont == "")){
-                return RedirectToAction("errorDatos", "Login");
-            }
-
+                return RedirectToAction("errorDatos", "Login");}
             if (cont != confirmarCont){
-                return RedirectToAction("errorContrasenas", "Login");
-            }
+                return RedirectToAction("errorContrasenas", "Login");}
 
-            // aqui debo conectarme con el modelo para mandar a crear la cuanta
-            
             // manda a crear la cuenta a la base 
-            VerificarLogin log = new VerificarLogin();
             if (log.crearCuenta(nombre, usuario, cont)){
                 ViewBag.nombre = nombre;
                 ViewBag.usuario = usuario;
@@ -53,9 +50,7 @@ namespace Shoping_Site.Controllers
                 return View();
             }
             // si no se creo la cuenta
-            return RedirectToAction("cuentaNoCreada", "Login");
-            
-            
+            return RedirectToAction("cuentaNoCreada", "Login");    
         }
 
 
@@ -75,22 +70,18 @@ namespace Shoping_Site.Controllers
 
 
         public ActionResult VerificaLogin(FormCollection form){
-            /* Aqui es donde va la capa logica para vrificarlo con la BD*/
-            /* y devolver la vista para el caso */
-
-            
             if (Session["user"] == null){
                 var user = form["txtuser"];
                 var contrasena = form["txtcont"];
+
                 // habilita el modo de administrador
-                if ((user == "Admin") && (contrasena == "Admin")) { return Redirect("../Login/ModoAdmin"); }
+                if ((user == "Admin") && (contrasena == "Admin")){return Redirect("../Login/ModoAdmin"); }
 
                 // habilita el modo de usuario
                 if ((contrasena == ""))  {return Redirect("../Login/ErrorConrasenaLogin");}
                 else if ((user == ""))   {return Redirect("../Login/ErrorUserLogin");}
                 else{
-                    // manda a verificar a la capa de modelos 
-                    VerificarLogin log = new VerificarLogin();
+                    // manda a verificar a la capa de modelos
                     if (log.verificarUsuario(user, contrasena)){
                         Session["user"] = user;
                         ViewBag.User = Session["user"];
@@ -107,58 +98,32 @@ namespace Shoping_Site.Controllers
         }
 
 
-        public ActionResult ErrorConrasenaLogin(){
-            return View();
-        }
-
-
-        public ActionResult ErrorUserLogin(){
-            ViewBag.msj = "error de usuario";
-            return View();
-        }
-
-
-        public ActionResult LoginCorrecto(){
-            return View();
-        }
-
-        public ActionResult errorDatos() {
-            return View();
-        }
-
-        public ActionResult errorUsuarioNoExiste(){
-            return View();
-        }
-
-        public ActionResult ModoAdmin()
-        {
-            return View();
-        }
-
-
-
-
-
-        public ActionResult VerificAdmin(FormCollection form)
-        {
+        public ActionResult VerificAdmin(FormCollection form){
             var user = form["txtuser"];
             var contrasena = form["txtcont"];
-            VerificarLogin logAdmin = new VerificarLogin();
-
-            if (logAdmin.verificarAdmin(user, contrasena))
-            {
-                // si es un admin
+            if (log.verificarAdmin(user, contrasena)){
                 ViewBag.UserAdmin = user;
                 Session["user"] = user;
                 return View();
             }
-            // no es un admin 
             return Redirect("../Login/ErrorUserAdmin");
         }
 
-        public ActionResult ErrorUserAdmin(){
-            return View();
-        }
+
+
+        public ActionResult ErrorConrasenaLogin() { return View(); }
+
+        public ActionResult ErrorUserLogin() { return View(); }
+
+        public ActionResult LoginCorrecto() { return View(); }
+
+        public ActionResult errorDatos() { return View(); }
+
+        public ActionResult errorUsuarioNoExiste() { return View(); }
+
+        public ActionResult ModoAdmin() { return View(); }
+
+        public ActionResult ErrorUserAdmin() { return View(); }
 
     }
 }
