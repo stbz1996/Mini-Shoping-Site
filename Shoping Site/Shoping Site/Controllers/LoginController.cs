@@ -12,7 +12,6 @@ namespace Shoping_Site.Controllers
         // Atributos generales
         Logins log = new Logins();
 
-
         public ActionResult Index(){
             if (Session["user"] == null) { return View(); }
             return RedirectToAction("VerificaLogin", "Login");
@@ -30,8 +29,6 @@ namespace Shoping_Site.Controllers
         }
 
         
-
-       
         public ActionResult establecerCuenta(FormCollection form){
             var nombre = form["nombre"];
             var usuario = form["txtuser"];
@@ -39,7 +36,9 @@ namespace Shoping_Site.Controllers
             var confirmarCont = form["rcont"];
 
             if ((nombre=="")|| (usuario == "")|| (cont == "")|| (confirmarCont == "")){
-                return RedirectToAction("errorDatos", "Login");}
+                return RedirectToAction("errorDatos", "Login");
+            }
+
             if (cont != confirmarCont){
                 return RedirectToAction("errorContrasenas", "Login");}
 
@@ -111,8 +110,7 @@ namespace Shoping_Site.Controllers
         }
 
 
-        public ActionResult creaNuevoAdmin()
-        {
+        public ActionResult creaNuevoAdmin(){
             return View();
         }
 
@@ -147,7 +145,9 @@ namespace Shoping_Site.Controllers
 
         public ActionResult ErrorDatosAdmin() { return View(); }
 
-        public ActionResult ErrorUserLogin() { return View(); }
+        public ActionResult ErrorUserLogin() {
+            return View();
+        }
 
         public ActionResult LoginCorrecto() { return View(); }
 

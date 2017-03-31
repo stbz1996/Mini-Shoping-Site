@@ -11,6 +11,29 @@ namespace Shoping_Site.Models
         // atributo general para almacenar los articulos del carrito durante su uso
         public static List<Articulo> carrito = new List<Articulo>();
 
+
+
+
+        public bool pagar(string usuario){
+            // toma el usuario y el carrito para hacer el pago.
+
+            // limpia el carrito al hacer el pago
+            carrito.Clear();
+            return true;
+        }
+
+
+
+        public int precioTotal(){
+            // retorna el precio total de la compra            
+            int precio = 0;
+            foreach (var item in carrito){
+                precio += item.precio; 
+            }
+            return precio;
+        }
+
+
         public List<Articulo> articulosCarrito(){
             // retorna todo el carrito 
             return carrito;

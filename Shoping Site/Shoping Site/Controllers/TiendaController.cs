@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using Shoping_Site.Models;
 using Shoping_Site.Models.Secundarias;
 
-namespace Shoping_Site.Controllers
+namespace Shoping_Site.Controllers 
 {
     public class TiendaController : Controller
     {
@@ -14,23 +14,47 @@ namespace Shoping_Site.Controllers
         Tienda tienda = new Tienda();
         Carrito carritoCompras = new Carrito();
 
+
+
         // Metodos
         public ActionResult Index(FormCollection form){
             if (Session["user"] == null){
                 return RedirectToAction("Index", "Login");
             }
             // creo lista de objetos a la venta y la envio a la vista
+
+
+            // prueba 
+            ViewBag.pets = tienda.articulosTienda(); 
+
             return View(tienda.articulosTienda());
         }
+
+
+
+
+        public ActionResult VerArticuloEspecifico(FormCollection form)
+        {
+            var id = form["oculto"]; // obtengo el id del objeto
+            // 
+            return View();
+        }
+
+
+
+
+
+
+
 
         public ActionResult verDeInventario(){
             return View(tienda.articulosTienda());
         }
 
-        public ActionResult confirmarVerDeInventario()
-        {
+        public ActionResult confirmarVerDeInventario(){
             return View(tienda.articulosTienda());
         }
+
 
         public ActionResult eliminarDeInventario(FormCollection form){
             var id = form["oculto"];
@@ -41,13 +65,30 @@ namespace Shoping_Site.Controllers
             return View(tienda.articulosTienda());
         }
 
+
         public ActionResult incluirArticuloAlInventario() { return View(); }
+
+        public ActionResult hacerPago() {
+            // Conecta con la base para hacer el pago de la compra
+            string x = Session["user"].ToString();
+
+            if (carritoCompras.pagar(x)){
+                ViewBag.msj = "El pago se realizó Correctamente, su orden será enviada instantaneamente";
+            }
+            else{
+                ViewBag.msj = "El pago NO se realizó Correctamente";
+            }
+            return View();
+        }
+
+
 
         public ActionResult carrito(){
             if (Session["user"] == null){
                 return RedirectToAction("Index", "Login");
             }
             // retorna una lista con los objetos del carrito de compras
+            ViewBag.precioTotal = carritoCompras.precioTotal();
             return View(carritoCompras.articulosCarrito());
         }
 
