@@ -158,9 +158,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Carrito.cs" />
-    <Compile Include="Models\conexionMySQL.cs" />
-    <Compile Include="Models\conexionNeo4j.cs" />
-    <Compile Include="Models\Parametros.cs" />
+    <Compile Include="Models\Secundarias\conexionMySQL.cs" />
+    <Compile Include="Models\Secundarias\conexionNeo4j.cs" />
+    <Compile Include="Models\Secundarias\Parametros.cs" />
     <Compile Include="Models\Secundarias\Articulo.cs" />
     <Compile Include="Models\Tienda.cs" />
     <Compile Include="Models\Logins.cs" />

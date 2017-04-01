@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using MySql.Data.MySqlClient;
 using System.Data;
+using Shoping_Site.Models.Secundarias;
 
 namespace Shoping_Site.Models
 {
