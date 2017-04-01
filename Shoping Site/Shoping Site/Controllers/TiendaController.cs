@@ -95,8 +95,14 @@ namespace Shoping_Site.Controllers
 
         public ActionResult ArticuloAlCarrito(FormCollection form){
             // agrega un articulo de la tienda al carrito de compras
-            carritoCompras.agregarAlCarrito(form["articulo"]);
-            return Redirect("../Tienda/Index");
+            string user = Session["user"].ToString();
+            int cantidad = Int32.Parse(form["cantidad"]);
+            int idArticulo = Int32.Parse(form["articulo"]);
+            if (carritoCompras.agregarAlCarrito(user, idArticulo, cantidad))
+            {
+                return Redirect("../Tienda/Index");
+            }
+            return View();
         }
 
 

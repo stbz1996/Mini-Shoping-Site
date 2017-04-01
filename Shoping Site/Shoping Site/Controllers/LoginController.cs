@@ -31,13 +31,12 @@ namespace Shoping_Site.Controllers
         
         public ActionResult establecerCuenta(FormCollection form){
             var nombre = form["nombre"];
-            var usuario = form["txtuser"];
+            var usuario = form["user"];
             var cont = form["cont"];
             var confirmarCont = form["rcont"];
 
             if ((nombre=="")|| (usuario == "")|| (cont == "")|| (confirmarCont == "")){
-                return RedirectToAction("errorDatos", "Login");
-            }
+                return RedirectToAction("errorDatos", "Login");}
 
             if (cont != confirmarCont){
                 return RedirectToAction("errorContrasenas", "Login");}

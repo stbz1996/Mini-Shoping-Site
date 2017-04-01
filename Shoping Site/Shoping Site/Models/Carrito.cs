@@ -12,6 +12,45 @@ namespace Shoping_Site.Models
         public static List<Articulo> carrito = new List<Articulo>();
 
 
+                                            // Metodos
+        public bool agregarAlCarrito(string user, int idArticulo, int cantidad){
+            // Agrega a REDIS el articulo del carrito
+            try{
+                conexionRedis conect = new conexionRedis();
+                conect.insertarEnCarrito(user, idArticulo, cantidad);
+                return true;
+            }
+            catch (Exception){
+                return false;
+            }    
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         public bool pagar(string usuario){
@@ -54,18 +93,6 @@ namespace Shoping_Site.Models
         }
 
 
-        public void agregarAlCarrito(string id){
-            // debo agregar al carrito el objeto con ese id de la tienda
-            Articulo obj = null;
-            Tienda tienda = new Tienda();
-            foreach (var item in tienda.articulosTienda()){
-                if (item.ID == id){
-                    obj = item;
-                    break;
-                }
-            }
-            // Cuando encuentra el articulo lo agrega al carrito
-            carrito.Add(obj);
-        }
+        
     }
 }

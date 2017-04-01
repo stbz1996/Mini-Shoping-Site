@@ -10,6 +10,7 @@ namespace Shoping_Site.Models
         private string name;
         private string username;
         private string contrasena;
+        private Parametros[] datos;
 
         public string Name
         {
@@ -30,11 +31,9 @@ namespace Shoping_Site.Models
 
         }
 
-        private Parametros[] datos;
-
+        
         public bool agregarUsuario(string pNombre, string pUsername, string pContrasena)
         {
-
             conexionMySQL conexionmysql = new conexionMySQL();
             conexionNeo4j conexionNeo = new conexionNeo4j();
             //conexionNeo.crearUsuario(pNombre, pUsername, pContrasena);
@@ -43,18 +42,14 @@ namespace Shoping_Site.Models
                 datos = new Parametros[2];
                 datos[0] = new Parametros("pUsername", pUsername);
                 datos[1] = new Parametros("pPassword", pContrasena);
-                if (conexionmysql.consultaNombreUsuarios(datos) == 0)
-                {
+                if (conexionmysql.consultaNombreUsuarios(datos) == 0){
                     conexionmysql.insertarUsuario(datos);
                     conexionNeo.crearUsuario(pNombre, pUsername, pContrasena);
                     return true;
                 }
                 else { return false; }
-
-
             }
-            else
-            {
+            else{
                 //retornar para saber que fallo
                 return false;
             }
