@@ -1,0 +1,137 @@
+CREATE TABLE `administrador` (
+`usernameAdmin` varchar(25) NOT NULL,   
+`password` varchar(12) DEFAULT NULL,   
+PRIMARY KEY (`usernameAdmin`) ) 
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `usuario` (
+`username` varchar(25) DEFAULT NULL,   
+`password` varchar(12) DEFAULT NULL,
+PRIMARY KEY (`username`) ) 
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE producto(
+IN idProducto INT,
+
+IN nombreProducto VARCHAR(100),
+
+IN precio INT,
+
+IN detalle VARCHAR(500),
+
+PRIMARY KEY(idProducto));
+
+
+
+
+CREATE TABLE inventario(
+
+IN idProducto INT,
+
+IN cantidad INT,
+
+FOREIGN KEY(idProducto));
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spConsultaNombreUsuario`
+(IN pUsername VARCHAR(25)) 
+BEGIN 	
+	SELECT username
+        FROM usuario     
+	WHERE username = pUsername;  
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarUsuario`
+(IN pUsername VARCHAR(25),
+ IN pPassword VARCHAR(12)) 
+BEGIN 	
+	INSERT INTO usuario (username, password)     
+	VALUES (pUsername, pPassword); 
+END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spVerificaAdmin`
+( IN pUsername VARCHAR(25), 
+IN pPassword VARCHAR(12)) 
+BEGIN 	
+	SELECT usernameAdmin     
+	FROM administrador     
+	WHERE usernameAdmin = pUsername AND password = pPassword;  
+END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spVerificaUsuario`
+(IN pUsername VARCHAR(25),
+ IN pPassword VARCHAR(12)) 
+BEGIN 	
+	SELECT username     
+	FROM usuario     
+	WHERE username = pUsername AND password = pPassword; 
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spSumarCantidadInventario`
+(IN pIdProducto INT,
+IN pCantidad INT)
+
+BEGIN
+
+	SELECT cantidad = cantidad + pCantidad
+
+    	FROM inventario
+
+   	WHERE idProducto = pIdProducto;
+
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spVerificarCantidadInventario`
+(IN pIdProducto INT)
+BEGIN
+	SELECT cantidad
+    	FROM inventario
+    	WHERE idProducto = pIdProducto;
+
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spRestarCantidadInventario`
+(IN pIdProducto INT,
+IN pCantidad INT)
+BEGIN
+	SELECT cantidad = cantidad-pCantidad
+    	FROM inventario
+    	WHERE idProducto = pIdProducto;
+END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Procedimientos
+
+restarCantidadInventario
+sumarCantidadInventario
+verificarCantidadInventario
+verificarInventarioVacio

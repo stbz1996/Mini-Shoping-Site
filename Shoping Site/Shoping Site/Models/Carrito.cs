@@ -16,13 +16,55 @@ namespace Shoping_Site.Models
         public bool agregarAlCarrito(string user, int idArticulo, int cantidad){
             // Agrega a REDIS el articulo del carrito
             try{
-                conexionRedis conect = new conexionRedis();
-                conect.insertarEnCarrito(user, idArticulo, cantidad);
+                conexionRedis connect = new conexionRedis();
+                connect.insertarEnCarrito(user, idArticulo, cantidad);
                 return true;
             }
             catch (Exception){
                 return false;
             }    
+        }
+
+        public bool limpiarCarrito(string user)
+        {
+            try
+            {
+                conexionRedis connect = new conexionRedis();
+                //Falta agregar procedimiento MySQL para reducir cantidad de inventario
+                connect.limpiarCarrito(user);
+                return true;
+            }catch(Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool eliminarDelCarrito(string user, int idArticulo, int cantidad)
+        {
+            try
+            {
+                conexionRedis connect = new conexionRedis();
+
+                connect.eliminarEnCarrito(user, idArticulo);
+                return true;
+            }catch
+            {
+                return false;
+            }
+        }
+
+        public List<Articulo> obtenerCarrito(string user)
+        {
+            try
+            {
+                conexionRedis connect = new conexionRedis();
+                carrito = connect.obtenerArticulos(user);
+                return carrito;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
 
@@ -67,7 +109,7 @@ namespace Shoping_Site.Models
             // retorna el precio total de la compra            
             int precio = 0;
             foreach (var item in carrito){
-                precio += item.precio; 
+                precio += item.Precio; 
             }
             return precio;
         }
@@ -75,15 +117,17 @@ namespace Shoping_Site.Models
 
         public List<Articulo> articulosCarrito(){
             // retorna todo el carrito 
+
             return carrito;
         }
 
 
         public void eliminarDelCarrito(string id){
             // debo agregar al carrito el objeto con ese id de la tienda
+            int idProducto = Int32.Parse(id);
             Articulo obj = null;
             foreach (var item in carrito){
-                if (item.ID == id){
+                if (item.ID == idProducto){
                     obj = item;
                     break;
                 }
