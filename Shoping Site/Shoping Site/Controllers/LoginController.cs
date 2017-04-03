@@ -100,6 +100,13 @@ namespace Shoping_Site.Controllers
         public ActionResult VerificAdmin(FormCollection form){
             var user = form["txtuser"];
             var contrasena = form["txtcont"];
+
+            if (Session["user"] != null)
+            {
+                ViewBag.UserAdmin = Session["user"];
+                return View();
+            }
+
             if (log.verificarAdmin(user, contrasena)){
                 ViewBag.UserAdmin = user;
                 Session["user"] = user;

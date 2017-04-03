@@ -114,8 +114,23 @@ namespace Shoping_Site.Models
             string nombre = reader["nombre"].ToString();
             int precio = Int32.Parse(reader["precio"].ToString());
             int cantidadTotal = Int32.Parse(reader["cantidad"].ToString());
+            int idproducto  = Int32.Parse(reader["idProducto"].ToString());
             cerrarConexion();
-            return new Articulo(0, nombre, precio, "", 0, cantidadTotal);
+            return new Articulo(idproducto, nombre, precio, "", 0, cantidadTotal);
+        }
+
+        public void insertarArticulo(Parametros[] datos)
+        {
+            abrirConexion();
+            cmd.CommandText = "insertarProductoAlInventario";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = conn;
+            for (int i = 0; i < datos.Length; i++){
+                cmd.Parameters.AddWithValue(datos[i].Nombre, datos[i].Valor);
+            }
+            MySqlDataReader reader = cmd.ExecuteReader();
+            cerrarConexion();
         }
     }
 }
+

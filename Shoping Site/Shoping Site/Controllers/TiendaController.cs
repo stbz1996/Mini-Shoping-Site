@@ -31,6 +31,35 @@ namespace Shoping_Site.Controllers
                 return Redirect("../Tienda/errorCarrito");
             } 
         }
+
+        public ActionResult incluirArticuloAlInventario() { return View(); }
+
+        public ActionResult anadirArticuloAlInventario(FormCollection form)
+        {
+            var id = form["id"];
+            var nombre = form["nombre"];
+            var precio = form["precio"];
+            var cantidad = form["cantidad"];
+            var img = form["img"];
+            ViewBag.nombre = nombre;
+            ViewBag.precio = precio;
+            ViewBag.cantidad = cantidad;
+
+            if ((nombre == "") || (precio == "") || (cantidad == ""))
+            {
+                return Redirect("../Tienda/errorDatosFaltantesInvetario");
+            }
+
+            try{
+                tienda.insertarEnInventario(id, nombre, precio, cantidad, img);
+                return View();
+            }
+            catch (Exception){
+                return Redirect("../Tienda/errorCargarArticuloAlInventario");
+            }
+        }
+
+
         //////////////////////////
         //////////////////////////
         //////////////////////////
@@ -39,7 +68,25 @@ namespace Shoping_Site.Controllers
 
         public ActionResult VerArticuloEspecifico(FormCollection form)
         {
-            var id = form["oculto"]; // obtengo el id del objeto
+            // obtengo los datos del producto
+            var id = form["articulo"];
+            Articulo art = tienda.consultarArticulo(id);
+            ViewBag.nombre = art.Nombre;
+            ViewBag.precio = art.Precio;
+            ViewBag.cant = art.CantidadMaxima;
+            
+            // Aqui debo mandar a traer los comentarios
+            List<String> comentarios = new List<String>();
+            comentarios.Add("es un buen producto");
+            comentarios.Add("me cago en la puta, esto no sirve para nada tio, me cago en la leche con estos estafadores, oyo Jorge jajaja");
+            comentarios.Add("jajaja vale picha esta madre ya jajaja");
+            ViewBag.comentarios = comentarios;
+
+            // necesito la images
+            // necesito la valoracion
+            // necesito las recomendaciones 
+
+            //var id = form["oculto"]; // obtengo el id del objeto
             // 
             return View();
         }
@@ -70,9 +117,7 @@ namespace Shoping_Site.Controllers
         }
 
 
-        public ActionResult incluirArticuloAlInventario() { return View(); }
-
-
+       
         public ActionResult hacerPago() {
             // Conecta con la base para hacer el pago de la compra
             string x = Session["user"].ToString();
@@ -153,24 +198,6 @@ namespace Shoping_Site.Controllers
             return View();
         }
 
-        public ActionResult anadirArticuloAlInventario(FormCollection form){
-            var nombre = form["nombre"];
-            var precio = form["precio"];
-            var cantidad = form["cantidad"];
-            var img = form["img"];
-            ViewBag.nombre = nombre;
-            ViewBag.precio = precio;
-            ViewBag.cantidad = cantidad;
- 
-            if ((nombre == "") || (precio == "") || (cantidad == "")){
-                return Redirect("../Tienda/errorDatosFaltantesInvetario");
-            }
- 
-            if (tienda.insertarEnInventario(nombre, Int32.Parse(precio), Int32.Parse(cantidad), img)){
-                // se creo el objeto
-                return View();
-            }
-            return Redirect("../Tienda/errorCargarArticuloAlInventario");
-        }
+       
     }
 }

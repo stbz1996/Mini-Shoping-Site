@@ -2,17 +2,34 @@
 
 
 <body onload="mostrarCrearCuenta()">
-    <section class="contenido" id="pagCrearCuenta">
+    <div class="contenedorPrimario" id="pagInicio">
+        <section class="navBar" id="navBar">
+            <ul>
+                <li id="etiquetasMenu" style="margin-top: 0%;">
+                    <a>@Html.ActionLink("Inicio", "Index", "Login", new { area = "" }, new { @class = "navbar-brand" })</a>
+                </li>
+                <li id="etiquetasMenu" style="margin-top: 0%;">
+                    <a> @Html.ActionLink("Menú Admin", "VerificAdmin", "Login", new { area = "" }, new { @class = "navbar-brand" })</a>
+                </li>
+                <li id="etiquetasMenu" style="margin-top: 0%;">
+                    <a>@Html.ActionLink("Salir", "Index", "Login", new { area = "" }, new { @class = "navbar-brand" })</a>
+                </li>
+            </ul>
+        </section>
+    </div>
+    
+     <section class="contenido" id="pagCrearCuenta">
         <h1> Añadir Objetos Al Inventario </h1>
-        <form action="../Tienda/anadirArticuloAlInventario" method="POST">
-            <p>
-                Nombre <input type="text" maxlength="10" value="" id="textspace" name="nombre" />
-                Precio  <input type="number" value="" id="textspace" name="precio" />
-                Cantidad <input type="number" value="" id="textspace" name="cantidad" />
-                Imagen <input type="file" id="textoJustificado" name="img"><br><br>
-                <input type="submit" value="Insertar Producto" id="boton" /><br>
-            </p>
-        </form>
+         <form action="../Tienda/anadirArticuloAlInventario" method="POST">
+             <p>
+                 ID <input type="number" min="1000" value=1000 id="textspace" name="id" />
+                 Nombre <input type="text" maxlength="10" value="" id="textspace" name="nombre" />
+                 Precio  <input type="number" value="" id="textspace" name="precio" />
+                 Cantidad <input type="number" value="" id="textspace" name="cantidad" />
+                 Imagen <input type="file" id="textoJustificado" name="img"><br><br>
+                 <input type="submit" value="Insertar Producto" id="boton" /><br>
+             </p>
+         </form>
         <h3 style="padding: 5% 0% 10% 45%;">El objeto con el nombre "@ViewBag.nombre", con un precio de "@ViewBag.precio", y una cantidad de "@ViewBag.cantidad" elementos fue ingresado al inventario correctamente</h3>
 </section>
 </body>

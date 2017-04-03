@@ -327,13 +327,7 @@ a {
 }
 
 
-#comentario{
-    background: rgba(255, 0, 0, 0.5);
-    width: 90%;
-    border-radius: 20px;
-    margin: 5% 0% 5% 4%;
-    padding: 1%;
-}
+
 
 #articuloRec{
     background: rgba(255, 0, 0, 0.5);
@@ -344,4 +338,12 @@ a {
 	float: left;
 	border-radius: 20px;
 	overflow: hidden;
+}
+
+#comentario{
+    background: rgba(255, 0, 0, 0.5);
+    width: 90%;
+    border-radius: 10px;
+    margin: 5% 0% 5% 5%;
+    padding: 5%;
 }

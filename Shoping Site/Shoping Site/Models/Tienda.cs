@@ -8,16 +8,39 @@ namespace Shoping_Site.Models
 {
     public class Tienda
     {
-        public bool insertarEnInventario(string nombre, int precio, int cantidad, string img){
-            // inserta objetos en el inventario
-            // se conecta en la base para crear un objeto en la tienda
-            return true;
+        public void insertarEnInventario(string id, string nombre, string precio, string cantidad, string img){
+            conexionMySQL mysql = new conexionMySQL();
+            Parametros[] datos = new Parametros[5];
+            datos[0] = new Parametros("id", id);
+            datos[1] = new Parametros("nombre", nombre);
+            datos[2] = new Parametros("precio", precio);
+            datos[3] = new Parametros("detalle", "detalle");
+            datos[4] = new Parametros("pcantidad", cantidad);
+            // falta mandar la img a mongo 
+            mysql.insertarArticulo(datos);
         }
+
+
 
         public bool eliminarArticuloDelInventario(string id){
             return true;
         }
 
+        public Articulo consultarArticulo(string id){
+            try
+            {
+                conexionMySQL mysql = new conexionMySQL();
+                Parametros[] datos = new Parametros[1];
+                datos[0] = new Parametros("id", id);
+                return mysql.consultarArticulo(datos);
+            }
+            catch (Exception)
+            {
+                // mandar un error
+                return null;
+            }
+            
+        }
 
 
         public List<Articulo> articulosTienda(){
