@@ -54,7 +54,7 @@ namespace Shoping_Site.Models.Secundarias
                 int cantCaracter = pUser.Length + 1; //Se incrementa en 1 debido a los dos puntos (:)
                 int idProducto = Int32.Parse(key.ToString().Remove(0,cantCaracter));
                 int cantidad = Int32.Parse(cache.StringGet(key));
-                articulos.Add(new Articulo(idProducto, "", 0, "", cantidad));
+                articulos.Add(new Articulo(idProducto, "", 0, "", cantidad, 0));
             }
             return articulos;
         }

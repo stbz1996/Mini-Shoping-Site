@@ -7,7 +7,7 @@
     <section class="articulos" id="comun">
         <br><h3>Tienda</h3><br>
         <ul>
-            @foreach (var item in ViewBag.pets)
+            @foreach (var item in ViewBag.artic)
             {
                 <li id=@item.ID>
                     <form action="../Tienda/ArticuloAlCarrito" method="POST">
@@ -17,7 +17,7 @@
                         <p>Agregar al carro</p>
                         <!-- elemento oculto para el paso de datos -->
                         <input id="oculto" name="articulo" type="text" value=@item.ID />
-                        <input id="botonCentrado" type="number" value = 1 min="1" name="cantidad" />
+                        <input id="botonCentrado" type="number" value = 1 min = 1 max=@item.CantidadMaxima name="cantidad" />
                         <p><input id="botonCentrado" type="submit" value="Añadir" /></p>
                     </form>
                     <form action="../Tienda/VerArticuloEspecifico" method="POST">

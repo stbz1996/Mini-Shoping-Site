@@ -13,21 +13,18 @@ namespace Shoping_Site.Models
         private MySqlConnection conn = new MySqlConnection("server=localhost; userId=root; password=admin; database=proyecto;");
         private MySqlCommand cmd;
 
+        // Metodos 
         public conexionMySQL() { }
 
-        public bool abrirConexion()
-        {
-            try
-            {
+        public bool abrirConexion(){
+            try{
                 cmd = new MySqlCommand();
                 conn.Open();
                 return true;
             }
-            catch
-            {
-
-            }
-            return false;
+            catch{
+                return false;
+            } 
         }
 
         public int consultaNombreUsuarios(Parametros[] datos){
@@ -74,7 +71,6 @@ namespace Shoping_Site.Models
             return tabla.Rows.Count;
         }
 
-
         public void insertarUsuario(Parametros[] datos){
             MySqlCommand cmd = new MySqlCommand("spInsertarUsuario", conn);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -90,15 +86,36 @@ namespace Shoping_Site.Models
             conn.Close();
         }
 
-
-
-
-
-
-        public void objetosTienda()
-        {
-
+        public List<Articulo> objetosTienda(){
+            abrirConexion();
+            cmd = new MySqlCommand("call obtenerInventario", conn);
+            MySqlDataReader reader = cmd.ExecuteReader();
+            List<Articulo> objetosTienda = new List<Articulo>();
+            while (reader.Read()){
+                int idproducto = Int32.Parse(reader["idProducto"].ToString());
+                string nombre = reader["nombreProducto"].ToString();
+                int precio = Int32.Parse(reader["precio"].ToString());
+                int cantidadTotal = Int32.Parse(reader["cantidad"].ToString());
+                objetosTienda.Add(new Articulo(idproducto, nombre, precio, "", 0, cantidadTotal));
+            }
+            cerrarConexion();
+            return objetosTienda;
         }
 
+        public Articulo consultarArticulo(Parametros[] datos)
+        {
+            abrirConexion();
+            cmd.CommandText = "consultarArticulo";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = conn;
+            cmd.Parameters.AddWithValue(datos[0].Nombre, datos[0].Valor);
+            MySqlDataReader reader = cmd.ExecuteReader();
+            reader.Read();
+            string nombre = reader["nombre"].ToString();
+            int precio = Int32.Parse(reader["precio"].ToString());
+            int cantidadTotal = Int32.Parse(reader["cantidad"].ToString());
+            cerrarConexion();
+            return new Articulo(0, nombre, precio, "", 0, cantidadTotal);
+        }
     }
 }

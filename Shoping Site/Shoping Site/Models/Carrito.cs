@@ -10,7 +10,7 @@ namespace Shoping_Site.Models
     {
         // atributo general para almacenar los articulos del carrito durante su uso
         public List<Articulo> carrito = new List<Articulo>();
-        public int total;
+        public int total = 0;
 
                                             // Metodos
         public bool agregarAlCarrito(string user, int idArticulo, int cantidad){
@@ -54,13 +54,22 @@ namespace Shoping_Site.Models
             try{
                 // paso 1: obtener los objetos del carrito en redis
                 conexionRedis connect = new conexionRedis();
+                conexionMySQL mysql = new conexionMySQL();
                 carrito = connect.obtenerArticulos(user);
-
-                // paso 2: completar el nombre, el precio del articulo y la imagen
-                foreach(Articulo item in carrito){
-                    item.Nombre = "xxx";
-                    item.Precio = 10000;
+                Articulo temp = null;
+                // paso 2: completar el nombre, el precio del articulo, la imagen y el total que existen en el inventario
+                Parametros[] datos = new Parametros[1];
+                foreach (Articulo item in carrito){
+                    datos[0] = new Parametros("id", item.ID.ToString());
+                    temp = mysql.consultarArticulo(datos);
+                    item.Nombre = temp.Nombre;
+                    item.Precio = temp.Precio;
+                    item.CantidadMaxima = temp.CantidadMaxima;
+                    // falta la img 
                     item.Ima = "https://ayudawp.com/wp-content/uploads/2013/10/miniatura-wordpress.jpg";
+
+                    // total
+                    total = total + (item.Precio * item.Cantidad);
                 }
                 return carrito;
             }
@@ -82,8 +91,6 @@ namespace Shoping_Site.Models
 
 
         public int precioTotal(string user){
-            // retorna el precio total de la compra            
-            total = 10000;
             return this.total;
         }
 

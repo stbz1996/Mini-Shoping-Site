@@ -19,7 +19,7 @@
                         <input id="oculto" name="idArticulo" type="text" value=@item.ID />
                         <p>Cantidad @item.Cantidad</p>
                         <p style="margin-right: 8%"><input id="boton" type="submit" value="Editar Cantidad" /></p>
-                        <input id="botonCentrado" type="number" value=@item.Cantidad min="0" name="cantidad" />
+                        <input id="botonCentrado" type="number" value=@item.Cantidad min="0" max=@item.CantidadMaxima name="cantidad" />
                     </form>
                 </li>
             }

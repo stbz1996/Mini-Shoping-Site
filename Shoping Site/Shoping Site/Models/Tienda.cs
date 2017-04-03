@@ -21,20 +21,17 @@ namespace Shoping_Site.Models
 
 
         public List<Articulo> articulosTienda(){
-            // Retorna todos los objetos disponibles en la tienda
-            
-
-
-
-            // para probar
+            // Retorna todos los objetos disponibles en la tienda ttomados de la BD
+            conexionMySQL mysql = new conexionMySQL();
             List<Articulo> objetosTienda = new List<Articulo>();
-            objetosTienda.Add(new Articulo(1, "Cocina", 25000, "https://ayudawp.com/wp-content/uploads/2013/10/miniatura-wordpress.jpg", 1));
-            objetosTienda.Add(new Articulo(2, "Cocina", 25000, "https://ayudawp.com/wp-content/uploads/2013/10/miniatura-wordpress.jpg", 1));
-            objetosTienda.Add(new Articulo(3, "Cocina", 25000, "https://ayudawp.com/wp-content/uploads/2013/10/miniatura-wordpress.jpg", 1));
-            objetosTienda.Add(new Articulo(4, "Cocina", 25000, "https://ayudawp.com/wp-content/uploads/2013/10/miniatura-wordpress.jpg", 1));
-            objetosTienda.Add(new Articulo(5, "Cocina", 25000, "https://ayudawp.com/wp-content/uploads/2013/10/miniatura-wordpress.jpg", 1));
+            objetosTienda = mysql.objetosTienda();
+
+            // falta agregar datos a los objetos de la lista, la imagen desde mongo
+            foreach (var item in objetosTienda)
+            {
+                item.Ima = "https://ayudawp.com/wp-content/uploads/2013/10/miniatura-wordpress.jpg";
+            }
             return objetosTienda;
         }
-
     }
 }

@@ -15,7 +15,6 @@ namespace Shoping_Site.Controllers
         Carrito carritoCompras = new Carrito();
 
 
-
         //////////////////////////
         /// Seccion del Tienda ///
         //////////////////////////
@@ -23,16 +22,15 @@ namespace Shoping_Site.Controllers
             if (Session["user"] == null){
                 return RedirectToAction("Index", "Login");
             }
-            // creo lista de objetos a la venta y la envio a la vista
-
-
-            // prueba 
-            ViewBag.pets = tienda.articulosTienda(); 
-
-            return View(tienda.articulosTienda());
+            // Carga la tienda. 
+            try{
+                ViewBag.artic = tienda.articulosTienda();
+                return View();
+            }
+            catch (Exception){
+                return Redirect("../Tienda/errorCarrito");
+            } 
         }
-        
-        
         //////////////////////////
         //////////////////////////
         //////////////////////////
@@ -95,21 +93,16 @@ namespace Shoping_Site.Controllers
         /// //////////////////////////////////
         public ActionResult carrito(){
             // muestra el carrito 
-            try
-            {
-                if (Session["user"] == null)
-                {
+            try{
+                if (Session["user"] == null){
                     return RedirectToAction("Index", "Login");
                 }
                 string user = Session["user"].ToString();
+                List<Articulo> lista = carritoCompras.obtenerCarrito(user);
                 ViewBag.precioTotal = carritoCompras.precioTotal(user);
-                return View(carritoCompras.obtenerCarrito(user));
+                return View(lista);
             }
-            catch (Exception)
-            {
-                return Redirect("../Tienda/errorCarrito");
-            }
-            
+            catch (Exception){return Redirect("../Tienda/errorCarrito");}    
         }
 
         public ActionResult ArticuloAlCarrito(FormCollection form){
