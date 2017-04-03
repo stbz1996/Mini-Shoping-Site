@@ -9,10 +9,6 @@ CREATE TABLE `usuario` (
 `password` varchar(12) DEFAULT NULL ) 
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `usuario` (   
-`username` varchar(25) DEFAULT NULL,   
-`password` varchar(12) DEFAULT NULL ) 
-ENGINE=InnoDB DEFAULT CHARSET=utf8
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spConsultaNombreUsuario`
 (IN pUsername VARCHAR(25)) 

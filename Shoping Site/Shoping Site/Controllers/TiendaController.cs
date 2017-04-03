@@ -16,7 +16,9 @@ namespace Shoping_Site.Controllers
 
 
 
-        // Metodos
+        //////////////////////////
+        /// Seccion del Tienda ///
+        //////////////////////////
         public ActionResult Index(FormCollection form){
             if (Session["user"] == null){
                 return RedirectToAction("Index", "Login");
@@ -29,7 +31,11 @@ namespace Shoping_Site.Controllers
 
             return View(tienda.articulosTienda());
         }
-
+        
+        
+        //////////////////////////
+        //////////////////////////
+        //////////////////////////
 
 
 
@@ -68,6 +74,7 @@ namespace Shoping_Site.Controllers
 
         public ActionResult incluirArticuloAlInventario() { return View(); }
 
+
         public ActionResult hacerPago() {
             // Conecta con la base para hacer el pago de la compra
             string x = Session["user"].ToString();
@@ -83,36 +90,64 @@ namespace Shoping_Site.Controllers
 
 
 
+        //////////////////////////////////////
+        /// Seccion del carrito de compras ///
+        /// //////////////////////////////////
         public ActionResult carrito(){
-            if (Session["user"] == null){
-                return RedirectToAction("Index", "Login");
+            // muestra el carrito 
+            try
+            {
+                if (Session["user"] == null)
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+                string user = Session["user"].ToString();
+                ViewBag.precioTotal = carritoCompras.precioTotal(user);
+                return View(carritoCompras.obtenerCarrito(user));
             }
-            // retorna una lista con los objetos del carrito de compras
-            ViewBag.precioTotal = carritoCompras.precioTotal();
-            return View(carritoCompras.articulosCarrito());
+            catch (Exception)
+            {
+                return Redirect("../Tienda/errorCarrito");
+            }
+            
         }
 
-
         public ActionResult ArticuloAlCarrito(FormCollection form){
-            // agrega un articulo de la tienda al carrito de compras
+            // agrega un articulo de la tienda al carrito de 
             string user = Session["user"].ToString();
             int cantidad = Int32.Parse(form["cantidad"]);
             int idArticulo = Int32.Parse(form["articulo"]);
-            if (carritoCompras.agregarAlCarrito(user, idArticulo, cantidad))
-            {
+            if (carritoCompras.agregarAlCarrito(user, idArticulo, cantidad)){
                 return Redirect("../Tienda/Index");
             }
-            return View();
+            // error general
+            return Redirect("../Tienda/errorCarrito");
         }
-
-
 
         public ActionResult EliminarArticuloCarrito(FormCollection form){
-            // Elimina un articulo de la tienda al carrito de compras
-            carritoCompras.eliminarDelCarrito(form["idArticulo"]);
-            return Redirect("../Tienda/carrito");
+            // Elimina del carrito de compras
+            try
+            {
+                int idArticulo = Int32.Parse(form["idArticulo"]);
+                string user = Session["user"].ToString();
+                int cantidadEliminados = Int32.Parse(form["cantidad"]);
+                carritoCompras.eliminarDelCarrito(user, idArticulo, cantidadEliminados);
+                return Redirect("../Tienda/carrito");
+            }
+            catch (Exception)
+            {
+                return Redirect("../Tienda/errorCarrito");
+            }
+
         }
 
+        public ActionResult errorCarrito()
+        {
+            return View();
+        }
+        //////////////////////////////////////
+        //////////////////////////////////////
+        //////////////////////////////////////
 
 
         public ActionResult errorCargarArticuloAlInventario()

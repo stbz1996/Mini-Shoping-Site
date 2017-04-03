@@ -11,7 +11,14 @@ namespace Shoping_Site.Models.Secundarias
         private string nombre;
         private int precio;
         private string ima;
+        private int cantidad;
 
+
+        public int Cantidad
+        {
+            get { return cantidad; }
+            set { cantidad = value; }
+        }
         public int ID
         {
             get { return idArticulo; }
@@ -37,12 +44,13 @@ namespace Shoping_Site.Models.Secundarias
         }
         
 
-        public Articulo(int id, string nombre, int precio, string ima)
+        public Articulo(int id, string nombre, int precio, string ima, int cantidad)
         {
             this.nombre = nombre;
             this.precio = precio;
             this.ima = ima;
             this.idArticulo = id;
+            this.cantidad = cantidad;
         }
 
     }

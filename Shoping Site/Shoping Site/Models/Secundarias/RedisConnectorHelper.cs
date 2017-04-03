@@ -11,23 +11,19 @@ namespace Shoping_Site.Models.Secundarias
     {
         private static Lazy<ConnectionMultiplexer> lazyConnection;
 
-        static RedisConnectorHelper()
-        {
-
+        static RedisConnectorHelper(){
             lazyConnection = new Lazy<ConnectionMultiplexer>(() => {
                 return ConnectionMultiplexer.Connect("localhost");
             });
-
         }
 
-        public static ConnectionMultiplexer Connection
-        {
-            get { return lazyConnection.Value; }
+        public static ConnectionMultiplexer Connection{
+            get { return lazyConnection.Value;}
         }
 
-        public static IServer server
-        {
+        public static IServer server{
             get { return Connection.GetServer("localhost", 6379); }
         }
+
     }
 }

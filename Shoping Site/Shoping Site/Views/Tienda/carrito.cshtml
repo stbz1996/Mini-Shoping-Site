@@ -10,14 +10,16 @@
         <ul>
             @foreach (var item in Model)
             {
-                <li id=@item.ID onclick="ejemplo(this)">
+                <li id=@item.ID>
                     <form action="../Tienda/EliminarArticuloCarrito" method="POST">
-                        <p>Nombre: @Html.DisplayFor(ModelItem => item.nombre)</p>
-                        <p>Precio: @Html.DisplayFor(ModelItem => item.precio)</p>
+                        <p>Nombre: @item.Nombre</p>
+                        <p>Precio: @item.Precio</p>
                         <img src="http://www.humordeanimales.com/wp-content/uploads/2015/07/perro-esponjoso.jpg" id="imagenVenta">
                         <!-- elemento oculto para el paso de datos -->
                         <input id="oculto" name="idArticulo" type="text" value=@item.ID />
-                        <p><input id="botonCentrado" type="submit" value="Eliminar" /></p>
+                        <p>Cantidad @item.Cantidad</p>
+                        <p style="margin-right: 8%"><input id="boton" type="submit" value="Editar Cantidad" /></p>
+                        <input id="botonCentrado" type="number" value=@item.Cantidad min="0" name="cantidad" />
                     </form>
                 </li>
             }
