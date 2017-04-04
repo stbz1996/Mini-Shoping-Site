@@ -2,19 +2,29 @@
 <section class="carrito" id="seccionMsj">
     <section class="comunEspecifico" id="part1">
         <form id="imgArticulo">
-            <h2 style="text-align:center;">@ViewBag.nombre</h2>
+            <h2 style="text-align:center;">@ViewBag.nombre</h2><br>
             <h4 style="text-align:center;">Precio: @ViewBag.precio</h4>
-            <h4 style="text-align:center;">En el almacen: @ViewBag.cant</h4>
+            <h4 style="text-align:center;">En el almacen: @ViewBag.cant</h4><br>
             <img src="http://cde.3.depor.pe/ima/0/0/0/8/3/83663.jpg" id="imagenVenta" />
         </form>
         <form style="text-align:center">
-            <h4 style="margin-top: 160px;">Calificacion</h4>
+            <h4 style="margin-top: 130px;">Calificacion</h4>
         </form>
      </section>
    
 
-    <section class="comunEspecifico" id="part2">
-        <h2 style="text-align:center;">Comentarios</h2>
+    <section class="comunEspecifico" id="part2" style="text-align:center; overflow:hidden">
+        
+        <h3 style="text-align:center">Coloca tú comentario</h3>
+        
+        <form id="comentario" style="background: green; margin-top:3%" action="" method="POST" >
+            <textarea id="boton" style="margin-right:5%; " name="COMMENT" rows="10" cols="50" wrap="soft" placeholder="" maxlength="310" required></textarea><br />
+            <br><br><br><br><br><br><br>
+            <p><input id="botonCentrado" type="submit" value="Enviar" /></p>
+         </form>
+
+
+        <h2 style="text-align:center">Comentarios</h2>
         <!-- por cada comentario se va a crear una caja -->
         @foreach (var item in ViewBag.comentarios)
         {
@@ -27,7 +37,7 @@
 
 
     <section class="comunEspecifico" id="part3">
-        <h3 style="text-align:center">Recomendaciones</h3>
+        <h3 style="text-align:center">Recomendaciones</h3><br>
 
         <form action="" method="POST" id="articuloRec">
             <p>Nombre: </p>
@@ -35,17 +45,7 @@
             <img src="http://www.humordeanimales.com/wp-content/uploads/2015/07/perro-esponjoso.jpg" id="imagenVenta">
             <!-- elemento oculto para el paso de datos -->
             <input id="oculto" name="idArticulo" type="text" value="" />
-            <p><input id="botonCentrado" type="submit" value="Eliminar" /></p>
-        </form>
-
-
-        <form action="" method="POST" id="articuloRec">
-            <p>Nombre: </p>
-            <p>Precio: </p>
-            <img src="http://www.humordeanimales.com/wp-content/uploads/2015/07/perro-esponjoso.jpg" id="imagenVenta">
-            <!-- elemento oculto para el paso de datos -->
-            <input id="oculto" name="idArticulo" type="text" value="" />
-            <p><input id="botonCentrado" type="submit" value="Eliminar" /></p>
+            <p><input id="botonCentrado" type="submit" value="Ver" /></p>
         </form>
         <form action="" method="POST" id="articuloRec">
             <p>Nombre: </p>
@@ -53,17 +53,7 @@
             <img src="http://www.humordeanimales.com/wp-content/uploads/2015/07/perro-esponjoso.jpg" id="imagenVenta">
             <!-- elemento oculto para el paso de datos -->
             <input id="oculto" name="idArticulo" type="text" value="" />
-            <p><input id="botonCentrado" type="submit" value="Eliminar" /></p>
+            <p><input id="botonCentrado" type="submit" value="Ver" /></p>
         </form>
-
-        <form action="" method="POST" id="articuloRec">
-            <p>Nombre: </p>
-            <p>Precio: </p>
-            <img src="http://www.humordeanimales.com/wp-content/uploads/2015/07/perro-esponjoso.jpg" id="imagenVenta">
-            <!-- elemento oculto para el paso de datos -->
-            <input id="oculto" name="idArticulo" type="text" value="" />
-            <p><input id="botonCentrado" type="submit" value="Eliminar" /></p>
-        </form>
-
     </section>
 </section>

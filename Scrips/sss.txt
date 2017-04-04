@@ -116,10 +116,24 @@ BEGIN
 END
 
 
+// sps
+CREATE DEFINER=`root`@`localhost` PROCEDURE `consultarArticulo`(id int)
+BEGIN
+select I.idProducto, P.nombreProducto nombre, P.precio precio, I.Cantidad cantidad 
+from inventario I inner join producto P 
+on I.idProducto = P.idProducto 
+where I.idProducto = id;
+END
 
 
+// sps
+CREATE DEFINER=`root`@`localhost` PROCEDURE `obtenerInventario`()
+BEGIN
+    select I.idProducto, I.Cantidad, P.nombreProducto, P.precio, P.detalle from 
+	inventario I inner join producto P where I.idProducto = P.idProducto;
+END
 
-
+//sps
 
 
 
