@@ -44,3 +44,46 @@ BEGIN
 	FROM usuario     
 	WHERE username = pUsername AND password = pPassword; 
 END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertarProductoAlInventario`(
+	id int,
+    nombre varchar(100),
+    precio int,
+    detalle varchar(500),
+    pcantidad int
+)
+BEGIN
+	
+    insert into producto(idProducto, nombreProducto, precio, detalle) 
+    values (id, nombre, precio, detalle);
+    
+    insert into inventario(idProducto, cantidad) values (id, pcantidad);
+END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminarDeInventario`(id int)
+BEGIN
+	delete from inventario where idProducto = id;
+    delete from producto where idProducto = id;
+END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `actualizarProductoAlInventario`(
+	id int,
+    nombre varchar(100),
+    precio int,
+    detalle varchar(500),
+    pcantidad int
+)
+BEGIN
+	UPDATE producto
+	SET nombreProducto = nombre,
+	precio = precio
+	WHERE idProducto = id;
+    
+	UPDATE inventario
+    set Cantidad = pcantidad
+    where idProducto = id;
+END
+
+
+
