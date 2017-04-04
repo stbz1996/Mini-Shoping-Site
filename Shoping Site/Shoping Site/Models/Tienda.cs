@@ -20,6 +20,26 @@ namespace Shoping_Site.Models
             mysql.insertarArticulo(datos);
         }
 
+        public void actualizarEnInventario(string id, string nombre, string precio, string cantidad, string img)
+        {
+            conexionMySQL mysql = new conexionMySQL();
+            Parametros[] datos = new Parametros[5];
+            datos[0] = new Parametros("id", id);
+            datos[1] = new Parametros("nombre", nombre);
+            datos[2] = new Parametros("precio", precio);
+            datos[3] = new Parametros("detalle", "detalle");
+            datos[4] = new Parametros("pcantidad", cantidad);
+            // falta mandar la img a mongo 
+            mysql.actualizarArticulo(datos);
+        }
+        public void eliminarEnInventario(string id){
+            conexionMySQL mysql = new conexionMySQL();
+            Parametros[] datos = new Parametros[1];
+            datos[0] = new Parametros("id", id);
+            // falta mandar la img a mongo 
+            mysql.eliminarArticulo(datos);
+        }
+
 
 
         public bool eliminarArticuloDelInventario(string id){

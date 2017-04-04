@@ -131,6 +131,35 @@ namespace Shoping_Site.Models
             MySqlDataReader reader = cmd.ExecuteReader();
             cerrarConexion();
         }
+
+
+        public void actualizarArticulo(Parametros[] datos)
+        {
+            abrirConexion();
+            cmd.CommandText = "actualizarProductoAlInventario";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = conn;
+            for (int i = 0; i < datos.Length; i++)
+            {
+                cmd.Parameters.AddWithValue(datos[i].Nombre, datos[i].Valor);
+            }
+            MySqlDataReader reader = cmd.ExecuteReader();
+            cerrarConexion();
+        }
+
+        public void eliminarArticulo(Parametros[] datos)
+        {
+            abrirConexion();
+            cmd.CommandText = "eliminarDeInventario";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = conn;
+            for (int i = 0; i < datos.Length; i++)
+            {
+                cmd.Parameters.AddWithValue(datos[i].Nombre, datos[i].Valor);
+            }
+            MySqlDataReader reader = cmd.ExecuteReader();
+            cerrarConexion();
+        }
     }
 }
 

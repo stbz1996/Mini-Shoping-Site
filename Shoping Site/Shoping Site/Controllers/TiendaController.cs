@@ -59,7 +59,48 @@ namespace Shoping_Site.Controllers
             }
         }
 
+        public ActionResult editarInventario()
+        {
+            if (Session["user"] == null){
+                return RedirectToAction("Index", "Login");
+            }
+            try
+            {
+                ViewBag.artic = tienda.articulosTienda();
+                ViewBag.user = Session["user"];
+                return View();
+            }
+            catch (Exception)
+            {
+                return Redirect("../Tienda/errorCarrito");
+            }
+        }
 
+        public ActionResult editarArticuloInventario(FormCollection form){
+            try{
+                if (Int32.Parse(form["cantidad"]) != 0){
+                    string id = form["articulo"];
+                    string nombre = form["nombre"];
+                    string precio = form["precio"];
+                    string cantidad = form["cantidad"];
+                    tienda.actualizarEnInventario(id, nombre, precio, cantidad, "hola");
+                }
+                else{
+                    string id = form["articulo"];
+                    tienda.eliminarEnInventario(id);
+                }
+                return Redirect("../Tienda/editarInventario");
+            }
+            catch (Exception){
+                return Redirect("../Tienda/errorArticulosAdmin");
+            }
+            
+        }
+
+        public ActionResult errorArticulosAdmin()
+        {
+            return View();
+        }
         //////////////////////////
         //////////////////////////
         //////////////////////////

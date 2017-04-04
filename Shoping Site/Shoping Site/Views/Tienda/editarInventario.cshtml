@@ -1,0 +1,49 @@
+﻿
+
+
+<div class="contenedorPrimario" id="pagInicio">
+    <section class="navBar" id="navBar">
+        <ul>
+            <li id="etiquetasMenu" style="margin-top: 0%;">
+                <a>@Html.ActionLink("Inicio", "Index", "Login", new { area = "" }, new { @class = "navbar-brand" })</a>
+            </li>
+            <li id="etiquetasMenu" style="margin-top: 0%;">
+                <a> @Html.ActionLink("Menú Admin", "VerificAdmin", "Login", new { area = "" }, new { @class = "navbar-brand" })</a>
+            </li>
+            <li id="etiquetasMenu" style="margin-top: 0%;">
+                <a>@Html.ActionLink("Salir", "Index", "Login", new { area = "" }, new { @class = "navbar-brand" })</a>
+            </li>
+        </ul>
+    </section>
+</div>
+
+
+<div class="contenedorPrimario" id="pagInicio">
+    <section class="articulos" id="comun">
+        <br><h3>Este es el inventario Completo @ViewBag.user</h3><br>
+        <ul>
+            @foreach (var item in ViewBag.artic)
+            {
+                <li id=@item.ID>
+                    <form action="../Tienda/editarArticuloInventario" method="POST">
+                        <p>Nombre: <input id="botonCentrado" type="text" value=@item.Nombre min=0 name="nombre" /></p>
+                        <p>Precio: <input id="botonCentrado" type="number" value= @item.Precio min=0 name="precio" /></p>
+                        <img src="http://www.humordeanimales.com/wp-content/uploads/2015/07/perro-esponjoso.jpg" id="imagenVenta">
+                        <p>Cantidad Actual</p>
+                        <input id="botonCentrado" type="number" value=@item.CantidadMaxima min=0 name="cantidad" />
+                        <!-- elemento oculto para el paso de datos -->
+                        <input id="oculto" name="articulo" type="text" value=@item.ID />
+                        <p><input id="botonCentrado" type="submit" value="Guardar" /></p>
+                    </form>
+                </li>
+            }
+        </ul>
+    </section>
+</div>
+
+
+
+
+
+
+
