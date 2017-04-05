@@ -7,26 +7,78 @@ namespace Shoping_Site.Models
 {
     public class Logins
     {
-        private Usuario usuario = new Usuario();
+        private Usuario usuario;
+        private conexionNeo4j conexionNeo = new conexionNeo4j();
+        private conexionMySQL conexionmysql = new conexionMySQL();
+        private Parametros[] datos;
 
         public Boolean verificarUsuario(string user, string contrasena)
         {
             // conecta con base y retorna true si es un usuario o false si no es un usuario
-            return usuario.verificarUsuario(user, contrasena);
+            if (conexionmysql.abrirConexion())
+            {
+                datos = new Parametros[2];
+                datos[0] = new Parametros("pUsername", user);
+                datos[1] = new Parametros("pPassword", contrasena);
+                if (conexionmysql.verificarUsuario(datos) > 0) return true;
+                else return false;
 
+            }
+            else return false;
         }
 
 
         public Boolean crearCuenta(string nombre, string user, string contrasena)
         {
             // conecta con base y retorna true si un usuario se crea o false si no
-            return usuario.agregarUsuario(nombre, user, contrasena);
+            try
+            {
+                conexionmysql.abrirConexion();
+                if (verificarUsuario(user, contrasena))
+                {
+                    return false;
+                }
+                else
+                {
+                    usuario = new Usuario { Name = nombre, Username = user };
+                    //conexionNeo.crearUsuario(pNombre, pUsername, pContrasena);
+                    datos = new Parametros[3];
+                    datos[0] = new Parametros("pUsername", user);
+                    datos[1] = new Parametros("pName", nombre);
+                    datos[2] = new Parametros("pPassword", contrasena);
+                    conexionmysql.insertarUsuario(datos);
+                    conexionNeo.crearUsuario(user, nombre);
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public Boolean verificarAdmin(string user, string contrasena)
         {
             // conecta con base y retorna true si es un admin o false si no es un admin
-            return usuario.verificarAdmin(user, contrasena);
+            if (conexionmysql.abrirConexion())
+            {
+                datos = new Parametros[2];
+                datos[0] = new Parametros("pUsername", user);
+                datos[1] = new Parametros("pPassword", contrasena);
+
+                if (conexionmysql.verificarAdmin(datos) != 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public Boolean crearCuentaAdministrador(string nombre, string user, string password)

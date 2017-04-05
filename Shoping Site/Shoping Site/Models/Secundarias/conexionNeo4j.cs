@@ -8,7 +8,7 @@ namespace Shoping_Site.Models
 {
     public class conexionNeo4j
     {
-        private GraphClient conexionNeo;
+        private GraphClient conexionNeo = new GraphClient(new Uri("http://localhost:7474/db/data"), "neo4j", "admin");
 
         public conexionNeo4j()
         {
@@ -16,9 +16,9 @@ namespace Shoping_Site.Models
         }
 
 
-        public void crearUsuario(string pNombre, string pUsername, string pPassword)
+        public void crearUsuario(string username, string name)
         {
-            var newUser = new Usuario { Name = pNombre, Username = pUsername, Contrasena = pPassword };
+            var newUser = new Usuario { Username = username, Name = name };
             conexionNeo.Connect();
             conexionNeo.Cypher
                 .Create("(user:User {newUser})")
