@@ -41,7 +41,7 @@ namespace Shoping_Site.Models.Secundarias
         }
 
        
-
+        // Obtiene de la base de datos la imagen.
         public string obtenerBD(int id){
             string newID = id.ToString();
             try{
@@ -57,5 +57,11 @@ namespace Shoping_Site.Models.Secundarias
         }
 
 
+        // Elimina una imagen de la base de datos.
+        public void eliminarBD(string id)
+        {
+            // no funca la verga.
+        }
+
     }
-}
+    }

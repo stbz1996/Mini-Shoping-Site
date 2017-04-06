@@ -164,12 +164,6 @@ namespace Shoping_Site.Controllers
         }
 
 
-
-
-
-
-
-
         public ActionResult verDeInventario(){
             return View(tienda.articulosTienda());
         }
@@ -178,16 +172,16 @@ namespace Shoping_Site.Controllers
             return View(tienda.articulosTienda());
         }
 
-
+        /*
         public ActionResult eliminarDeInventario(FormCollection form){
             var id = form["oculto"];
             // envio a que se elimina
-            if (tienda.eliminarArticuloDelInventario(id)){
+            if (tienda.eliminarEnInventario(id)){
                 return RedirectToAction("confirmarVerDeInventario", "Tienda");
             }
             return View(tienda.articulosTienda());
         }
-
+        */
 
        
         public ActionResult hacerPago() {

@@ -49,19 +49,18 @@ namespace Shoping_Site.Models
             // falta mandar la img a mongo 
             mysql.actualizarArticulo(datos);
         }
-        public void eliminarEnInventario(string id){
+        public bool eliminarEnInventario(string id){
+            conexionMongoDB mongo = new conexionMongoDB();
             conexionMySQL mysql = new conexionMySQL();
             Parametros[] datos = new Parametros[1];
             datos[0] = new Parametros("id", id);
-            // falta mandar la img a mongo 
+            mongo.eliminarBD(id);
             mysql.eliminarArticulo(datos);
-        }
-
-
-
-        public bool eliminarArticuloDelInventario(string id){
             return true;
         }
+
+
+
 
         public Articulo consultarArticulo(string id){
             try
@@ -88,7 +87,6 @@ namespace Shoping_Site.Models
             conexionMySQL mysql = new conexionMySQL();
             conexionMongoDB cnMongo = new conexionMongoDB();
             List<Articulo> objetosTienda = new List<Articulo>();
-            //
             objetosTienda = mysql.objetosTienda();
 
             // falta agregar datos a los objetos de la lista, la imagen desde mongo
