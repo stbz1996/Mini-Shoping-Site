@@ -55,6 +55,7 @@ namespace Shoping_Site.Models
                 // paso 1: obtener los objetos del carrito en redis
                 conexionRedis connect = new conexionRedis();
                 conexionMySQL mysql = new conexionMySQL();
+                conexionMongoDB cnMongo = new conexionMongoDB();
                 carrito = connect.obtenerArticulos(user);
                 Articulo temp = null;
                 // paso 2: completar el nombre, el precio del articulo, la imagen y el total que existen en el inventario
@@ -65,10 +66,7 @@ namespace Shoping_Site.Models
                     item.Nombre = temp.Nombre;
                     item.Precio = temp.Precio;
                     item.CantidadMaxima = temp.CantidadMaxima;
-                    // falta la img 
-                    item.Ima = "https://ayudawp.com/wp-content/uploads/2013/10/miniatura-wordpress.jpg";
-
-                    // total
+                    item.Ima = cnMongo.obtenerBD(item.ID);
                     total = total + (item.Precio * item.Cantidad);
                 }
                 return carrito;

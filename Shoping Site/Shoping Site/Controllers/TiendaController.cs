@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Shoping_Site.Models;
 using Shoping_Site.Models.Secundarias;
+using System.IO;
 
 namespace Shoping_Site.Controllers 
 {
@@ -22,7 +23,6 @@ namespace Shoping_Site.Controllers
             if (Session["user"] == null){
                 return RedirectToAction("Index", "Login");
             }
-            // Carga la tienda. 
             try{
                 ViewBag.artic = tienda.articulosTienda();
                 return View();
@@ -34,24 +34,31 @@ namespace Shoping_Site.Controllers
 
         public ActionResult incluirArticuloAlInventario() { return View(); }
 
-        public ActionResult anadirArticuloAlInventario(FormCollection form)
+        public ActionResult anadirArticuloAlInventario(FormCollection form, HttpPostedFileBase imgUpdate)
         {
             var id = form["id"];
             var nombre = form["nombre"];
             var precio = form["precio"];
             var cantidad = form["cantidad"];
             var img = form["img"];
+            byte[] imageData = null;
+            
             ViewBag.nombre = nombre;
             ViewBag.precio = precio;
             ViewBag.cantidad = cantidad;
 
-            if ((nombre == "") || (precio == "") || (cantidad == ""))
-            {
+            if ((nombre == "") || (precio == "") || (cantidad == "") || (imgUpdate == null)){
                 return Redirect("../Tienda/errorDatosFaltantesInvetario");
             }
 
+            if (imgUpdate != null && imgUpdate.ContentLength > 0){
+                using (var binaryReader = new BinaryReader(imgUpdate.InputStream)){
+                    imageData = binaryReader.ReadBytes(imgUpdate.ContentLength);
+                }
+            }
+
             try{
-                tienda.insertarEnInventario(id, nombre, precio, cantidad, img);
+                tienda.insertarEnInventario(id, nombre, precio, cantidad, imageData);
                 return View();
             }
             catch (Exception){
@@ -127,8 +134,7 @@ namespace Shoping_Site.Controllers
         }
 
 
-        public ActionResult VerArticuloEspecifico(FormCollection form)
-        {
+        public ActionResult VerArticuloEspecifico(FormCollection form){
             if (Session["user"] == null){return RedirectToAction("Index", "Login");}
             // obtengo los datos del producto
             var id = form["articulo"];
@@ -137,10 +143,9 @@ namespace Shoping_Site.Controllers
             ViewBag.nombre = art.Nombre;
             ViewBag.precio = art.Precio;
             ViewBag.cant = art.CantidadMaxima;
+            ViewBag.ima = art.Ima;
             List<comentarios> comentarios;
-            // Aqui debo mandar a traer los comentarios
-            try
-            {
+            try{
                 // si no falla coloca comentarios
                 comentarios = tienda.obtenerComentarios(id);
             }
@@ -151,7 +156,7 @@ namespace Shoping_Site.Controllers
             ViewBag.comentarios = comentarios;
 
 
-            // necesito la images
+            
             // necesito la valoracion
             // necesito las recomendaciones 
 

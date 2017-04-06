@@ -222,6 +222,7 @@
     <Compile Include="Models\Carrito.cs" />
     <Compile Include="Models\Secundarias\comentarios.cs" />
     <Compile Include="Models\Secundarias\conexionCassandra.cs" />
+    <Compile Include="Models\Secundarias\conexionMongoDB.cs" />
     <Compile Include="Models\Secundarias\conexionMySQL.cs" />
     <Compile Include="Models\Secundarias\conexionNeo4j.cs" />
     <Compile Include="Models\Secundarias\conexionRedis.cs" />

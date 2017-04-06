@@ -1,4 +1,7 @@
 ﻿
+@using (Html.BeginForm("anadirArticuloAlInventario", "Tienda", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
 <body onload="mostrarCrearCuenta()">
     <div class="contenedorPrimario" id="pagInicio">
         <section class="navBar" id="navBar">
@@ -23,9 +26,10 @@
                 Nombre <input type="text" maxlength="10" value="" id="textspace" name="nombre" />
                 Precio  <input type="number" value="" id="textspace" name="precio" />
                 Cantidad <input type="number" value="" id="textspace" name="cantidad" />
-                Imagen <input type="file" id="textoJustificado" name="img"><br><br>
+                Imagen <input type="file" id="textoJustificado" name="imgUpdate"><br><br>
                 <input type="submit" value="Insertar Producto" id="boton" /><br>
             </p>
         </form>
     </section>
 </body>
+}

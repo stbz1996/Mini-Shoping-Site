@@ -26,13 +26,7 @@ namespace Shoping_Site.Models.Secundarias
             session.Execute(query);
         }
 
-        public void actualizarComentario(string pUsername, int pIdProducto, string pComentario)
-        {
-            string query = "UPDATE comentarios SET comentario = '" + pComentario + "' WHERE idProducto = " +
-                pIdProducto + "AND username = '" + pUsername + "'";
-            session.Execute(query);
-        }
-
+        
         public List<comentarios> obtenerComentarios(int pIdProducto)
         { 
             List<comentarios> comment = new List<comentarios>();

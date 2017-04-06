@@ -341,6 +341,18 @@ a {
 
 #comentario{
     background: rgba(255, 0, 0, 0.5);
-    width: 80%;
     text-align:left;
+    border-radius: 20px;
+    padding: 5%;
+    overflow: hidden;
+}
+
+
+#botonespecial{
+    text-align:center;
+    align-items: center;
+    width: 50%;
+    margin: 3% 0% 1% 22.5%;
+    padding: 2% 4% 2% 4%;
+    border-radius: 15px; 
 }
