@@ -17,10 +17,8 @@ namespace Shoping_Site.Models
             cass.agregarComentario(pUsername, pIdProducto, pComentario);
         }
 
-        public List<comentarios> obtenerComentarios(string id)
-        {
+        public List<comentarios> obtenerComentarios(string id){
             int newId = Int32.Parse(id);
-            // abrir conexion con Cassandra
             conexionCassandra cass = new conexionCassandra();
             return cass.obtenerComentarios(newId);
         }
@@ -34,13 +32,11 @@ namespace Shoping_Site.Models
             datos[2] = new Parametros("precio", precio);
             datos[3] = new Parametros("detalle", "detalle");
             datos[4] = new Parametros("pcantidad", cantidad);
-            // falta mandar la img a mongo 
             conexionMongo.insertarBD(id, imagen);
             mysql.insertarArticulo(datos);
         }
 
-        public void actualizarEnInventario(string id, string nombre, string precio, string cantidad, string img)
-        {
+        public void actualizarEnInventario(string id, string nombre, string precio, string cantidad, string img){
             conexionMySQL mysql = new conexionMySQL();
             datos = new Parametros[5];
             datos[0] = new Parametros("id", id);
@@ -51,6 +47,7 @@ namespace Shoping_Site.Models
             // falta mandar la img a mongo 
             mysql.actualizarArticulo(datos);
         }
+
         public bool eliminarEnInventario(string id){
             conexionMongoDB mongo = new conexionMongoDB();
             conexionMySQL mysql = new conexionMySQL();
@@ -61,12 +58,8 @@ namespace Shoping_Site.Models
             return true;
         }
 
-
-
-
         public Articulo consultarArticulo(string id){
-            try
-            {
+            try{
                 conexionMySQL mysql = new conexionMySQL();
                 conexionMongoDB conexion = new conexionMongoDB();
                 datos = new Parametros[1];
@@ -90,31 +83,36 @@ namespace Shoping_Site.Models
             conexionMongoDB cnMongo = new conexionMongoDB();
             List<Articulo> objetosTienda = new List<Articulo>();
             objetosTienda = mysql.objetosTienda();
-
-            // falta agregar datos a los objetos de la lista, la imagen desde mongo
-            foreach (var item in objetosTienda)
-            {
+            foreach (var item in objetosTienda){
                 item.Ima = cnMongo.obtenerBD(item.ID);
             }
             return objetosTienda;
         }
 
-        public bool procesarCompra(string pIdUsuario, string pIdProducto, string pCantidad)
-        {
-            try
+        public bool procesarCompra(string pUser) {
+            // carrito desde redis
+            string user = pUser;
+            Carrito car = new Carrito();
+            List<Articulo> carrito = car.obtenerCarrito(user);
+            int total = car.precioTotal();
+
+            // crear la orden
+            conexionMySQL conexionmysql = new conexionMySQL();
+            int numOrden = conexionmysql.crearOrden(user);
+           
+            // llenar la orden 
+            Parametros[] datos = new Parametros[3];
+            datos[0] = new Parametros("pIdOrden", numOrden.ToString());
+            foreach (var item in carrito)
             {
-                conexionMySQL conexionmysql = new conexionMySQL();
-                datos = new Parametros[3];
-                datos[0] = new Parametros("pIdUsuario", pIdUsuario);
-                datos[1] = new Parametros("pIdProducto", pIdProducto);
-                datos[2] = new Parametros("pCantidad", pCantidad);
+                datos[1] = new Parametros("pIdProducto", item.ID.ToString());
+                datos[2] = new Parametros("pCantidad", item.Cantidad.ToString());
                 conexionmysql.realizarOrden(datos);
-                return true;
             }
-            catch
-            {
-                return false;
-            }
+
+            return true;
         }
+
+
     }
 }

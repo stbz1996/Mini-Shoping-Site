@@ -184,18 +184,7 @@ namespace Shoping_Site.Controllers
         */
 
        
-        public ActionResult hacerPago() {
-            // Conecta con la base para hacer el pago de la compra
-            string x = Session["user"].ToString();
-
-            if (carritoCompras.pagar(x)){
-                ViewBag.msj = "El pago se realizó Correctamente, su orden será enviada instantaneamente";
-            }
-            else{
-                ViewBag.msj = "El pago NO se realizó Correctamente";
-            }
-            return View();
-        }
+        
 
 
 
@@ -210,10 +199,23 @@ namespace Shoping_Site.Controllers
                 }
                 string user = Session["user"].ToString();
                 List<Articulo> lista = carritoCompras.obtenerCarrito(user);
-                ViewBag.precioTotal = carritoCompras.precioTotal(user);
+                ViewBag.precioTotal = carritoCompras.precioTotal();
                 return View(lista);
             }
             catch (Exception){return Redirect("../Tienda/errorCarrito");}    
+        }
+
+        public ActionResult hacerPago() {
+            string user = Session["user"].ToString();
+            if (tienda.procesarCompra(user))
+            {
+                ViewBag.msj = "El pago se realizó Correctamente, su orden será enviada instantaneamente";
+            }
+            else
+            {
+                ViewBag.msj = "El pago NO se realizó Correctamente";
+            }
+            return View();
         }
 
         public ActionResult ArticuloAlCarrito(FormCollection form){

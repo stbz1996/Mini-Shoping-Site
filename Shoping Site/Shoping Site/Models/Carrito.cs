@@ -45,20 +45,14 @@ namespace Shoping_Site.Models
         }
 
 
-
-
-
-
         /// falta terminarlo 
         public List<Articulo> obtenerCarrito(string user){
             try{
-                // paso 1: obtener los objetos del carrito en redis
                 conexionRedis connect = new conexionRedis();
                 conexionMySQL mysql = new conexionMySQL();
                 conexionMongoDB cnMongo = new conexionMongoDB();
                 carrito = connect.obtenerArticulos(user);
                 Articulo temp = null;
-                // paso 2: completar el nombre, el precio del articulo, la imagen y el total que existen en el inventario
                 Parametros[] datos = new Parametros[1];
                 foreach (Articulo item in carrito){
                     datos[0] = new Parametros("id", item.ID.ToString());
@@ -77,23 +71,10 @@ namespace Shoping_Site.Models
         }
 
 
-
-        public bool pagar(string usuario){
-            // toma el usuario y el carrito para hacer el pago.
-
-            // limpia el carrito al hacer el pago
-            carrito.Clear();
-            return true;
-        }
-
-
-
-        public int precioTotal(string user){
+        public int precioTotal(){
             return this.total;
         }
+    
 
-
-       
-        
     }
 }

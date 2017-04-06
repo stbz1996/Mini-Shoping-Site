@@ -10,10 +10,16 @@ namespace Shoping_Site.Models
 {
     public class conexionMySQL
     {
+
+        /////////////////
+        /// Atributos ///
+        /////////////////
         private MySqlConnection conn = new MySqlConnection("server=localhost; userId=root; password=admin; database=proyecto;");
         private MySqlCommand cmd;
 
-        // Metodos 
+        ///////////////
+        /// Metodos ///
+        ///////////////
         public conexionMySQL() { }
 
         public bool abrirConexion(){
@@ -144,7 +150,6 @@ namespace Shoping_Site.Models
             cerrarConexion();
         }
 
-
         public void actualizarArticulo(Parametros[] datos)
         {
             abrirConexion();
@@ -173,10 +178,9 @@ namespace Shoping_Site.Models
             cerrarConexion();
         }
 
-        public void realizarOrden(Parametros[] datos)
-        {
+        public void realizarOrden(Parametros[] datos) {
             abrirConexion();
-            cmd.CommandText = "spRealizarCompra";
+            cmd.CommandText = "insertarEnOrden";
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = conn;
             for(int i = 0; i < datos.Length; i++)
@@ -186,6 +190,21 @@ namespace Shoping_Site.Models
             MySqlDataReader reader = cmd.ExecuteReader();
             cerrarConexion();
         }
+
+
+        public int crearOrden(string user){
+            abrirConexion();
+            cmd.CommandText = "insertarOrden";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = conn;
+            cmd.Parameters.AddWithValue("pUsername", user);
+            MySqlDataReader reader = cmd.ExecuteReader();
+            reader.Read();
+            string valor = reader["valor"].ToString();
+            cerrarConexion();
+            return Int32.Parse(valor);
+        }
+
     }
 }
 
