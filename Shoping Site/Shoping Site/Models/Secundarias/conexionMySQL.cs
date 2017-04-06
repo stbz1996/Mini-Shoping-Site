@@ -82,6 +82,18 @@ namespace Shoping_Site.Models
             cerrarConexion();
         }
 
+        public void insertarAdmin(Parametros[] datos)
+        {
+            MySqlCommand cmd = new MySqlCommand("spInsertarAdministrador", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            for(int i = 0; i < datos.Length; i++)
+            {
+                cmd.Parameters.AddWithValue(datos[i].Nombre, datos[i].Valor);
+            }
+            cmd.ExecuteNonQuery();
+            cerrarConexion();
+        }
+
         public void cerrarConexion(){
             conn.Close();
         }
