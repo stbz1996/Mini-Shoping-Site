@@ -13,25 +13,25 @@
      </section>
    
 
+
     <section class="comunEspecifico" id="part2" style="text-align:center; overflow:hidden">
         <h3 style="text-align:center">Coloca tú comentario</h3>
-        
-        <form id="comentario" style="background: green; margin-top:3%" action="" method="POST" >
-            <textarea id="boton" style="margin-right:5%; " name="COMMENT" rows="10" cols="50" wrap="soft" placeholder="" maxlength="310" required></textarea><br />
+        <form id="comentario" style="background: green; margin-top:3%" action="../Tienda/atraparComentario" method="POST" >
+            <textarea id="boton" style="margin-right:5%; " name="comentario" rows="10" cols="50" wrap="soft" placeholder="" maxlength="310" required></textarea><br />
             <br><br><br><br><br><br><br>
             <p><input id="botonCentrado" type="submit" value="Enviar" /></p>
          </form>
 
 
-        <h2 style="text-align:center">Comentarios</h2>
+        <h2 style="text-align:center; border-radius:15px">Comentarios</h2>
         <!-- por cada comentario se va a crear una caja -->
         @foreach (var item in ViewBag.comentarios)
         {
             <form id="comentario">
-                <h4>@item</h4><br>
-                <h5 style="text-align:right">Autor: xx, Fecha: xxx</h5>
-            </form>
-        }
+                <h4>@item.coment</h4><br>
+                <h5 style="text-align:right; margin-right:3%;">Autor: @item.user</h5>
+            </form> 
+         }
     </section>
 
 

@@ -105,30 +105,56 @@ namespace Shoping_Site.Controllers
         //////////////////////////
         //////////////////////////
 
+        public ActionResult msjAtencion()
+        {
+            return View();
+        }
+        
+        public ActionResult atraparComentario(FormCollection form){
+            var comentario = form["comentario"];
+            int idproducto = Int32.Parse(Session["articuloActual"].ToString());
+            var user = Session["user"].ToString();
+           
+            try
+            {
+               tienda.insertarComentario(user, idproducto, comentario);
+                return Redirect("../Tienda/msjAtencion");
+            }
+            catch (Exception)
+            {
+                return View();
+            }
+        }
 
 
         public ActionResult VerArticuloEspecifico(FormCollection form)
         {
+            if (Session["user"] == null){return RedirectToAction("Index", "Login");}
             // obtengo los datos del producto
             var id = form["articulo"];
+            Session["articuloActual"] = id;
             Articulo art = tienda.consultarArticulo(id);
             ViewBag.nombre = art.Nombre;
             ViewBag.precio = art.Precio;
             ViewBag.cant = art.CantidadMaxima;
-            
+            List<comentarios> comentarios;
             // Aqui debo mandar a traer los comentarios
-            List<String> comentarios = new List<String>();
-            comentarios.Add("es un buen producto");
-            comentarios.Add("me cago en la puta, esto no sirve para nada tio, me cago en la leche con estos estafadores, oyo Jorge jajaja");
-            comentarios.Add("jajaja vale picha esta madre ya jajaja");
+            try
+            {
+                // si no falla coloca comentarios
+                comentarios = tienda.obtenerComentarios(id);
+            }
+            catch (Exception){
+                // si falla no se colocan los comentarios
+                comentarios = null;
+            }
             ViewBag.comentarios = comentarios;
+
 
             // necesito la images
             // necesito la valoracion
             // necesito las recomendaciones 
 
-            //var id = form["oculto"]; // obtengo el id del objeto
-            // 
             return View();
         }
 

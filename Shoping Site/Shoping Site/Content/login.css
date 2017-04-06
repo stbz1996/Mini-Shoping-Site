@@ -311,7 +311,6 @@ a {
 
 #part2{
     width: 50%;
-    margin: 0% 0% 0% 3%;
     float:left;
     overflow: hidden;
 }
@@ -342,8 +341,6 @@ a {
 
 #comentario{
     background: rgba(255, 0, 0, 0.5);
-    width: 90%;
-    border-radius: 10px;
-    margin: 5% 0% 5% 5%;
-    padding: 5%;
+    width: 80%;
+    text-align:left;
 }

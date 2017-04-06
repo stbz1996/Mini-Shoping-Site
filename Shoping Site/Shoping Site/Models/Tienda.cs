@@ -8,6 +8,21 @@ namespace Shoping_Site.Models
 {
     public class Tienda
     {
+
+        public void insertarComentario(string pUsername, int pIdProducto, string pComentario)
+        {
+            conexionCassandra cass = new conexionCassandra();
+            cass.agregarComentario(pUsername, pIdProducto, pComentario);
+        }
+
+        public List<comentarios> obtenerComentarios(string id)
+        {
+            int newId = Int32.Parse(id);
+            // abrir conexion con Cassandra
+            conexionCassandra cass = new conexionCassandra();
+            return cass.obtenerComentarios(newId);
+        }
+
         public void insertarEnInventario(string id, string nombre, string precio, string cantidad, string img){
             conexionMySQL mysql = new conexionMySQL();
             Parametros[] datos = new Parametros[5];
