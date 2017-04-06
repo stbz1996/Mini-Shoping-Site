@@ -136,16 +136,27 @@ END
 //sps
 
 
-
-
-
-
-
-
-
 Procedimientos
 
 restarCantidadInventario
 sumarCantidadInventario
 verificarCantidadInventario
 verificarInventarioVacio
+
+
+
+
+
+
+//CAMBIOS EN LA BASE
+
+
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spRealizarCompra`(IN pIdUsuario INT,
+IN pIdProducto INT,
+IN pCantidad INT)
+BEGIN
+	INSERT INTO orden(idUsuario, idProducto, cantidad)
+    VALUES (pIdUsuario, pIdProducto, pCantidad);
+END

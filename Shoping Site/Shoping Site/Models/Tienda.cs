@@ -9,6 +9,8 @@ namespace Shoping_Site.Models
     public class Tienda
     {
 
+        Parametros[] datos;
+
         public void insertarComentario(string pUsername, int pIdProducto, string pComentario)
         {
             conexionCassandra cass = new conexionCassandra();
@@ -26,7 +28,7 @@ namespace Shoping_Site.Models
         public void insertarEnInventario(string id, string nombre, string precio, string cantidad, byte[] imagen){
             conexionMySQL mysql = new conexionMySQL();
             conexionMongoDB conexionMongo = new conexionMongoDB();
-            Parametros[] datos = new Parametros[5];
+            datos = new Parametros[5];
             datos[0] = new Parametros("id", id);
             datos[1] = new Parametros("nombre", nombre);
             datos[2] = new Parametros("precio", precio);
@@ -40,7 +42,7 @@ namespace Shoping_Site.Models
         public void actualizarEnInventario(string id, string nombre, string precio, string cantidad, string img)
         {
             conexionMySQL mysql = new conexionMySQL();
-            Parametros[] datos = new Parametros[5];
+            datos = new Parametros[5];
             datos[0] = new Parametros("id", id);
             datos[1] = new Parametros("nombre", nombre);
             datos[2] = new Parametros("precio", precio);
@@ -52,7 +54,7 @@ namespace Shoping_Site.Models
         public bool eliminarEnInventario(string id){
             conexionMongoDB mongo = new conexionMongoDB();
             conexionMySQL mysql = new conexionMySQL();
-            Parametros[] datos = new Parametros[1];
+            datos = new Parametros[1];
             datos[0] = new Parametros("id", id);
             mongo.eliminarBD(id);
             mysql.eliminarArticulo(datos);
@@ -67,7 +69,7 @@ namespace Shoping_Site.Models
             {
                 conexionMySQL mysql = new conexionMySQL();
                 conexionMongoDB conexion = new conexionMongoDB();
-                Parametros[] datos = new Parametros[1];
+                datos = new Parametros[1];
                 datos[0] = new Parametros("id", id);
                 Articulo temp = mysql.consultarArticulo(datos);
                 temp.Ima = conexion.obtenerBD(Int32.Parse(id));
@@ -95,6 +97,24 @@ namespace Shoping_Site.Models
                 item.Ima = cnMongo.obtenerBD(item.ID);
             }
             return objetosTienda;
+        }
+
+        public bool procesarCompra(string pIdUsuario, string pIdProducto, string pCantidad)
+        {
+            try
+            {
+                conexionMySQL conexionmysql = new conexionMySQL();
+                datos = new Parametros[3];
+                datos[0] = new Parametros("pIdUsuario", pIdUsuario);
+                datos[1] = new Parametros("pIdProducto", pIdProducto);
+                datos[2] = new Parametros("pCantidad", pCantidad);
+                conexionmysql.realizarOrden(datos);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
