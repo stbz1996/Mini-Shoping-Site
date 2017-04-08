@@ -1,13 +1,29 @@
 ﻿
 @model List<Shoping_Site.Models.Secundarias.Articulo>
 
+<div class="contenedorPrimario" id="pagInicio">
+    <section class="navBar" id="navBar">
+        <ul>
+            <li id="etiquetasMenu">
+                <a>@Html.ActionLink("Tienda", "Index", "Tienda", new { area = "" }, new { @class = "navbar-brand" })</a>
+            </li>
+            <li id="etiquetasMenu">
+                <a> @Html.ActionLink("Carrito", "Carrito", "Tienda", new { area = "" }, new { @class = "navbar-brand" })</a>
+            </li>
+            <li id="etiquetasMenu">
+                <a>@Html.ActionLink("Ingresar", "Index", "Login", new { area = "" }, new { @class = "navbar-brand" })</a>
+            </li>
+        </ul>
+    </section>
+</div>
+
 <section id="conetenedor">
     <section class="carrito" id="comun">
         <br><br><h3>Mi Carrito de Compras</h3><br>
         <ul>
             @foreach (var item in Model)
             {
-                <li id=@item.ID>
+                <li id=@item.ID >
                     <form action="../Tienda/EliminarArticuloCarrito" method="POST">
                         <p>Nombre: @item.Nombre</p>
                         <p>Precio: @item.Precio</p>
@@ -15,7 +31,7 @@
                         <!-- elemento oculto para el paso de datos -->
                         <input id="oculto" name="idArticulo" type="text" value=@item.ID />
                         <p>Cantidad @item.Cantidad</p>
-                        <p style="margin-right: 8%"><input id="boton" type="submit" value="Editar Cantidad" /></p>
+                        <p style="margin-right: 14%"><input onclick="alert('Su petición esta siendo ejecutada')" id="boton" type="submit" value="Editar Cantidad" /></p>
                         <input id="botonCentrado" type="number" value=@item.Cantidad min="0" max=@item.CantidadMaxima name="cantidad" />
                     </form>
                 </li>

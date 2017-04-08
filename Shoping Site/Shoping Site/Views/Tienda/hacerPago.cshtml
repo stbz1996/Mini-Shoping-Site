@@ -1,3 +1,19 @@
-﻿<section class="carrito" id="seccionMsj">
+﻿<div class="contenedorPrimario" id="pagInicio">
+    <section class="navBar" id="navBar">
+        <ul>
+            <li id="etiquetasMenu">
+                <a>@Html.ActionLink("Tienda", "Index", "Tienda", new { area = "" }, new { @class = "navbar-brand" })</a>
+            </li>
+            <li id="etiquetasMenu">
+                <a> @Html.ActionLink("Carrito", "Carrito", "Tienda", new { area = "" }, new { @class = "navbar-brand" })</a>
+            </li>
+            <li id="etiquetasMenu">
+                <a>@Html.ActionLink("Ingresar", "Index", "Login", new { area = "" }, new { @class = "navbar-brand" })</a>
+            </li>
+        </ul>
+    </section>
+</div>
+
+<section class="carrito" id="seccionMsj">
     <h3>@ViewBag.msj</h3>
 </section>

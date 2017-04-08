@@ -115,6 +115,5 @@ namespace Shoping_Site.Models
             return true;
         }
 
-
     }
 }

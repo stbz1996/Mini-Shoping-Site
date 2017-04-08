@@ -2,6 +2,21 @@
 
 
 @model List<Shoping_Site.Models.Secundarias.Articulo>
+<div class="contenedorPrimario" id="pagInicio">
+    <section class="navBar" id="navBar">
+        <ul>
+            <li id="etiquetasMenu">
+                <a>@Html.ActionLink("Tienda", "Index", "Tienda", new { area = "" }, new { @class = "navbar-brand" })</a>
+            </li>
+            <li id="etiquetasMenu">
+                <a> @Html.ActionLink("Carrito", "Carrito", "Tienda", new { area = "" }, new { @class = "navbar-brand" })</a>
+            </li>
+            <li id="etiquetasMenu">
+                <a>@Html.ActionLink("Ingresar", "Index", "Login", new { area = "" }, new { @class = "navbar-brand" })</a>
+            </li>
+        </ul>
+    </section>
+</div>
 
 <div class="contenedorPrimario" id="pagInicio">
     <section class="articulos" id="comun">
@@ -18,7 +33,7 @@
                         <!-- elemento oculto para el paso de datos -->
                         <input id="oculto" name="articulo" type="text" value=@item.ID />
                         <input id="botonCentrado" type="number" value = 1 min = 1 max=@item.CantidadMaxima name="cantidad" />
-                        <p><input id="botonCentrado" type="submit" value="Añadir" /></p>
+                        <p><input onclick="alert('Su petición esta siendo ejecutada')" id="botonCentrado" type="submit" value="Añadir" /></p>
                     </form>
                     <form action="../Tienda/VerArticuloEspecifico" method="POST">
                         <input id="oculto" name="articulo" type="text" value=@item.ID />

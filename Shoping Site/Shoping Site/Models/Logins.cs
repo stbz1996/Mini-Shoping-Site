@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shoping_Site.Models.Secundarias;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -25,7 +26,6 @@ namespace Shoping_Site.Models
             }
             else return false;
         }
-
 
         public Boolean crearCuenta(string nombre, string user, string contrasena){
             // conecta con base y retorna true si un usuario se crea o false si no
@@ -57,8 +57,7 @@ namespace Shoping_Site.Models
             }
         }
 
-        public Boolean verificarAdmin(string user, string contrasena)
-        {
+        public Boolean verificarAdmin(string user, string contrasena){
             // conecta con base y retorna true si es un admin o false si no es un admin
             if (conexionmysql.abrirConexion())
             {
@@ -81,30 +80,31 @@ namespace Shoping_Site.Models
             }
         }
 
-        public Boolean crearCuentaAdministrador(string nombre, string user, string password)
-        {
-            try
-            {
+        public Boolean crearCuentaAdministrador(string nombre, string user, string password){
+            try {
                 conexionmysql.abrirConexion();
-                if(verificarAdmin(user, password))
-                {
+                if(verificarAdmin(user, password)) {
                     return false;
                 }
-                else
-                {
+                else{
                     datos = new Parametros[3];
                     datos[0] = new Parametros("pUsername", user);
                     datos[1] = new Parametros("pName", nombre);
                     datos[2] = new Parametros("pPassword", password);
                     conexionmysql.insertarUsuario(datos);
                     return true;
-
                 }
             }
-            catch
-            {
+            catch {
                 return false;
             }
         }
+
+        public List<Articulo> mostrarRecomendaciones(string user){
+            Tienda tienda = new Tienda();
+            // debe retornar cosas que compro el amigo seleccionado
+            return tienda.verArticulosTienda();
+        }
+
     }
 }

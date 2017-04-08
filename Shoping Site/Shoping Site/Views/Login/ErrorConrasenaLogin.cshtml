@@ -1,4 +1,20 @@
-﻿<body onload="mostrarContenido()">
+﻿
+<div class="contenedorPrimario" id="pagInicio">
+    <section class="navBar" id="navBar">
+        <ul>
+            <li id="etiquetasMenu">
+                <a>@Html.ActionLink("Tienda", "Index", "Tienda", new { area = "" }, new { @class = "navbar-brand" })</a>
+            </li>
+            <li id="etiquetasMenu">
+                <a> @Html.ActionLink("Carrito", "Carrito", "Tienda", new { area = "" }, new { @class = "navbar-brand" })</a>
+            </li>
+            <li id="etiquetasMenu">
+                <a>@Html.ActionLink("Ingresar", "Index", "Login", new { area = "" }, new { @class = "navbar-brand" })</a>
+            </li>
+        </ul>
+    </section>
+</div>
+<body onload="mostrarContenido()">
     <section class="contenido" id="contenido">
         <h1> Login </h1>
         <img src="http://img05.deviantart.net/806b/i/2015/246/6/0/laika_by_mightygraph-d988x97.jpg"></img>

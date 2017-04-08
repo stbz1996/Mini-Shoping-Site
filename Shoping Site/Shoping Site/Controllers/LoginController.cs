@@ -168,7 +168,10 @@ namespace Shoping_Site.Controllers
         public ActionResult perfil()
         {
             if (Session["user"] == null) { return RedirectToAction("Index", "Login"); }
+
             ViewBag.user = Session["user"].ToString();
+            // posee los articulos recomendados
+            ViewBag.recomendaciones = log.mostrarRecomendaciones(ViewBag.user);
             return View();
         }
     }

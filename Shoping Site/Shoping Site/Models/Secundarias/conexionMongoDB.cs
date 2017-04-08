@@ -57,11 +57,51 @@ namespace Shoping_Site.Models.Secundarias
         }
 
 
-        // Elimina una imagen de la base de datos.
+
+
+
         public void eliminarBD(string id)
         {
-            // no funca la verga.
+            var collection = database.GetCollection<archivo>("fs.files");
+
+            var query = collection.AsQueryable<archivo>();
+            var res = from c in query
+                      where c.filename == id
+                      select c;
+
+            foreach (archivo mini in res)
+            {
+                comunicador.DeleteAsync(mini._id);
+            }
+        }
+
+
+        // Actualizar imagen de la base de datos.
+        public string actualizarImagen(string id, byte[] imagen)
+        {
+
+            try
+            {
+                eliminarBD(id);
+                return insertarBD(id, imagen);
+            }
+            catch (Exception e)
+            {
+                return "https://upload.wikimedia.org/wikipedia/commons/d/da/Imagen_no_disponible.svg";
+            }
+
+        }
+
+
+        public class archivo
+        {
+            public ObjectId _id { get; set; }
+            public string filename { get; set; }
+            public long length { get; set; }
+            public int chunkSize { get; set; }
+            public DateTime uploadDate { get; set; }
+            public string md5 { get; set; }
         }
 
     }
-    }
+}

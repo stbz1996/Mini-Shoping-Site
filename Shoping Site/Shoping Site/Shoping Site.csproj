@@ -247,7 +247,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Tienda\carrito.cshtml" />
-    <Content Include="Views\Tienda\EliminarArticuloCarrito.cshtml" />
     <Content Include="Views\Login\establecerCuenta.cshtml" />
     <Content Include="Views\Login\cuentaNoCreada.cshtml" />
     <Content Include="Views\Login\errorContrasenas.cshtml" />
@@ -266,7 +265,6 @@
     <Content Include="Views\Tienda\errorCargarArticuloAlInventario.cshtml" />
     <Content Include="Views\Tienda\errorDatosFaltantesInvetario.cshtml" />
     <Content Include="Views\Tienda\eliminarDeInventario.cshtml" />
-    <Content Include="Views\Tienda\verDeInventario.cshtml" />
     <Content Include="Views\Tienda\confirmarVerDeInventario.cshtml" />
     <Content Include="Views\Tienda\hacerPago.cshtml" />
     <Content Include="Views\Tienda\VerArticuloEspecifico.cshtml" />

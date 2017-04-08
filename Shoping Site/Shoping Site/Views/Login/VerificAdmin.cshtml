@@ -1,9 +1,20 @@
-﻿
+﻿<div class="contenedorPrimario" id="pagInicio">
+    <section class="navBar" id="navBar">
+        <ul>
+            <li id="etiquetasMenu" style="margin-top: 0%;">
+                <a>@Html.ActionLink("Inicio", "Index", "Login", new { area = "" }, new { @class = "navbar-brand" })</a>
+            </li>
+            <li id="etiquetasMenu" style="margin-top: 0%;">
+                <a> @Html.ActionLink("Menú Admin", "VerificAdmin", "Login", new { area = "" }, new { @class = "navbar-brand" })</a>
+            </li>
+            <li id="etiquetasMenu" style="margin-top: 0%;">
+                <a>@Html.ActionLink("Salir", "Index", "Login", new { area = "" }, new { @class = "navbar-brand" })</a>
+            </li>
+        </ul>
+    </section>
+</div>
 
 <body onload="mostrarContenido()">
-
-
-
 
     <section class="contenido" id="contenido">
         <h1 id="textoJustificado">Bienvenido @ViewBag.UserAdmin ya puedes usar el modo de administrador</h1>

@@ -13,14 +13,3 @@ function mostrarContactenos() {
     document.getElementById('pagCrearCuenta').style.display = 'none';
     document.getElementById('pagInicio').style.display = 'block';
 }
-
-function mostrarContenido() {
-    //document.getElementById('pagInicio').style.display = 'none';
-    //document.getElementById('contactenos').style.display = 'none';
-    //document.getElementById('pagCrearCuenta').style.display = 'none';
-}
-
-function ejemplo(elemento) {
-    alert('Gracias por pinchar ' + elemento.id + ' ' + elemento.title);
-
-}

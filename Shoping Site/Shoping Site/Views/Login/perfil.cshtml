@@ -1,6 +1,21 @@
-﻿
+﻿<div class="contenedorPrimario" id="pagInicio">
+    <section class="navBar" id="navBar">
+        <ul>
+            <li id="etiquetasMenu">
+                <a>@Html.ActionLink("Tienda", "Index", "Tienda", new { area = "" }, new { @class = "navbar-brand" })</a>
+            </li>
+            <li id="etiquetasMenu">
+                <a> @Html.ActionLink("Carrito", "Carrito", "Tienda", new { area = "" }, new { @class = "navbar-brand" })</a>
+            </li>
+            <li id="etiquetasMenu">
+                <a>@Html.ActionLink("Ingresar", "Index", "Login", new { area = "" }, new { @class = "navbar-brand" })</a>
+            </li>
+        </ul>
+    </section>
+</div>
 
 <section class="contenedorPerfil">
+    <h1 style="text-align:center">@ViewBag.user</h1>
     <section id="div1">
         <h2>Buscador Usuarios</h2>
         <br>
@@ -33,9 +48,19 @@
     </section>
 
 
-
-    <div id="div1">
-        <h2>Productos de mis amigos</h2>
-    </div>
+    <section class="" id="div1">
+        <h2>¿Qué compró mi amigo?</h2><br><br><br><br>
+        @foreach (var item in ViewBag.recomendaciones)
+        {
+            <form action="" method="POST" id="articuloRec">
+                <p>@item.Nombre </p>
+                <p>@item.Precio</p>
+                <img src=@item.Ima id="imagenVenta" style="height:100px; ">
+                <!-- elemento oculto para el paso de datos -->
+                <input id="oculto" name="idArticulo" type="text" value=@item.ID />
+                <p><input id="botonCentrado" type="submit" value="Ver" /></p>
+            </form>
+        }
+    </section>
 
 </section>
