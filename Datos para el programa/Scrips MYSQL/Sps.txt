@@ -32,18 +32,18 @@ BEGIN
 END
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `insertarProductoAlInventario`(
-	id int,
     nombre varchar(100),
     precio int,
     detalle varchar(500),
     pcantidad int
 )
 BEGIN
-	
-    insert into producto(idProducto, nombreProducto, precio, detalle) 
-    values (id, nombre, precio, detalle);
-    
+	DECLARE id INT;
+    insert into producto(nombreProducto, precio, detalle) 
+    values (nombre, precio, detalle);
+	set id = @@identity;
     insert into inventario(idProducto, cantidad) values (id, pcantidad);
+    select id idp;
 END
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spConsultaNombreUsuario`(IN pUsername VARCHAR(25))
@@ -76,7 +76,13 @@ BEGIN
 	INSERT INTO usuario (username, password)
      
 	VALUES (pUsername, pPassword);
- 
+	select @@Identity username;
+END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spEliminarUsuario`(user varchar(25))
+BEGIN
+	delete from usuario where username = user;
+    select 1;
 END
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spVerificaAdmin`(
