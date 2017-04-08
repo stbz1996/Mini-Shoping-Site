@@ -165,5 +165,11 @@ namespace Shoping_Site.Controllers
 
         public ActionResult ErrorUserAdmin() { return View(); }
 
+        public ActionResult perfil()
+        {
+            if (Session["user"] == null) { return RedirectToAction("Index", "Login"); }
+            ViewBag.user = Session["user"].ToString();
+            return View();
+        }
     }
 }

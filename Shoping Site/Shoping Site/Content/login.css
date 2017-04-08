@@ -48,11 +48,12 @@ body{
 #imagenVenta{
 	width: 80%;
 	margin: 1% 5% 1% 8%;
-	height: auto;
+	height: 200px;
 	padding: 1% 1% 1% 1%;
 	border-radius: 15px;
 	float: left;
 }
+
 
 #etiquetasMenu{
     background: rgba(255, 0, 0, 0.6);
@@ -355,4 +356,77 @@ a {
     margin: 3% 0% 1% 22.5%;
     padding: 2% 4% 2% 4%;
     border-radius: 15px; 
+}
+
+#botonPerfil{
+    float: left;
+    width:25%;
+    padding: 4% 4% 4% 4%;
+    margin: 1% 3% 1% 4.5%;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.contenido2{
+	background: rgba(255, 0, 0, 0.5);
+	text-align: center;
+	width: 50%;
+	border-radius: 20px;
+	padding: 25px;
+	margin: 1% 25% 1% 25%;
+	box-sizing: border-box;
+	border: white 2px ridge;
+	float: left;
+}
+
+
+
+.contenedorPerfil{
+    overflow:hidden;
+    background: rgba(255, 0, 0, 0.5);
+    width: 90%;
+    padding: 2%;
+    margin: 1% 1% 1% 3%;
+    border-radius: 20px;
+}
+
+#div1{
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.5);
+    margin: 1% 1% 1% 2%;
+    float: left;
+    width: 26%;
+    border-radius: 15px;
+    padding: 2%;
+    text-align: center;
+}
+
+#cajaTexto{
+    padding: 1%;
+    overflow:hidden;
+    text-align: left;
+    border-radius: 10px;
+    width: 65%;
+    float:left;
+}
+
+#botonPerfil{
+    padding: 1%;
+    overflow:hidden;
+    width: 24%;
+}
+
+#div1_1{
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.5);
+    text-align:left;
+    border-radius:20px;
+    padding: 3%;
+}
+
+.div11{
+    overflow: hidden;
+    text-align:left;
+    border-radius:20px;
+    padding: 3%;
 }
