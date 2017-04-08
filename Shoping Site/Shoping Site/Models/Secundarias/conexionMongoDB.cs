@@ -51,7 +51,7 @@ namespace Shoping_Site.Models.Secundarias
                 string base64 = Convert.ToBase64String(bytes);
                 return string.Format("data:{0};base64,{1}", ".jpg", base64);
             }
-            catch (Exception e){
+            catch (Exception){
                 return "https://upload.wikimedia.org/wikipedia/commons/d/da/Imagen_no_disponible.svg";
             }
         }

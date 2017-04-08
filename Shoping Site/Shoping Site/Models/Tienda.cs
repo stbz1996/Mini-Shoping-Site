@@ -23,17 +23,16 @@ namespace Shoping_Site.Models
             return cass.obtenerComentarios(newId);
         }
 
-        public void insertarEnInventario(string id, string nombre, string precio, string cantidad, byte[] imagen){
+        public void insertarEnInventario(string nombre, string precio, string cantidad, byte[] imagen){
             conexionMySQL mysql = new conexionMySQL();
             conexionMongoDB conexionMongo = new conexionMongoDB();
-            datos = new Parametros[5];
-            datos[0] = new Parametros("id", id);
-            datos[1] = new Parametros("nombre", nombre);
-            datos[2] = new Parametros("precio", precio);
-            datos[3] = new Parametros("detalle", "detalle");
-            datos[4] = new Parametros("pcantidad", cantidad);
+            datos = new Parametros[4];
+            datos[0] = new Parametros("nombre", nombre);
+            datos[1] = new Parametros("precio", precio);
+            datos[2] = new Parametros("detalle", "detalle");
+            datos[3] = new Parametros("pcantidad", cantidad);
+            string id = mysql.insertarArticulo(datos);
             conexionMongo.insertarBD(id, imagen);
-            mysql.insertarArticulo(datos);
         }
 
         public void actualizarEnInventario(string id, string nombre, string precio, string cantidad, string img){
@@ -46,16 +45,6 @@ namespace Shoping_Site.Models
             datos[4] = new Parametros("pcantidad", cantidad);
             // falta mandar la img a mongo 
             mysql.actualizarArticulo(datos);
-        }
-
-        public bool eliminarEnInventario(string id){
-            conexionMongoDB mongo = new conexionMongoDB();
-            conexionMySQL mysql = new conexionMySQL();
-            datos = new Parametros[1];
-            datos[0] = new Parametros("id", id);
-            mongo.eliminarBD(id);
-            mysql.eliminarArticulo(datos);
-            return true;
         }
 
         public Articulo consultarArticulo(string id){
@@ -76,14 +65,27 @@ namespace Shoping_Site.Models
             
         }
 
-
         public List<Articulo> articulosTienda(){
-            // Retorna todos los objetos disponibles en la tienda ttomados de la BD
+            // Retorna todos los objetos disponibles en la tienda
             conexionMySQL mysql = new conexionMySQL();
             conexionMongoDB cnMongo = new conexionMongoDB();
             List<Articulo> objetosTienda = new List<Articulo>();
             objetosTienda = mysql.objetosTienda();
             foreach (var item in objetosTienda){
+                item.Ima = cnMongo.obtenerBD(item.ID);
+            }
+            return objetosTienda;
+        }
+
+        public List<Articulo> verArticulosTienda()
+        {
+            // Retorna todos los objetos disponibles en la tienda
+            conexionMySQL mysql = new conexionMySQL();
+            conexionMongoDB cnMongo = new conexionMongoDB();
+            List<Articulo> objetosTienda = new List<Articulo>();
+            objetosTienda = mysql.objetosValidosTienda();
+            foreach (var item in objetosTienda)
+            {
                 item.Ima = cnMongo.obtenerBD(item.ID);
             }
             return objetosTienda;
@@ -99,17 +101,17 @@ namespace Shoping_Site.Models
             // crear la orden
             conexionMySQL conexionmysql = new conexionMySQL();
             int numOrden = conexionmysql.crearOrden(user);
-           
+            
             // llenar la orden 
             Parametros[] datos = new Parametros[3];
             datos[0] = new Parametros("pIdOrden", numOrden.ToString());
-            foreach (var item in carrito)
-            {
+            foreach (var item in carrito){
                 datos[1] = new Parametros("pIdProducto", item.ID.ToString());
                 datos[2] = new Parametros("pCantidad", item.Cantidad.ToString());
                 conexionmysql.realizarOrden(datos);
             }
-
+            // limpio el carrito
+            car.limpiarCarrito(user);
             return true;
         }
 

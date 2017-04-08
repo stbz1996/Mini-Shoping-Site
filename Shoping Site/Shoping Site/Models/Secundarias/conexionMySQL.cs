@@ -77,14 +77,26 @@ namespace Shoping_Site.Models
             return tabla.Rows.Count;
         }
 
-        public void insertarUsuario(Parametros[] datos){
+        public string insertarUsuario(Parametros[] datos){
             MySqlCommand cmd = new MySqlCommand("spInsertarUsuario", conn);
             cmd.CommandType = CommandType.StoredProcedure;
             for (int i = 0; i < datos.Length; i++)
             {
                 cmd.Parameters.AddWithValue(datos[i].Nombre, datos[i].Valor);
             }
-            cmd.ExecuteNonQuery();
+            MySqlDataReader reader = cmd.ExecuteReader();
+            reader.Read();
+            string username =  reader["username"].ToString(); ;
+            cerrarConexion();
+            return username;
+        }
+
+        public void eliminarUsuario(string username)
+        {
+            MySqlCommand cmd = new MySqlCommand("spEliminarUsuario", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("user", username);
+            MySqlDataReader reader = cmd.ExecuteReader();
             cerrarConexion();
         }
 
@@ -120,6 +132,24 @@ namespace Shoping_Site.Models
             return objetosTienda;
         }
 
+        public List<Articulo> objetosValidosTienda()
+        {
+            abrirConexion();
+            cmd = new MySqlCommand("call obtenerValidosInventario", conn);
+            MySqlDataReader reader = cmd.ExecuteReader();
+            List<Articulo> objetosTienda = new List<Articulo>();
+            while (reader.Read())
+            {
+                int idproducto = Int32.Parse(reader["idProducto"].ToString());
+                string nombre = reader["nombreProducto"].ToString();
+                int precio = Int32.Parse(reader["precio"].ToString());
+                int cantidadTotal = Int32.Parse(reader["cantidad"].ToString());
+                objetosTienda.Add(new Articulo(idproducto, nombre, precio, "", 0, cantidadTotal));
+            }
+            cerrarConexion();
+            return objetosTienda;
+        }
+
         public Articulo consultarArticulo(Parametros[] datos)
         {
             abrirConexion();
@@ -137,7 +167,7 @@ namespace Shoping_Site.Models
             return new Articulo(idproducto, nombre, precio, "", 0, cantidadTotal);
         }
 
-        public void insertarArticulo(Parametros[] datos)
+        public string insertarArticulo(Parametros[] datos)
         {
             abrirConexion();
             cmd.CommandText = "insertarProductoAlInventario";
@@ -147,31 +177,18 @@ namespace Shoping_Site.Models
                 cmd.Parameters.AddWithValue(datos[i].Nombre, datos[i].Valor);
             }
             MySqlDataReader reader = cmd.ExecuteReader();
+            reader.Read();
+            string id= reader["idp"].ToString();
             cerrarConexion();
+            return id;
         }
 
-        public void actualizarArticulo(Parametros[] datos)
-        {
+        public void actualizarArticulo(Parametros[] datos){
             abrirConexion();
             cmd.CommandText = "actualizarProductoAlInventario";
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = conn;
-            for (int i = 0; i < datos.Length; i++)
-            {
-                cmd.Parameters.AddWithValue(datos[i].Nombre, datos[i].Valor);
-            }
-            MySqlDataReader reader = cmd.ExecuteReader();
-            cerrarConexion();
-        }
-
-        public void eliminarArticulo(Parametros[] datos)
-        {
-            abrirConexion();
-            cmd.CommandText = "eliminarDeInventario";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = conn;
-            for (int i = 0; i < datos.Length; i++)
-            {
+            for (int i = 0; i < datos.Length; i++){
                 cmd.Parameters.AddWithValue(datos[i].Nombre, datos[i].Valor);
             }
             MySqlDataReader reader = cmd.ExecuteReader();
@@ -190,7 +207,6 @@ namespace Shoping_Site.Models
             MySqlDataReader reader = cmd.ExecuteReader();
             cerrarConexion();
         }
-
 
         public int crearOrden(string user){
             abrirConexion();

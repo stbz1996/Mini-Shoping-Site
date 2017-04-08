@@ -134,6 +134,11 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `insertarEnOrden`(pIdOrden int, pIdP
 BEGIN
 	insert into productoxorden(idOrden, idProducto, cantidad) 
     values(pIdOrden, pIdProducto, pCantidad);
+    
+    -- decrementa el articulo de la tienda
+    update inventario
+	set Cantidad = Cantidad - pCantidad
+	where idProducto = pIdProducto;
 END
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `consultarOrdenes`(user varchar(25))
@@ -142,3 +147,11 @@ BEGIN
 	on O.idOrden = P.idOrden
     where O.username = user;
 END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `obtenerValidosInventario`()
+BEGIN
+    select I.idProducto, I.Cantidad, P.nombreProducto, P.precio, P.detalle 
+    from inventario I inner join producto P 
+    where I.idProducto = P.idProducto and I.Cantidad > 0;
+END
+

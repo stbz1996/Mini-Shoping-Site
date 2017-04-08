@@ -24,7 +24,7 @@ namespace Shoping_Site.Controllers
                 return RedirectToAction("Index", "Login");
             }
             try{
-                ViewBag.artic = tienda.articulosTienda();
+                ViewBag.artic = tienda.verArticulosTienda();
                 return View();
             }
             catch (Exception){
@@ -36,7 +36,6 @@ namespace Shoping_Site.Controllers
 
         public ActionResult anadirArticuloAlInventario(FormCollection form, HttpPostedFileBase imgUpdate)
         {
-            var id = form["id"];
             var nombre = form["nombre"];
             var precio = form["precio"];
             var cantidad = form["cantidad"];
@@ -58,7 +57,7 @@ namespace Shoping_Site.Controllers
             }
 
             try{
-                tienda.insertarEnInventario(id, nombre, precio, cantidad, imageData);
+                tienda.insertarEnInventario(nombre, precio, cantidad, imageData);
                 return View();
             }
             catch (Exception){
@@ -85,17 +84,11 @@ namespace Shoping_Site.Controllers
 
         public ActionResult editarArticuloInventario(FormCollection form){
             try{
-                if (Int32.Parse(form["cantidad"]) != 0){
-                    string id = form["articulo"];
-                    string nombre = form["nombre"];
-                    string precio = form["precio"];
-                    string cantidad = form["cantidad"];
-                    tienda.actualizarEnInventario(id, nombre, precio, cantidad, "hola");
-                }
-                else{
-                    string id = form["articulo"];
-                    tienda.eliminarEnInventario(id);
-                }
+                string id = form["articulo"];
+                string nombre = form["nombre"];
+                string precio = form["precio"];
+                string cantidad = form["cantidad"];
+                tienda.actualizarEnInventario(id, nombre, precio, cantidad, "");
                 return Redirect("../Tienda/editarInventario");
             }
             catch (Exception){
@@ -104,8 +97,7 @@ namespace Shoping_Site.Controllers
             
         }
 
-        public ActionResult errorArticulosAdmin()
-        {
+        public ActionResult errorArticulosAdmin(){
             return View();
         }
         //////////////////////////
@@ -120,19 +112,15 @@ namespace Shoping_Site.Controllers
         public ActionResult atraparComentario(FormCollection form){
             var comentario = form["comentario"];
             int idproducto = Int32.Parse(Session["articuloActual"].ToString());
-            var user = Session["user"].ToString();
-           
-            try
-            {
+            var user = Session["user"].ToString();    
+            try {
                tienda.insertarComentario(user, idproducto, comentario);
                 return Redirect("../Tienda/msjAtencion");
             }
-            catch (Exception)
-            {
+            catch (Exception){
                 return View();
             }
         }
-
 
         public ActionResult VerArticuloEspecifico(FormCollection form){
             if (Session["user"] == null){return RedirectToAction("Index", "Login");}
@@ -163,7 +151,6 @@ namespace Shoping_Site.Controllers
             return View();
         }
 
-
         public ActionResult verDeInventario(){
             return View(tienda.articulosTienda());
         }
@@ -171,21 +158,6 @@ namespace Shoping_Site.Controllers
         public ActionResult confirmarVerDeInventario(){
             return View(tienda.articulosTienda());
         }
-
-        /*
-        public ActionResult eliminarDeInventario(FormCollection form){
-            var id = form["oculto"];
-            // envio a que se elimina
-            if (tienda.eliminarEnInventario(id)){
-                return RedirectToAction("confirmarVerDeInventario", "Tienda");
-            }
-            return View(tienda.articulosTienda());
-        }
-        */
-
-       
-        
-
 
 
         //////////////////////////////////////
@@ -207,8 +179,7 @@ namespace Shoping_Site.Controllers
 
         public ActionResult hacerPago() {
             string user = Session["user"].ToString();
-            if (tienda.procesarCompra(user))
-            {
+            if (tienda.procesarCompra(user)){
                 ViewBag.msj = "El pago se realizó Correctamente, su orden será enviada instantaneamente";
             }
             else
@@ -240,11 +211,9 @@ namespace Shoping_Site.Controllers
                 carritoCompras.eliminarDelCarrito(user, idArticulo, cantidadEliminados);
                 return Redirect("../Tienda/carrito");
             }
-            catch (Exception)
-            {
+            catch (Exception){
                 return Redirect("../Tienda/errorCarrito");
             }
-
         }
 
         public ActionResult errorCarrito()

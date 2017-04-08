@@ -54,7 +54,11 @@ namespace Shoping_Site.Models
                 carrito = connect.obtenerArticulos(user);
                 Articulo temp = null;
                 Parametros[] datos = new Parametros[1];
-                foreach (Articulo item in carrito){
+                foreach (Articulo item in carrito)
+                {
+                    int idxx = item.ID;
+
+
                     datos[0] = new Parametros("id", item.ID.ToString());
                     temp = mysql.consultarArticulo(datos);
                     item.Nombre = temp.Nombre;
@@ -65,7 +69,8 @@ namespace Shoping_Site.Models
                 }
                 return carrito;
             }
-            catch{
+            catch (Exception)
+            {
                 return null;
             }
         }

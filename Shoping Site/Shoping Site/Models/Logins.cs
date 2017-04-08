@@ -15,8 +15,7 @@ namespace Shoping_Site.Models
         public Boolean verificarUsuario(string user, string contrasena)
         {
             // conecta con base y retorna true si es un usuario o false si no es un usuario
-            if (conexionmysql.abrirConexion())
-            {
+            if (conexionmysql.abrirConexion()){
                 datos = new Parametros[2];
                 datos[0] = new Parametros("pUsername", user);
                 datos[1] = new Parametros("pPassword", contrasena);
@@ -28,26 +27,27 @@ namespace Shoping_Site.Models
         }
 
 
-        public Boolean crearCuenta(string nombre, string user, string contrasena)
-        {
+        public Boolean crearCuenta(string nombre, string user, string contrasena){
             // conecta con base y retorna true si un usuario se crea o false si no
-            try
-            {
+            try{
                 conexionmysql.abrirConexion();
-                if (verificarUsuario(user, contrasena))
-                {
-                    return false;
-                }
-                else
-                {
+                if (verificarUsuario(user, contrasena)){return false;}
+                else{
                     usuario = new Usuario { Name = nombre, Username = user };
                     //conexionNeo.crearUsuario(pNombre, pUsername, pContrasena);
                     datos = new Parametros[3];
                     datos[0] = new Parametros("pUsername", user);
                     datos[1] = new Parametros("pName", nombre);
                     datos[2] = new Parametros("pPassword", contrasena);
-                    conexionmysql.insertarUsuario(datos);
-                    conexionNeo.crearUsuario(user, nombre);
+
+                    string username = conexionmysql.insertarUsuario(datos);
+
+                    try {conexionNeo.crearUsuario(user, nombre);}
+                    catch (Exception){
+                        // elimine el mysql
+                        conexionmysql.eliminarUsuario(username);
+                        throw;
+                    }
                     return true;
                 }
             }

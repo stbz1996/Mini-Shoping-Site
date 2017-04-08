@@ -12,6 +12,7 @@ CREATE TABLE `inventario` (
   CONSTRAINT `idProducto` FOREIGN KEY (`idProducto`) REFERENCES `producto` (`idProducto`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
 
+// recordar poner el idProducto autoincrementable
 CREATE TABLE `producto` (
   `idProducto` int(11) NOT NULL,
   `nombreProducto` varchar(100) DEFAULT NULL,
