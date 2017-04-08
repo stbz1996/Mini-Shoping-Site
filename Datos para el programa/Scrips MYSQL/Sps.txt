@@ -161,3 +161,24 @@ BEGIN
     where I.idProducto = P.idProducto and I.Cantidad > 0;
 END
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spConsultaProductosUsuario`(IN pUsername VARCHAR(25))
+
+BEGIN
+	
+	SELECT MIN(p.idProducto) idProducto, p.nombreProducto nombre
+    
+	FROM producto p
+    
+	INNER JOIN productoxorden po
+		
+		ON p.idProducto = po.idProducto
+    
+	INNER JOIN orden o
+		
+		ON po.idOrden = o.idOrden
+	
+	WHERE o.username = pUsername
+    
+	GROUP BY p.idProducto;
+
+END
