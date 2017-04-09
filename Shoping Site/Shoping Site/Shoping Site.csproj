@@ -248,8 +248,6 @@
     <Content Include="scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Tienda\carrito.cshtml" />
     <Content Include="Views\Login\establecerCuenta.cshtml" />
-    <Content Include="Views\Login\cuentaNoCreada.cshtml" />
-    <Content Include="Views\Login\errorContrasenas.cshtml" />
     <Content Include="Views\Login\errorDatos.cshtml" />
     <Content Include="Views\Login\errorUsuarioNoExiste.cshtml" />
     <Content Include="Views\Login\ModoAdmin.cshtml" />

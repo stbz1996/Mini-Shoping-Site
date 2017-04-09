@@ -18,30 +18,60 @@ namespace Shoping_Site.Controllers
             return RedirectToAction("VerificaLogin", "Login");
         }
 
-
         public ActionResult cerrarSesion(){
             Session.Clear();
             return RedirectToAction("Index", "Login");
         }
 
-
         public ActionResult CrearCuenta(){
             return View();
         }
 
-        
+
+
+
+
+        public ActionResult errorDatos() {
+            try
+            {
+                ViewBag.msjError = Session["error"].ToString();
+            }
+            catch (Exception)
+            {
+                ViewBag.msjError ="";
+            }
+            
+            return View();
+        }
+
+
+
         public ActionResult establecerCuenta(FormCollection form){
             var nombre = form["nombre"];
             var usuario = form["user"];
             var cont = form["cont"];
             var confirmarCont = form["rcont"];
 
-            if ((nombre=="")|| (usuario == "")|| (cont == "")|| (confirmarCont == "")){
-                return RedirectToAction("errorDatos", "Login");}
-
+            if ((nombre == "Admin") || (usuario == "Admin")){
+                Session["error"] = "El nombre y el usuario no pueden ser Admin";
+                return RedirectToAction("errorDatos", "Login");
+            }
+            if ((nombre == "")){
+                Session["error"] = "Debe digitar un nombre";
+                return RedirectToAction("errorDatos", "Login");
+            }
+            if ((usuario == "")){
+                Session["error"] = "Debe digitar un nombre de usuario";
+                return RedirectToAction("errorDatos", "Login");
+            }
+            if ((cont == "") || (confirmarCont == "")){
+                Session["error"] = "Debe digitar la contraseña";
+                return RedirectToAction("errorDatos", "Login");
+            }
             if (cont != confirmarCont){
-                return RedirectToAction("errorContrasenas", "Login");}
-
+                Session["error"] = "Las contraseñas deben ser iguales";
+                return RedirectToAction("errorDatos", "Login");
+            }
             // manda a crear la cuenta a la base 
             if (log.crearCuenta(nombre, usuario, cont)){
                 ViewBag.nombre = nombre;
@@ -50,20 +80,16 @@ namespace Shoping_Site.Controllers
                 return View();
             }
             // si no se creo la cuenta
-            return RedirectToAction("cuentaNoCreada", "Login");    
+            Session["error"] = "Lo sentimos, Su cuenta no pudo ser creada, intentelo de nuevo mas tarde";
+            return RedirectToAction("errorDatos", "Login");
+
+              
         }
 
 
-        public ActionResult cuentaNoCreada(){
-            return View();
-        }
 
 
-        public ActionResult errorContrasenas(){
-            return View();
-        }
-
-
+ 
         public ActionResult Tienda(){
             return View();
         }
@@ -157,8 +183,6 @@ namespace Shoping_Site.Controllers
         }
 
         public ActionResult LoginCorrecto() { return View(); }
-
-        public ActionResult errorDatos() { return View(); }
 
         public ActionResult errorUsuarioNoExiste() { return View(); }
 
