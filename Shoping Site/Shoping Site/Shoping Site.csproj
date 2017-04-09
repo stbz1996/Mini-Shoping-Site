@@ -206,8 +206,6 @@
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Login\CrearCuenta.cshtml" />
     <Content Include="Views\Login\LoginCorrecto.cshtml" />
-    <Content Include="Views\Login\ErrorConrasenaLogin.cshtml" />
-    <Content Include="Views\Login\ErrorUserLogin.cshtml" />
     <Content Include="Views\Tienda\Index.cshtml" />
     <Content Include="Views\Login\VerificaLogin.cshtml" />
   </ItemGroup>
@@ -249,30 +247,25 @@
     <Content Include="Views\Tienda\carrito.cshtml" />
     <Content Include="Views\Login\establecerCuenta.cshtml" />
     <Content Include="Views\Login\errorDatos.cshtml" />
-    <Content Include="Views\Login\errorUsuarioNoExiste.cshtml" />
     <Content Include="Views\Login\ModoAdmin.cshtml" />
     <Content Include="Views\Login\VerificAdmin.cshtml" />
-    <Content Include="Views\Login\ErrorUserAdmin.cshtml" />
     <Content Include="Views\Login\creaNuevoAdmin.cshtml" />
     <Content Include="Views\Login\estableceNuevoAdmin.cshtml" />
     <Content Include="Views\Login\ErrorDatosAdmin.cshtml" />
-    <Content Include="Views\Login\ErrorConrasenaAdmin.cshtml" />
-    <Content Include="Views\Login\cuentaNoCreadaAdmin.cshtml" />
     <Content Include="Views\Tienda\incluirArticuloAlInventario.cshtml" />
     <Content Include="Views\Tienda\anadirArticuloAlInventario.cshtml" />
-    <Content Include="Views\Tienda\errorCargarArticuloAlInventario.cshtml" />
     <Content Include="Views\Tienda\errorDatosFaltantesInvetario.cshtml" />
     <Content Include="Views\Tienda\eliminarDeInventario.cshtml" />
     <Content Include="Views\Tienda\confirmarVerDeInventario.cshtml" />
     <Content Include="Views\Tienda\hacerPago.cshtml" />
     <Content Include="Views\Tienda\VerArticuloEspecifico.cshtml" />
-    <Content Include="Views\Tienda\errorCarrito.cshtml" />
     <Content Include="Views\Tienda\editarInventario.cshtml" />
-    <Content Include="Views\Tienda\errorArticulosAdmin.cshtml" />
-    <Content Include="Views\Tienda\atraparComentario.cshtml" />
     <Content Include="Views\Tienda\msjAtencion.cshtml" />
     <Content Include="Views\Login\perfil.cshtml" />
     <Content Include="Views\Login\buscarUsuario.cshtml" />
+    <Content Include="Views\Tienda\errorAdmin.cshtml" />
+    <Content Include="Views\Login\errorLogin.cshtml" />
+    <Content Include="Views\Login\errorAdmin.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

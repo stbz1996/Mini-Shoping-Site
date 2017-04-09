@@ -10,70 +10,55 @@ namespace Shoping_Site.Controllers
 {
     public class LoginController : Controller
     {
-        // Atributos generales
+        ///////////////////////////
+        /// Atributos generales ///
+        ///////////////////////////
         Logins log = new Logins();
+        ///////////////////////////
+        ///////////////////////////
+        ///////////////////////////
 
-        public ActionResult Index(){
+
+        ////////////////
+        /// Usuarios ///
+        ////////////////
+        public ActionResult Index()
+        {
             if (Session["user"] == null) { return View(); }
             return RedirectToAction("VerificaLogin", "Login");
         }
 
-        public ActionResult cerrarSesion(){
+        public ActionResult cerrarSesion()
+        {
             Session.Clear();
             return RedirectToAction("Index", "Login");
         }
 
-        public ActionResult CrearCuenta(){
+        public ActionResult CrearCuenta()
+        {
             return View();
         }
 
-
-
-
-
-        public ActionResult errorDatos() {
-            try
-            {
-                ViewBag.msjError = Session["error"].ToString();
-            }
-            catch (Exception)
-            {
-                ViewBag.msjError ="";
-            }
-            
-            return View();
-        }
-
-
-
-        public ActionResult establecerCuenta(FormCollection form){
+        public ActionResult establecerCuenta(FormCollection form)
+        {
             var nombre = form["nombre"];
             var usuario = form["user"];
             var cont = form["cont"];
             var confirmarCont = form["rcont"];
 
-            if ((nombre == "Admin") || (usuario == "Admin")){
-                Session["error"] = "El nombre y el usuario no pueden ser Admin";
+            if ((nombre == "Admin") || (usuario == "Admin") || (nombre == "") || (usuario == "") || (cont == "") || (confirmarCont == ""))
+            {
+                Session["error"] = "Todos los datos deben estar completos";
                 return RedirectToAction("errorDatos", "Login");
             }
-            if ((nombre == "")){
-                Session["error"] = "Debe digitar un nombre";
-                return RedirectToAction("errorDatos", "Login");
-            }
-            if ((usuario == "")){
-                Session["error"] = "Debe digitar un nombre de usuario";
-                return RedirectToAction("errorDatos", "Login");
-            }
-            if ((cont == "") || (confirmarCont == "")){
-                Session["error"] = "Debe digitar la contraseña";
-                return RedirectToAction("errorDatos", "Login");
-            }
-            if (cont != confirmarCont){
+            if (cont != confirmarCont)
+            {
                 Session["error"] = "Las contraseñas deben ser iguales";
                 return RedirectToAction("errorDatos", "Login");
             }
             // manda a crear la cuenta a la base 
-            if (log.crearCuenta(nombre, usuario, cont)){
+            if (log.crearCuenta(nombre, usuario, cont))
+            {
                 ViewBag.nombre = nombre;
                 ViewBag.usuario = usuario;
                 ViewBag.cont = cont;
@@ -82,120 +67,57 @@ namespace Shoping_Site.Controllers
             // si no se creo la cuenta
             Session["error"] = "Lo sentimos, Su cuenta no pudo ser creada, intentelo de nuevo mas tarde";
             return RedirectToAction("errorDatos", "Login");
-
-              
         }
 
-
-
-
- 
-        public ActionResult Tienda(){
-            return View();
-        }
-
-
-        public ActionResult VerificaLogin(FormCollection form){
-            if (Session["user"] == null){
+        public ActionResult VerificaLogin(FormCollection form)
+        {
+            if (Session["user"] == null)
+            {
                 var user = form["txtuser"];
                 var contrasena = form["txtcont"];
-
                 // habilita el modo de administrador
-                if ((user == "Admin") && (contrasena == "Admin")){return Redirect("../Login/ModoAdmin"); }
-
+                if ((user == "Admin") && (contrasena == "Admin")) { return Redirect("../Login/ModoAdmin"); }
                 // habilita el modo de usuario
-                if ((contrasena == ""))  {return Redirect("../Login/ErrorConrasenaLogin");}
-                else if ((user == ""))   {return Redirect("../Login/ErrorUserLogin");}
-                else{
+                if ((contrasena == ""))
+                {
+                    Session["msj"] = "Debe digitar una contraseña";
+                    return Redirect("../Login/errorLogin");
+                }
+                else if ((user == ""))
+                {
+                    Session["msj"] = "Debe digitar el nombre de usuario";
+                    return Redirect("../Login/errorLogin");
+                }
+                else
+                {
                     // manda a verificar a la capa de modelos
-                    if (log.verificarUsuario(user, contrasena)){
+                    if (log.verificarUsuario(user, contrasena))
+                    {
                         Session["user"] = user;
                         ViewBag.User = Session["user"];
                         return View();
                     }
                     // no es un usuario 
-                    return Redirect("../Login/errorUsuarioNoExiste");
+                    Session["msj"] = "El usuario no está registrado";
+                    return Redirect("../Login/errorLogin");
                 }
             }
-            else{
+            else
+            {
                 ViewBag.User = Session["user"];
                 return View();
             }
         }
 
-
-        public ActionResult VerificAdmin(FormCollection form){
-            var user = form["txtuser"];
-            var contrasena = form["txtcont"];
-
-            if (Session["user"] != null)
-            {
-                ViewBag.UserAdmin = Session["user"];
-                return View();
-            }
-
-            if (log.verificarAdmin(user, contrasena)){
-                ViewBag.UserAdmin = user;
-                Session["user"] = user;
-                return View();
-            }
-            return Redirect("../Login/ErrorUserAdmin");
-        }
-
-
-        public ActionResult creaNuevoAdmin(){
-            return View();
-        }
-
-        public ActionResult estableceNuevoAdmin(FormCollection form){
-            var usuario = form["txtuser"];
-            var cont = form["cont"];
-            var confirmarCont = form["rcont"];
-            // debe retornar las vistas especiales
-            if ((usuario == "") || (cont == "") || (confirmarCont == "")){
-                return RedirectToAction("ErrorDatosAdmin", "Login");
-            }
-            if (cont != confirmarCont){
-                return RedirectToAction("ErrorConrasenaAdmin", "Login");
-            }
-            // manda a crear la cuenta a la base 
-            if (log.crearCuentaAdministrador(usuario, cont)){
-                //ViewBag.nombre = nombre;
-                ViewBag.usuario = usuario;
-                ViewBag.cont = cont;
-                return View();
-            }
-            // si no se creo la cuenta
-            return RedirectToAction("cuentaNoCreadaAdmin", "Login");
-        }
-
-        public ActionResult cuentaNoCreadaAdmin() { return View(); }
-
-        public ActionResult ErrorConrasenaLogin() { return View(); }
-
-        public ActionResult ErrorConrasenaAdmin() { return View(); }
-
-        public ActionResult ErrorDatosAdmin() { return View(); }
-
-        public ActionResult ErrorUserLogin() {
-            return View();
-        }
-
-        public ActionResult LoginCorrecto() { return View(); }
-
-        public ActionResult errorUsuarioNoExiste() { return View(); }
-
-        public ActionResult ModoAdmin() { return View(); }
-
-        public ActionResult ErrorUserAdmin() { return View(); }
-
-        public ActionResult perfil(FormCollection form){
+        public ActionResult perfil(FormCollection form)
+        {
             if (Session["user"] == null) { return RedirectToAction("Index", "Login"); }
             ViewBag.user = Session["user"].ToString();
             string usernameAmigo = form["articulosAmigo"];
             // posee los articulos de el amigo 
             List<Articulo> recomendaciones;
-            try{
+            try
+            {
                 recomendaciones = log.mostrarProductosAmigo(usernameAmigo);
                 if (recomendaciones == null) { ViewBag.articulosAmigo = new List<Articulo>(); }
                 else { ViewBag.articulosAmigo = recomendaciones; }
@@ -203,36 +125,38 @@ namespace Shoping_Site.Controllers
             catch (Exception) { ViewBag.articulosAmigo = new List<Articulo>(); }
             // posee los amigos
             List<Usuario> amigos;
-            try{
+            try
+            {
                 amigos = log.todosLosAmigos(Session["user"].ToString());
                 if (amigos == null) { ViewBag.amigos = new List<Usuario>(); }
                 else { ViewBag.amigos = amigos; }
             }
-            catch (Exception){ViewBag.amigos = new List<Usuario>();}            
+            catch (Exception) { ViewBag.amigos = new List<Usuario>(); }
             return View();
         }
 
-        public ActionResult buscarUsuario(FormCollection form){
+        public ActionResult buscarUsuario(FormCollection form)
+        {
             if (Session["user"] == null) { return RedirectToAction("Index", "Login"); }
             var texto = form["cajaTexto"];
             string usernameAmigo = form["articulosAmigo"];
             Logins log = new Logins();
-            @ViewBag.user = Session["user"].ToString();
+            ViewBag.user = Session["user"].ToString();
             // carga la lista de articulos
             List<Articulo> recomendaciones = log.mostrarProductosAmigo(usernameAmigo);
             if (recomendaciones == null) { ViewBag.articulosAmigo = new List<Articulo>(); }
-            else { ViewBag.articulosAmigo = recomendaciones;}
-
+            else { ViewBag.articulosAmigo = recomendaciones; }
             // carga el usuario que se busca
-            try{
+            try
+            {
                 Usuario user = log.buscarUsuario(texto.ToString());
                 ViewBag.nombre = user.Name;
                 ViewBag.username = user.Username;
             }
-            catch (Exception) {}
+            catch (Exception) { }
 
             // carga amigos
-            List<Usuario> amigos = log.todosLosAmigos(Session["user"].ToString()); 
+            List<Usuario> amigos = log.todosLosAmigos(Session["user"].ToString());
             if (amigos == null) { ViewBag.amigos = new List<Usuario>(); }
             else { ViewBag.amigos = amigos; }
             return View();
@@ -244,30 +168,141 @@ namespace Shoping_Site.Controllers
             string usernameAmigo = form["oculto"];
             if ((usernameAmigo == Session["user"].ToString()) || (usernameAmigo == null)) { usernameAmigo = ""; }
 
-            try {
+            try
+            {
                 // carga amigos
                 Logins log = new Logins();
                 List<Usuario> amigos = log.todosLosAmigos(Session["user"].ToString());
                 Boolean flagControl = true;
-                if (amigos==null){
+                if (amigos == null)
+                {
                     string user = Session["user"].ToString();
                     log.crearRelacion(user, usernameAmigo);
                     return RedirectToAction("buscarUsuario", "Login");
                 }
 
-                foreach (var item in amigos){
-                    if (item.Username == usernameAmigo){
+                foreach (var item in amigos)
+                {
+                    if (item.Username == usernameAmigo)
+                    {
                         flagControl = false;
                     }
                 }
-                if (flagControl == true){
+                if (flagControl == true)
+                {
                     string user = Session["user"].ToString();
                     log.crearRelacion(user, usernameAmigo);
                 }
             }
-            catch (Exception){ }
+            catch (Exception) { }
             return RedirectToAction("buscarUsuario", "Login");
         }
+        ////////////////
+        ////////////////
+        ////////////////
 
+
+
+        ///////////////////////
+        /// Administradores ///
+        ///////////////////////
+        public ActionResult VerificAdmin(FormCollection form)
+        {
+            var user = form["txtuser"];
+            var contrasena = form["txtcont"];
+            if (Session["user"] != null)
+            {
+                ViewBag.UserAdmin = Session["user"];
+                return View();
+            }
+
+            if (log.verificarAdmin(user, contrasena))
+            {
+                ViewBag.UserAdmin = user;
+                Session["user"] = user;
+                return View();
+            }
+            Session["msj"] = "No existe el Administrador";
+            return Redirect("../Login/errorAdmin");
+        }
+
+        public ActionResult estableceNuevoAdmin(FormCollection form)
+        {
+            var usuario = form["txtuser"];
+            var cont = form["cont"];
+            var confirmarCont = form["rcont"];
+            // debe retornar las vistas especiales
+            if ((usuario == "") || (cont == "") || (confirmarCont == ""))
+            {
+                Session["msj"] = "Todos los datos deben estar llenos";
+                return Redirect("../Login/errorAdmin");
+            }
+            if (cont != confirmarCont)
+            {
+                Session["msj"] = "Las contraseñas no son iguales";
+                return Redirect("../Login/errorAdmin");
+            }
+            // manda a crear la cuenta a la base 
+            if (log.crearCuentaAdministrador(usuario, cont))
+            {
+                //ViewBag.nombre = nombre;
+                ViewBag.usuario = usuario;
+                ViewBag.cont = cont;
+                return View();
+            }
+            // si no se creo la cuenta
+            Session["msj"] = "Lo sentimos, Su cuenta no pudo ser creada, intentelo de nuevo mas tarde";
+            return Redirect("../Login/errorAdmin");
+        }
+
+        public ActionResult creaNuevoAdmin()
+        {
+            return View();
+        }
+        ///////////////////////
+        ///////////////////////
+        ///////////////////////
+
+
+
+        ////////////////
+        /// Errores  ///
+        ////////////////
+        public ActionResult errorDatos() {
+            try{ ViewBag.msjError = Session["error"].ToString();}
+            catch (Exception){ViewBag.msjError ="";}
+            return View();
+        }
+        
+        public ActionResult errorLogin()
+        {
+            ViewBag.msj = Session["msj"].ToString();
+            return View();
+        }
+
+        public ActionResult errorAdmin()
+        {
+            ViewBag.msj = Session["msj"].ToString();
+            return View();
+        }
+        ////////////////
+        ////////////////
+        ////////////////
+
+
+
+        //////////////
+        /// Extras ///
+        //////////////
+        public ActionResult Tienda(){
+            return View();
+        }
+
+        public ActionResult LoginCorrecto() { return View(); }
+
+        public ActionResult ModoAdmin() { return View(); }
+        //////////////
+        //////////////
+        //////////////
     }
 }

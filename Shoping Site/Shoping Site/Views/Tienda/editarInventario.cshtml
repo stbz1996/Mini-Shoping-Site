@@ -26,7 +26,7 @@
             {
                 <li id=@item.ID>
                     <form action="../Tienda/editarArticuloInventario" method="POST">
-                        <p><input id="botonCentrado" type="text" value=@item.Nombre name="nombre" /></p>
+                        <p>Nombre: <input id="botonCentrado" type="text" value=@item.Nombre name="nombre" /></p>
                         <p>Precio: <input id="botonCentrado" type="number" value= @item.Precio min=0 name="precio" /></p>
                         <img src=@item.Ima id="imagenVenta">
                         <p>Cantidad Actual</p>

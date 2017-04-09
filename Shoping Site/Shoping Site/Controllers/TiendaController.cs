@@ -10,75 +10,73 @@ using System.IO;
 namespace Shoping_Site.Controllers 
 {
     public class TiendaController : Controller
-    {
-        // atributos de uso general 
+    {   ////////////////////////////////
+        /// atributos de uso general ///
+        ////////////////////////////////
         Tienda tienda = new Tienda();
         Carrito carritoCompras = new Carrito();
+        ////////////////////////////////
+        ////////////////////////////////
+        ////////////////////////////////
+
 
 
         //////////////////////////
         /// Seccion del Tienda ///
         //////////////////////////
         public ActionResult Index(FormCollection form){
-            if (Session["user"] == null){
-                return RedirectToAction("Index", "Login");
-            }
+            if (Session["user"] == null){return RedirectToAction("Index", "Login");}
             try{
                 ViewBag.artic = tienda.verArticulosTienda();
                 return View();
             }
             catch (Exception){
-                return Redirect("../Tienda/errorCarrito");
+                Session["msj"] = "Disculpenos, estamos teniendo problemas para ejecutar su petición, vuelva mas tarde por favor.";
+                return Redirect("../Tienda/errorAdmin");
             } 
         }
 
         public ActionResult incluirArticuloAlInventario() { return View(); }
 
-        public ActionResult anadirArticuloAlInventario(FormCollection form, HttpPostedFileBase imgUpdate)
-        {
+        public ActionResult anadirArticuloAlInventario(FormCollection form, HttpPostedFileBase imgUpdate){
             var nombre = form["nombre"];
             var precio = form["precio"];
             var cantidad = form["cantidad"];
             var img = form["img"];
             byte[] imageData = null;
-            
             ViewBag.nombre = nombre;
             ViewBag.precio = precio;
             ViewBag.cantidad = cantidad;
-
             if ((nombre == "") || (precio == "") || (cantidad == "") || (imgUpdate == null)){
+                Session["msj"] = "Complete todos los datos por favor";
                 return Redirect("../Tienda/errorDatosFaltantesInvetario");
             }
-
             if (imgUpdate != null && imgUpdate.ContentLength > 0){
                 using (var binaryReader = new BinaryReader(imgUpdate.InputStream)){
                     imageData = binaryReader.ReadBytes(imgUpdate.ContentLength);
                 }
             }
-
             try{
                 tienda.insertarEnInventario(nombre, precio, cantidad, imageData);
                 return View();
             }
             catch (Exception){
-                return Redirect("../Tienda/errorCargarArticuloAlInventario");
+                Session["msj"] = "No se logró ingresar el producto al inventario, intentelo mas tarde";
+                return Redirect("../Tienda/errorDatosFaltantesInvetario");
             }
         }
 
         public ActionResult editarInventario()
         {
-            if (Session["user"] == null){
-                return RedirectToAction("Index", "Login");
-            }
-            try
-            {
+            if (Session["user"] == null){return RedirectToAction("Index", "Login");}
+            try{
                 ViewBag.artic = tienda.articulosTienda();
                 ViewBag.user = Session["user"];
                 return View();
             }
-            catch (Exception)
-            {
-                return Redirect("../Tienda/errorCarrito");
+            catch (Exception){
+                Session["msj"] = "Disculpenos, estamos teniendo problemas para ejecutar su petición, vuelva mas tarde por favor.";
+                return Redirect("../Tienda/errorAdmin");
             }
         }
 
@@ -92,18 +90,20 @@ namespace Shoping_Site.Controllers
                 return Redirect("../Tienda/editarInventario");
             }
             catch (Exception){
-                return Redirect("../Tienda/errorArticulosAdmin");
+                Session["msj"] = "Error, no hemos logrado actualizar la información";
+                return Redirect("../Tienda/errorAdmin");
             }
             
         }
-
-        public ActionResult errorArticulosAdmin(){
-            return View();
-        }
         //////////////////////////
         //////////////////////////
         //////////////////////////
 
+
+
+        /////////////////
+        /// Articulos ///
+        /////////////////
         public ActionResult msjAtencion()
         {
             return View();
@@ -126,7 +126,8 @@ namespace Shoping_Site.Controllers
                return Redirect("../Tienda/msjAtencion");
             }
             catch (Exception){
-                return View();
+                Session["msj"] = "No se logró ingresar el comentario, intentelo mas tarde";
+                return Redirect("../Tienda/errorAdmin");
             }
         }
 
@@ -151,13 +152,13 @@ namespace Shoping_Site.Controllers
             return View();
         }
 
-        public ActionResult verDeInventario(){
-            return View(tienda.articulosTienda());
-        }
-
         public ActionResult confirmarVerDeInventario(){
             return View(tienda.articulosTienda());
         }
+        /////////////////
+        /////////////////
+        /////////////////
+
 
 
         //////////////////////////////////////
@@ -215,24 +216,26 @@ namespace Shoping_Site.Controllers
                 return Redirect("../Tienda/errorCarrito");
             }
         }
-
-        public ActionResult errorCarrito()
-        {
-            return View();
-        }
         //////////////////////////////////////
         //////////////////////////////////////
         //////////////////////////////////////
 
 
-        public ActionResult errorCargarArticuloAlInventario()
-        {
+
+        ///////////////////////////
+        ///  Seccion de errores ///
+        ///////////////////////////
+        public ActionResult errorDatosFaltantesInvetario(){
+            ViewBag.msj = Session["msj"].ToString();
             return View();
         }
 
-        public ActionResult errorDatosFaltantesInvetario()
-        {
+        public ActionResult errorAdmin(){
+            ViewBag.msj = Session["msj"];
             return View();
         }
+        ///////////////////////////
+        ///////////////////////////
+        ///////////////////////////
     }
 }

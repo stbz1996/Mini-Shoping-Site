@@ -84,6 +84,7 @@ namespace Shoping_Site.Models
             objetosTienda = mysql.objetosTienda();
             foreach (var item in objetosTienda){
                 item.Ima = cnMongo.obtenerBD(item.ID);
+                string x = item.Nombre;
             }
             return objetosTienda;
         }
@@ -148,17 +149,6 @@ namespace Shoping_Site.Models
             conexionMySQL conect = new conexionMySQL();
             return conect.yaCompro(user, idproducto);
         }
-
-
-
-
-
-
-
-
-
-
-
 
 
         public List<Articulo> obtenerRecomendaciones(){
