@@ -274,6 +274,7 @@
     <Content Include="Views\Tienda\atraparComentario.cshtml" />
     <Content Include="Views\Tienda\msjAtencion.cshtml" />
     <Content Include="Views\Login\perfil.cshtml" />
+    <Content Include="Views\Login\buscarUsuario.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -10,15 +10,9 @@ namespace Shoping_Site.Models
     {
         private GraphClient conexionNeo;
 
-        public conexionNeo4j()
-        {
-            conexionNeo = new GraphClient(new Uri("http://localhost:7474/db/data"), "neo4j", "admin"); ;
-        }
+        public conexionNeo4j(){conexionNeo = new GraphClient(new Uri("http://localhost:7474/db/data"), "neo4j", "admin");}
 
-
-        public void crearUsuario(string username, string name)
-        {
-
+        public void crearUsuario(string username, string name) {
             var newUser = new Usuario { Username = username, Name = name };
             conexionNeo.Connect();
 
@@ -29,24 +23,43 @@ namespace Shoping_Site.Models
                 .ExecuteWithoutResults();
         }
 
+
+
         //Metodo que permite la creacion de relacion de 2 usuarios
         public void crearRelacion(string pUsername1, string pUsername2)
         {
-            //Realizamos union entre dos usuarios (grafo dirigido)
-            conexionNeo.Cypher
-                .Match("(user1:User)", "(user2:User)")
-                .Where((Usuario user1) => user1.Username == pUsername1)
-                .AndWhere((Usuario user2) => user2.Username == pUsername2)
-                .Create("(user1)-[:FOLLOW_WITH]->(user2)")
-                .ExecuteWithoutResults();
+             try{
+                var friendQuery = conexionNeo.Cypher
+                .OptionalMatch("(user:User)-[FRIENDS_WITH]-(friend:User)")
+                .Where((Usuario user) => user.Username == pUsername1)
+                .AndWhere((Usuario friend) => friend.Username == pUsername2)
+                .Return((user, friend) => new
+                {
+                    User = user.As<Usuario>(),
+                    Friend = friend.As<Usuario>()
+                })
+                .Results;
+            }
+            catch (Exception){
+                conexionNeo.Connect();
+                conexionNeo.Cypher
+                    .Match("(user1:User)", "(user2:User)")
+                    .Where((Usuario user1) => user1.Username == pUsername1)
+                    .AndWhere((Usuario user2) => user2.Username == pUsername2)
+                    .Create("(user1)-[:FOLLOW_WITH]->(user2)")
+                    .ExecuteWithoutResults();
+                throw;
+            } 
+
         }
 
+
         //Metodo que retorna los usuarios que sigue la persona
-        public List<Usuario> retornarRelaciones(string pUsername)
-        {
+        public List<Usuario> retornarRelaciones(string pUsername) {
             //Obtenemos arreglo de personas que sigue el usuario
+            conexionNeo.Connect();
             var personasASeguir = conexionNeo.Cypher
-                .OptionalMatch("(user:User)-[FOLLOW_WITH]-(friend:User)")
+                .OptionalMatch("(user:User)-[FOLLOW_WITH]->(friend:User)")
                 .Where((Usuario user) => user.Username == pUsername)
                 .Return((user, friend) => new
                 {
@@ -55,25 +68,29 @@ namespace Shoping_Site.Models
                 .Results;
 
             int cantidad = personasASeguir.Single().Friends.Count();
-
             //Verificamos cuantos amigos posee
-            if (cantidad != 0)
-            {
+            if (cantidad != 0){
                 //Obtenemos los datos de cada usuario y lo almacenamos en una lista de Usuario
                 List<Usuario> usuariosASeguir = new List<Usuario>();
-                for(int i = 0; i < cantidad; i++)
-                {
+                for(int i = 0; i < cantidad; i++){
                     string username = personasASeguir.Single().Friends.ElementAt(i).Username;
                     string name = personasASeguir.Single().Friends.ElementAt(i).Name;
                     usuariosASeguir.Add(new Usuario { Username = username, Name = name });
                 }
                 return usuariosASeguir;
             }
-            else
-            {
-                return null;
-            }
-            
+            else{return null;}
         }
+
+        public Usuario buscarUsuario(string userBuscar){
+            conexionNeo.Connect();
+            var userQuery = conexionNeo.Cypher
+            .Match("(user : User)")
+            .Where((Usuario user) => user.Username == userBuscar)
+            .Return<Node<Usuario>>("user")
+            .Results.Single();
+            return new Usuario { Username = userQuery.Data.Username, Name = userQuery.Data.Name };
+        }
+
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Shoping_Site.Models;
+using Shoping_Site.Models.Secundarias;
 
 namespace Shoping_Site.Controllers
 {
@@ -165,14 +166,85 @@ namespace Shoping_Site.Controllers
 
         public ActionResult ErrorUserAdmin() { return View(); }
 
-        public ActionResult perfil()
-        {
+        public ActionResult perfil(FormCollection form){
             if (Session["user"] == null) { return RedirectToAction("Index", "Login"); }
-
             ViewBag.user = Session["user"].ToString();
-            // posee los articulos recomendados
-            ViewBag.recomendaciones = log.mostrarRecomendaciones(ViewBag.user);
+            string usernameAmigo = form["articulosAmigo"];
+            // posee los articulos de el amigo 
+            List<Articulo> recomendaciones;
+            try{
+                recomendaciones = log.mostrarProductosAmigo(usernameAmigo);
+                if (recomendaciones == null) { ViewBag.articulosAmigo = new List<Articulo>(); }
+                else { ViewBag.articulosAmigo = recomendaciones; }
+            }
+            catch (Exception) { ViewBag.articulosAmigo = new List<Articulo>(); }
+            // posee los amigos
+            List<Usuario> amigos;
+            try{
+                amigos = log.todosLosAmigos(Session["user"].ToString());
+                if (amigos == null) { ViewBag.amigos = new List<Usuario>(); }
+                else { ViewBag.amigos = amigos; }
+            }
+            catch (Exception){ViewBag.amigos = new List<Usuario>();}            
             return View();
         }
+
+        public ActionResult buscarUsuario(FormCollection form){
+            if (Session["user"] == null) { return RedirectToAction("Index", "Login"); }
+            var texto = form["cajaTexto"];
+            string usernameAmigo = form["articulosAmigo"];
+            Logins log = new Logins();
+            @ViewBag.user = Session["user"].ToString();
+            // carga la lista de articulos
+            List<Articulo> recomendaciones = log.mostrarProductosAmigo(usernameAmigo);
+            if (recomendaciones == null) { ViewBag.articulosAmigo = new List<Articulo>(); }
+            else { ViewBag.articulosAmigo = recomendaciones;}
+
+            // carga el usuario que se busca
+            try{
+                Usuario user = log.buscarUsuario(texto.ToString());
+                ViewBag.nombre = user.Name;
+                ViewBag.username = user.Username;
+            }
+            catch (Exception) {}
+
+            // carga amigos
+            List<Usuario> amigos = log.todosLosAmigos(Session["user"].ToString()); 
+            if (amigos == null) { ViewBag.amigos = new List<Usuario>(); }
+            else { ViewBag.amigos = amigos; }
+            return View();
+        }
+
+        public ActionResult seguirUsuario(FormCollection form)
+        {
+            if (Session["user"] == null) { return RedirectToAction("Index", "Login"); }
+            string usernameAmigo = form["oculto"];
+            if ((usernameAmigo == Session["user"].ToString()) || (usernameAmigo == null)) { usernameAmigo = ""; }
+
+            try {
+                // carga amigos
+                Logins log = new Logins();
+                List<Usuario> amigos = log.todosLosAmigos(Session["user"].ToString());
+                Boolean flagControl = true;
+                if (amigos==null){
+                    string user = Session["user"].ToString();
+                    log.crearRelacion(user, usernameAmigo);
+                    return RedirectToAction("buscarUsuario", "Login");
+                }
+
+                foreach (var item in amigos){
+                    if (item.Username == usernameAmigo){
+                        flagControl = false;
+                    }
+                }
+                if (flagControl == true){
+                    string user = Session["user"].ToString();
+                    log.crearRelacion(user, usernameAmigo);
+                }
+            }
+            catch (Exception){ }
+            return RedirectToAction("buscarUsuario", "Login");
+        }
+
     }
 }

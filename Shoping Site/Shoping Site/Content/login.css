@@ -312,9 +312,10 @@ a {
 }
 
 #part2{
-    width: 50%;
+    width: 55%;
     float:left;
     overflow: hidden;
+   
 }
 
 #imgArticulo{
@@ -336,8 +337,9 @@ a {
     background: rgba(255, 0, 0, 0.5);
     text-align:left;
     border-radius: 20px;
-    padding: 5%;
-    overflow: hidden;
+    padding: 2%;
+    margin: 1% 1% 1% 10%;
+    width: 80%;
 }
 
 
@@ -450,4 +452,9 @@ a {
 	float: left;
 	border-radius: 20px;
 	overflow: hidden;
+}
+
+
+#textPequeño{
+    font-size: 14px;
 }

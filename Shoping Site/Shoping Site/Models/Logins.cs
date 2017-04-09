@@ -100,10 +100,24 @@ namespace Shoping_Site.Models
             }
         }
 
-        public List<Articulo> mostrarRecomendaciones(string user){
+        public List<Articulo> mostrarProductosAmigo(string amigo){
             Tienda tienda = new Tienda();
-            // debe retornar cosas que compro el amigo seleccionado
-            return tienda.verArticulosTienda();
+            return tienda.verArticulosAmigo(amigo);
+        }
+
+        public Usuario buscarUsuario(string user){
+            conexionNeo4j conect = new conexionNeo4j();
+            return conect.buscarUsuario(user);
+        }
+
+        public void crearRelacion(string user, string amigo){
+            conexionNeo4j conect = new conexionNeo4j();
+            conect.crearRelacion(user, amigo);
+        }
+
+        public List<Usuario> todosLosAmigos(string user){
+            conexionNeo4j conect = new conexionNeo4j();
+            return conect.retornarRelaciones(user);
         }
 
     }
