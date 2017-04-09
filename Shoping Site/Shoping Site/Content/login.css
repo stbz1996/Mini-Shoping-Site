@@ -48,7 +48,7 @@ body{
 #imagenVenta{
 	width: 80%;
 	margin: 1% 5% 1% 8%;
-	height: 200px;
+	height: 150px;
 	padding: 1% 1% 1% 1%;
 	border-radius: 15px;
 	float: left;
@@ -334,7 +334,7 @@ a {
 
 
 #comentario{
-    background: rgba(255, 0, 0, 0.5);
+    background: rgba(255, 255, 255, 0.5);
     text-align:left;
     border-radius: 20px;
     padding: 2%;
@@ -435,10 +435,6 @@ a {
 	border-radius: 20px;
 	overflow: hidden;
 }
-
-
-
-
 
 
 

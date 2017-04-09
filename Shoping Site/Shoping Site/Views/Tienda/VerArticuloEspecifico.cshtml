@@ -56,13 +56,14 @@
         <h3 style="text-align:center">Recomendaciones</h3><br>
         @foreach (var item in ViewBag.recomendaciones)
         {
-            <form action="" method="POST" id="articuloRec">
+            <form action="../Tienda/VerArticuloEspecifico" method="POST" id="articuloRec2">
                 <p>@item.Nombre</p>
                 <p>Precio: @item.Precio</p>
                 <img src=@item.Ima id="imagenVenta" style="height: 130px;">
                 <!-- elemento oculto para el paso de datos -->
-                <input id="oculto" name="idArticulo" type="text" value=@item.ID />
+                <input id="oculto" name="articulo" type="text" value=@item.ID />
                 <p><input id="botonCentrado" type="submit" value="Ver" /></p>
+                <br><br><br>
             </form>
         }
     </section>
