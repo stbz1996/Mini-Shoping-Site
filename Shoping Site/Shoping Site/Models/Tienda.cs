@@ -143,11 +143,105 @@ namespace Shoping_Site.Models
             return cass.agregarCalificacion(usuario, producto, calificacion);
         }
 
-
         public bool yaCompro(string user, int idproducto)
         {
             conexionMySQL conect = new conexionMySQL();
             return conect.yaCompro(user, idproducto);
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        public List<Articulo> obtenerRecomendaciones(){
+            // variables
+            Object[] arreglo = new Object[2];
+            List<int[]> productos;
+            List<double> promedios = new List<double>();
+            List<Articulo> articulos = new List<Articulo>();
+            // conexiones
+            conexionMySQL cnMySQL = new conexionMySQL();
+            conexionCassandra cnCassandra = new conexionCassandra();
+            conexionMongoDB cnMongo = new conexionMongoDB();
+
+            productos = cnMySQL.obtenerMejoresProductos();
+            int sumTotal = 0;
+            int calificacionTotal = 5;
+            double calificacionObtenida;
+            sumTotal = obtenerSumatoria(productos);
+       
+            for (int i = 0; i < productos.Count; i++)
+            {
+                int[] listaTemp = productos.ElementAt(i);
+                int cantidadUnProducto = listaTemp[0];
+                calificacionObtenida = Double.Parse(cnCassandra.obtenerPromedio(listaTemp[2]).ToString());
+                if (Double.IsNaN(calificacionObtenida) == true)
+                {
+                    calificacionObtenida = 2.5;
+                }
+                promedios.Add(((calificacionObtenida + calificacionTotal) * sumTotal) / (sumTotal - cantidadUnProducto));
+            }
+
+            arreglo[0] = productos;
+            arreglo[1] = promedios;
+            productos = insertionSort(arreglo); // Se realiza el insertion Sort.
+            int x;
+            if (productos.Count < 10){ x = 0;}
+            else { x = productos.Count - 10;}
+            for (int i = x; i < productos.Count; i++){
+                int idProducto = productos[i][2];
+                string imagen = cnMongo.obtenerBD(idProducto);
+                Parametros[] datos = { new Parametros("id", idProducto.ToString()) };
+                Articulo articulo = cnMySQL.consultarArticulo(datos);
+                articulo.Ima = cnMongo.obtenerBD(idProducto);
+                articulos.Add(articulo);
+            }
+            return articulos;
+        }
+
+
+        // funciones
+        private int obtenerSumatoria(List<int[]> productos){
+            int sumTotal = 0;
+            foreach (int[] listaTemp in productos){
+                sumTotal += listaTemp[0];
+            }
+            return sumTotal;
+        }
+
+        private List<int[]> insertionSort(Object[] arreglo){
+            List<int[]> productos = (List<int[]>)arreglo[0];
+            List<double> promedios = (List<double>)arreglo[1];
+            int largo = promedios.Count;
+            for (int i = 1; i < largo; i++){
+                int j = i;
+                while ((j > 0) && (promedios[j] < promedios[j - 1])){
+                    int k = j - 1;
+                    double tempPromedios = promedios[k];
+                    // swap de promedios //
+                    promedios[k] = promedios[j];
+                    promedios[j] = tempPromedios;
+                    // swap de enteros //
+                    Swap(productos, j, k);
+                    j--;
+                }
+            }
+            return productos;
+        }
+
+        private static void Swap<T>(IList<T> list, int indexA, int indexB){
+            T tmp = list[indexA];
+            list[indexA] = list[indexB];
+            list[indexB] = tmp;
+        }
+
     }
 }

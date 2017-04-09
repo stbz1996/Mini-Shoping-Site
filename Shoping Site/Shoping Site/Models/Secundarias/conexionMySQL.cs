@@ -272,6 +272,28 @@ namespace Shoping_Site.Models
             }
             return false;
         }
+
+
+        public List<int[]> obtenerMejoresProductos(){
+            List<int[]> productos = new List<int[]>();
+            int[] enteros;
+            abrirConexion();
+            cmd.CommandText = "obtenerMejoresProductos";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = conn;
+            MySqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read()){
+                enteros = new int[3];
+                enteros[0] = (Int32.Parse(reader["Total"].ToString()));
+                enteros[1] = (Int32.Parse(reader["Cantidad"].ToString()));
+                enteros[2] = (Int32.Parse(reader["idProducto"].ToString()));
+                productos.Add(enteros);
+            }
+            cerrarConexion();
+            return productos;
+        }
+
+
     }
 }
 

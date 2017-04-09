@@ -132,7 +132,6 @@ namespace Shoping_Site.Controllers
 
         public ActionResult VerArticuloEspecifico(FormCollection form){
             if (Session["user"] == null){return RedirectToAction("Index", "Login");}
-            // obtengo los datos del producto
             var id = form["articulo"];
             Session["articuloActual"] = id;
             Articulo art = tienda.consultarArticulo(id);
@@ -143,9 +142,12 @@ namespace Shoping_Site.Controllers
             ViewBag.calificacion = art.Puntaje;
             List<comentarios> comentarios;
             try{comentarios = tienda.obtenerComentarios(id);}
-            catch (Exception){
-                comentarios = new List<Models.Secundarias.comentarios>();}
+            catch (Exception){comentarios = new List<Models.Secundarias.comentarios>();}
             ViewBag.comentarios = comentarios;
+
+            // busco recomendaciones
+            try{ViewBag.recomendaciones = tienda.obtenerRecomendaciones();}
+            catch (Exception){ViewBag.recomendaciones = new List<Articulo>();}
             return View();
         }
 

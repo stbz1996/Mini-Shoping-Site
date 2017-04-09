@@ -54,22 +54,16 @@
 
     <section class="comunEspecifico" id="part3">
         <h3 style="text-align:center">Recomendaciones</h3><br>
-
-        <form action="" method="POST" id="articuloRec">
-            <p>Nombre: </p>
-            <p>Precio: </p>
-            <img src="http://www.humordeanimales.com/wp-content/uploads/2015/07/perro-esponjoso.jpg" id="imagenVenta">
-            <!-- elemento oculto para el paso de datos -->
-            <input id="oculto" name="idArticulo" type="text" value="" />
-            <p><input id="botonCentrado" type="submit" value="Ver" /></p>
-        </form>
-        <form action="" method="POST" id="articuloRec">
-            <p>Nombre: </p>
-            <p>Precio: </p>
-            <img src="http://www.humordeanimales.com/wp-content/uploads/2015/07/perro-esponjoso.jpg" id="imagenVenta">
-            <!-- elemento oculto para el paso de datos -->
-            <input id="oculto" name="idArticulo" type="text" value="" />
-            <p><input id="botonCentrado" type="submit" value="Ver" /></p>
-        </form>
+        @foreach (var item in ViewBag.recomendaciones)
+        {
+            <form action="" method="POST" id="articuloRec">
+                <p>@item.Nombre</p>
+                <p>Precio: @item.Precio</p>
+                <img src=@item.Ima id="imagenVenta" style="height: 130px;">
+                <!-- elemento oculto para el paso de datos -->
+                <input id="oculto" name="idArticulo" type="text" value=@item.ID />
+                <p><input id="botonCentrado" type="submit" value="Ver" /></p>
+            </form>
+        }
     </section>
 </section>
