@@ -80,18 +80,17 @@ namespace Shoping_Site.Models
             }
         }
 
-        public Boolean crearCuentaAdministrador(string nombre, string user, string password){
+        public Boolean crearCuentaAdministrador(string user, string password){
             try {
                 conexionmysql.abrirConexion();
                 if(verificarAdmin(user, password)) {
                     return false;
                 }
                 else{
-                    datos = new Parametros[3];
+                    datos = new Parametros[2];
                     datos[0] = new Parametros("pUsername", user);
-                    datos[1] = new Parametros("pName", nombre);
-                    datos[2] = new Parametros("pPassword", password);
-                    conexionmysql.insertarUsuario(datos);
+                    datos[1] = new Parametros("pPassword", password);
+                    conexionmysql.crearAdministrador(datos);
                     return true;
                 }
             }

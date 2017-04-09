@@ -238,6 +238,21 @@ namespace Shoping_Site.Models
             cerrarConexion();
             return objetosTienda;
         }
+
+        public void crearAdministrador(Parametros[] datos)
+        {
+            abrirConexion();
+            cmd.CommandText = "spInsertarAdministrador";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = conn;
+            for (int i = 0; i < datos.Length; i++)
+            {
+                cmd.Parameters.AddWithValue(datos[i].Nombre, datos[i].Valor);
+            }
+            cmd.ExecuteNonQuery();
+            int a = 2;
+            cerrarConexion();
+        }
     }
 }
 

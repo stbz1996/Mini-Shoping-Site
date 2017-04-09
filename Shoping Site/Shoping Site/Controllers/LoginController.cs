@@ -134,8 +134,8 @@ namespace Shoping_Site.Controllers
                 return RedirectToAction("ErrorConrasenaAdmin", "Login");
             }
             // manda a crear la cuenta a la base 
-            if (log.crearCuentaAdministrador(nombre, usuario, cont)){
-                ViewBag.nombre = nombre;
+            if (log.crearCuentaAdministrador(usuario, cont)){
+                //ViewBag.nombre = nombre;
                 ViewBag.usuario = usuario;
                 ViewBag.cont = cont;
                 return View();

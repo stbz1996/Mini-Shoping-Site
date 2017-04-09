@@ -190,3 +190,19 @@ BEGIN
 
 
 END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarAdministrador`(
+
+IN pUsernameAdmin VARCHAR(25),
+
+IN pPassword VARCHAR(25))
+
+BEGIN
+
+	INSERT INTO administrador(usernameAdmin, password)
+
+	VALUES (pUsernameAdmin, pPassword);
+
+END
+
