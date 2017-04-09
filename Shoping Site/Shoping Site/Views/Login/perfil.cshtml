@@ -56,10 +56,10 @@
         </div>
     </section>
     <section class="" id="div1">
-        <h2>¿Qué compró mi amigo?</h2><br><br><br><br>
+        <h2>¿Qué compró mi amigo?</h2><br><br><br>
         @foreach (var item in @ViewBag.articulosAmigo)
         {
-            <form action="../Login/seguirUsuario" method="POST" id="articuloRec">
+            <form  action="../Tienda/VerArticuloEspecifico" method="POST" id="articuloRec">
                 <p id="textPequeño">@item.Nombre </p>
                 <p id="textPequeño">@item.Precio</p>
                 <img src=@item.Ima id="imagenVenta" style="height:100px;">

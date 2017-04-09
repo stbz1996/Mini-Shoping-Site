@@ -221,6 +221,23 @@ namespace Shoping_Site.Models
             return Int32.Parse(valor);
         }
 
+        public List<Articulo> objetosAmigo(string amigo){
+            abrirConexion();
+            List<Articulo> objetosTienda = new List<Articulo>();
+            cmd.CommandText = "spConsultaProductosUsuario";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = conn;
+            cmd.Parameters.AddWithValue("pUsername", amigo);
+            MySqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read()){
+                int idproducto = Int32.Parse(reader["id"].ToString());
+                string nombre = reader["nombre"].ToString();
+                int precio = Int32.Parse(reader["precio"].ToString());
+                objetosTienda.Add(new Articulo(idproducto, nombre, precio, "", 0, 0));
+            }
+            cerrarConexion();
+            return objetosTienda;
+        }
     }
 }
 

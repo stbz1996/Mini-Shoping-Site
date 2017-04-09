@@ -100,11 +100,6 @@ namespace Shoping_Site.Models
             }
         }
 
-        public List<Articulo> mostrarProductosAmigo(string amigo){
-            Tienda tienda = new Tienda();
-            return tienda.verArticulosAmigo(amigo);
-        }
-
         public Usuario buscarUsuario(string user){
             conexionNeo4j conect = new conexionNeo4j();
             return conect.buscarUsuario(user);
@@ -120,5 +115,12 @@ namespace Shoping_Site.Models
             return conect.retornarRelaciones(user);
         }
 
+
+
+
+        public List<Articulo> mostrarProductosAmigo(string amigo){
+            Tienda tienda = new Tienda();
+            return tienda.verArticulosAmigo(amigo);
+        }
     }
 }

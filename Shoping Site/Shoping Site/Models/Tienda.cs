@@ -115,18 +115,16 @@ namespace Shoping_Site.Models
             return true;
         }
 
-        public List<Articulo> verArticulosAmigo(string amigo)
-        {
+        public List<Articulo> verArticulosAmigo(string amigo){
             // Retorna todos los objetos disponibles en la tienda
             conexionMySQL mysql = new conexionMySQL();
             conexionMongoDB cnMongo = new conexionMongoDB();
-            List<Articulo> objetosTienda = new List<Articulo>();
-            objetosTienda = mysql.objetosValidosTienda();
-            foreach (var item in objetosTienda)
-            {
+            List<Articulo> objetosAmigo = new List<Articulo>();
+            objetosAmigo = mysql.objetosAmigo(amigo);
+            foreach (var item in objetosAmigo){
                 item.Ima = cnMongo.obtenerBD(item.ID);
             }
-            return objetosTienda;
+            return objetosAmigo;
         }
     }
 }
