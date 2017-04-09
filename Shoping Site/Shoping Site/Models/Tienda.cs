@@ -126,5 +126,6 @@ namespace Shoping_Site.Models
             }
             return objetosAmigo;
         }
+
     }
 }

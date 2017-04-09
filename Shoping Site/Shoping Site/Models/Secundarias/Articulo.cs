@@ -13,7 +13,13 @@ namespace Shoping_Site.Models.Secundarias
         private string ima;
         private int cantidad;
         private int cantidadMaxima;
+        private int puntaje;
 
+        public int Puntaje
+        {
+            get { return puntaje; }
+            set { puntaje = value; }
+        }
 
         public int CantidadMaxima
         {
@@ -58,6 +64,7 @@ namespace Shoping_Site.Models.Secundarias
             this.idArticulo = id;
             this.cantidadMaxima = maximo;
             this.cantidad = cantidad;
+            this.puntaje = 0;
         }
 
     }
