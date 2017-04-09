@@ -27,11 +27,11 @@
                     <form action="../Tienda/EliminarArticuloCarrito" method="POST">
                         <p>Nombre: @item.Nombre</p>
                         <p>Precio: @item.Precio</p>
-                        <img src=@item.Ima id="imagenVenta">
+                        <img src=@item.Ima id="imagenVenta" style="height: 150px;">
                         <!-- elemento oculto para el paso de datos -->
                         <input id="oculto" name="idArticulo" type="text" value=@item.ID />
                         <p>Cantidad @item.Cantidad</p>
-                        <p style="margin-right: 14%"><input onclick="alert('Su petición esta siendo ejecutada')" id="boton" type="submit" value="Editar Cantidad" /></p>
+                        <p style="margin-right: 10%"><input onclick="alert('Su petición esta siendo ejecutada')" id="boton" type="submit" value="Editar Cantidad"  /></p>
                         <input id="botonCentrado" type="number" value=@item.Cantidad min="0" max=@item.CantidadMaxima name="cantidad" />
                     </form>
                 </li>
