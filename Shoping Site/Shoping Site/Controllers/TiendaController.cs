@@ -111,11 +111,19 @@ namespace Shoping_Site.Controllers
         
         public ActionResult atraparComentario(FormCollection form){
             var comentario = form["comentario"];
+            int calificacion = Int32.Parse(form["calificacion"]);
             int idproducto = Int32.Parse(Session["articuloActual"].ToString());
-            var user = Session["user"].ToString();    
+            var user = Session["user"].ToString();
+            
             try {
-               tienda.insertarComentario(user, idproducto, comentario);
-                return Redirect("../Tienda/msjAtencion");
+                if (comentario != ""){
+                    tienda.insertarComentario(user, idproducto, comentario);
+                }
+                if ((calificacion != 0) && (tienda.yaCompro(user, idproducto))){
+                    try{tienda.calificarArticulo(user, idproducto, calificacion);}
+                    catch (Exception){}
+                }
+               return Redirect("../Tienda/msjAtencion");
             }
             catch (Exception){
                 return View();
@@ -132,22 +140,12 @@ namespace Shoping_Site.Controllers
             ViewBag.precio = art.Precio;
             ViewBag.cant = art.CantidadMaxima;
             ViewBag.ima = art.Ima;
+            ViewBag.calificacion = art.Puntaje;
             List<comentarios> comentarios;
-            try{
-                // si no falla coloca comentarios
-                comentarios = tienda.obtenerComentarios(id);
-            }
+            try{comentarios = tienda.obtenerComentarios(id);}
             catch (Exception){
-                // si falla no se colocan los comentarios
-                comentarios = null;
-            }
+                comentarios = new List<Models.Secundarias.comentarios>();}
             ViewBag.comentarios = comentarios;
-
-
-            
-            // necesito la valoracion
-            // necesito las recomendaciones 
-
             return View();
         }
 
@@ -234,7 +232,5 @@ namespace Shoping_Site.Controllers
         {
             return View();
         }
-
-       
     }
 }

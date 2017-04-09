@@ -13,9 +13,9 @@ namespace Shoping_Site.Models.Secundarias
         private string ima;
         private int cantidad;
         private int cantidadMaxima;
-        private int puntaje;
+        private double puntaje;
 
-        public int Puntaje
+        public double Puntaje
         {
             get { return puntaje; }
             set { puntaje = value; }

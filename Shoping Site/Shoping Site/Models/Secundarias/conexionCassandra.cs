@@ -32,7 +32,7 @@ namespace Shoping_Site.Models.Secundarias
             List<comentarios> comment = new List<comentarios>();
             RowSet rows = session.Execute("select * from evaluacion where idProducto = " + pIdProducto + " ALLOW FILTERING");
             foreach (Row row in rows){
-                comment.Add(new comentarios { user = row[0].ToString() , coment = row[2].ToString() });
+                comment.Add(new comentarios { user = row[0].ToString() , coment = row[3].ToString() });
             }
             return comment;
         }
@@ -59,19 +59,25 @@ namespace Shoping_Site.Models.Secundarias
         }
 
 
+
+
         // Agregar Calificacion
         public bool agregarCalificacion(string pUsername, int pIdProducto, int calificacion)
         {
-            try
-            {
+            try{
                 string query = "UPDATE evaluacion SET calificacion = " + calificacion + " WHERE username = '" + pUsername +
                 "' AND idProducto = " + pIdProducto;
                 session.Execute(query);
                 return true;
             }
-            catch (Exception e)
-            {
-                return false;
+            catch (Exception e){
+                string query1 = "INSERT INTO evaluacion(username, idProducto, comentario) values ('" +
+                pUsername + "'," + pIdProducto + ", '" + "" + "')";
+                session.Execute(query1);
+                string query = "UPDATE evaluacion SET calificacion = " + calificacion + " WHERE username = '" + pUsername +
+                "' AND idProducto = " + pIdProducto;
+                session.Execute(query);
+                return true;
             }
 
         }

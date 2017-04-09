@@ -88,7 +88,7 @@ namespace Shoping_Site.Models
                 }
                 else{
                     datos = new Parametros[2];
-                    datos[0] = new Parametros("pUsername", user);
+                    datos[0] = new Parametros("pUsernameAdmin", user);
                     datos[1] = new Parametros("pPassword", password);
                     conexionmysql.crearAdministrador(datos);
                     return true;

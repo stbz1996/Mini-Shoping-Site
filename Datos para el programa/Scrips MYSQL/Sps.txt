@@ -206,3 +206,14 @@ BEGIN
 
 END
 
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `yaCompro`(pUsername varchar(25), pIdProducto int)
+BEGIN
+	
+	select count(*) conteo from productoxorden p inner join orden o on
+	
+	p.idOrden = o.idOrden
+	where p.idProducto = pIdProducto and o.username = pUsername;
+
+END

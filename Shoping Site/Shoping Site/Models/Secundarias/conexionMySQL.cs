@@ -250,8 +250,27 @@ namespace Shoping_Site.Models
                 cmd.Parameters.AddWithValue(datos[i].Nombre, datos[i].Valor);
             }
             cmd.ExecuteNonQuery();
-            int a = 2;
             cerrarConexion();
+        }
+
+        public bool yaCompro(string user, int idproducto)
+        {
+            abrirConexion();
+            List<Articulo> objetosTienda = new List<Articulo>();
+            cmd.CommandText = "yaCompro";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = conn;
+            cmd.Parameters.AddWithValue("pUsername", user);
+            cmd.Parameters.AddWithValue("pIdProducto", idproducto);
+            MySqlDataReader reader = cmd.ExecuteReader();
+            reader.Read();
+            int valor = Int32.Parse(reader["conteo"].ToString());
+            cerrarConexion();
+            if (valor > 0)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

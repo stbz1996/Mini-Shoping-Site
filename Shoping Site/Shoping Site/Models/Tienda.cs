@@ -20,7 +20,13 @@ namespace Shoping_Site.Models
         public List<comentarios> obtenerComentarios(string id){
             int newId = Int32.Parse(id);
             conexionCassandra cass = new conexionCassandra();
-            return cass.obtenerComentarios(newId);
+            List < comentarios > comentarios = cass.obtenerComentarios(newId);
+            List<comentarios> comentFinal = new List<comentarios>();
+            foreach (var item in comentarios)
+            {
+                if ((item.coment != "") || (item.coment != null)){comentFinal.Add(item);}
+            }
+            return comentFinal;
         }
 
         public void insertarEnInventario(string nombre, string precio, string cantidad, byte[] imagen){
@@ -51,15 +57,20 @@ namespace Shoping_Site.Models
             try{
                 conexionMySQL mysql = new conexionMySQL();
                 conexionMongoDB conexion = new conexionMongoDB();
+                conexionCassandra cass = new conexionCassandra();
                 datos = new Parametros[1];
                 datos[0] = new Parametros("id", id);
                 Articulo temp = mysql.consultarArticulo(datos);
                 temp.Ima = conexion.obtenerBD(Int32.Parse(id));
+                try{
+                    temp.Puntaje = cass.obtenerPromedio(temp.ID);
+                }
+                catch (Exception){ temp.Puntaje = 10; }
+                
                 return temp;
             }
             catch (Exception)
             {
-                // mandar un error
                 return null;
             }
             
@@ -127,5 +138,16 @@ namespace Shoping_Site.Models
             return objetosAmigo;
         }
 
+        public bool calificarArticulo( string usuario, int producto, int calificacion){
+            conexionCassandra cass = new conexionCassandra();
+            return cass.agregarCalificacion(usuario, producto, calificacion);
+        }
+
+
+        public bool yaCompro(string user, int idproducto)
+        {
+            conexionMySQL conect = new conexionMySQL();
+            return conect.yaCompro(user, idproducto);
+        }
     }
 }

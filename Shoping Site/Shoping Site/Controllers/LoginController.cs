@@ -148,12 +148,11 @@ namespace Shoping_Site.Controllers
         }
 
         public ActionResult estableceNuevoAdmin(FormCollection form){
-            var nombre = form["nombre"];
             var usuario = form["txtuser"];
             var cont = form["cont"];
             var confirmarCont = form["rcont"];
             // debe retornar las vistas especiales
-            if ((nombre == "") || (usuario == "") || (cont == "") || (confirmarCont == "")){
+            if ((usuario == "") || (cont == "") || (confirmarCont == "")){
                 return RedirectToAction("ErrorDatosAdmin", "Login");
             }
             if (cont != confirmarCont){

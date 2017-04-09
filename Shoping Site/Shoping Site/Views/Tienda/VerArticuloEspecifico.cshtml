@@ -21,10 +21,7 @@
             <h4 style="text-align:center;">Precio: @ViewBag.precio</h4>
             <h4 style="text-align:center;">En el almacen: @ViewBag.cant</h4><br>
             <img src=@ViewBag.ima id="imagenVenta" />
-        </form>
-        <form style="text-align:center">
-            <h4 style="margin-top: 130px;">Calificacion</h4>
-            <input type="number" min="0" max="5" />
+            <h4 style="text-align:center;">Calificaciín: @ViewBag.calificacion</h4><br>
         </form>
      </section>
    
@@ -32,15 +29,20 @@
     <section class="comunEspecifico" id="part2">
         <h3 style="text-align:center;">Coloca tú comentario</h3>
         <form id="comentario"  action="../Tienda/atraparComentario" method="POST" >
-            <textarea id="boton" style="margin-right:5%; " name="comentario" rows="10" cols="50" wrap="soft" placeholder="" maxlength="310" required></textarea>
+            <textarea id="boton" style="margin-right:5%; " name="comentario" rows="10" cols="50" wrap="soft" placeholder="" maxlength="310"></textarea>
             <br><br><br>
+            <div style="margin-left:-6%; text-align:center">
+                <h4 style="margin-top: 130px;">Calificacion</h4>
+                <h5 style="">(Su calificación solo será contada si ya compró el producto)</h5>
+                <input type="number" value="0" min="0" max="5" name="calificacion" /><br>
+            </div>
             <p><input id="botonespecial" type="submit" value="Enviar " /></p>
          </form>
 
         <br><br>
         <h2 style="text-align:center; border-radius:15px">Comentarios</h2>
         <!-- por cada comentario se va a crear una caja -->
-        @foreach (var item in ViewBag.comentarios)
+        @foreach (var item in @ViewBag.comentarios)
         {
             <Div id="comentario">
                 @item.coment<br><br>
