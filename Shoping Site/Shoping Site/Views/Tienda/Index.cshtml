@@ -32,8 +32,8 @@
                         <p>Agregar al carro</p>
                         <!-- elemento oculto para el paso de datos -->
                         <input id="oculto" name="articulo" type="text" value=@item.ID />
-                        <input id="botonCentrado" type="number" value = 1 min = 1 max=@item.CantidadMaxima name="cantidad" />
-                        <p><input onclick="alert('Su petición esta siendo ejecutada')" id="botonCentrado" type="submit" value="Añadir" /></p>
+                        <input id="botonCentrado" type="number" value=1 min=1 max=@item.CantidadMaxima name="cantidad" required />
+                        <p><input id="botonCentrado" type="submit" value="Añadir" /></p>
                     </form>
                     <form action="../Tienda/VerArticuloEspecifico" method="POST">
                         <input id="oculto" name="articulo" type="text" value=@item.ID />
