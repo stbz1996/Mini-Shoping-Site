@@ -225,6 +225,7 @@
     <Compile Include="Models\Secundarias\conexionMySQL.cs" />
     <Compile Include="Models\Secundarias\conexionNeo4j.cs" />
     <Compile Include="Models\Secundarias\conexionRedis.cs" />
+    <Compile Include="Models\Secundarias\Encriptacion.cs" />
     <Compile Include="Models\Secundarias\Parametros.cs" />
     <Compile Include="Models\Secundarias\Articulo.cs" />
     <Compile Include="Models\Secundarias\RedisConnectorHelper.cs" />

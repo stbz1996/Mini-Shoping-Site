@@ -217,3 +217,22 @@ BEGIN
 	where p.idProducto = pIdProducto and o.username = pUsername;
 
 END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `todasLasOrdenesPorUsuario`(
+IN pUsername VARCHAR(25))
+BEGIN
+	select idOrden from orden  where username  = pUsername;
+END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `productosPorOrden`(orden int)
+BEGIN
+	select p.idProducto id, 
+           p.nombreProducto nombre, 
+		   p.precio precio, 
+           d.cantidad cantidad
+    from productoxorden d inner join producto p
+    on d.idProducto = p.idProducto
+    where d.idOrden = orden;
+END
+

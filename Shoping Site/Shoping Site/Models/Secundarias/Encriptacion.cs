@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Shoping_Site.Models.Secundarias
 {
-    public static class Encriptacion
+    public class Encriptacion
     {
         // http://www.programadordepalo.com/access-encriptar-contrasenas-con-sha-256-utilizando-biblioteca-de-clases-net-con-c/
         // Autor del código: Arkaitz Arteaga. 
