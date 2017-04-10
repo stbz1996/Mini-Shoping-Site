@@ -301,6 +301,18 @@ namespace Shoping_Site.Controllers
         public ActionResult LoginCorrecto() { return View(); }
 
         public ActionResult ModoAdmin() { return View(); }
+        
+        public ActionResult verOrdenes()
+        {
+            // mando a pedir las ordenes
+            Tienda tienda = new Models.Tienda();
+            try{
+                ViewBag.ordenes = tienda.ordenes(Session["user"].ToString());}
+            catch (Exception){
+                ViewBag.ordenes = new List<List<Articulo>>();
+            }
+            return View();
+        }
         //////////////
         //////////////
         //////////////

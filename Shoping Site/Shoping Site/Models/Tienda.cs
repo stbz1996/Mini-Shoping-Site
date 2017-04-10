@@ -233,5 +233,24 @@ namespace Shoping_Site.Models
             list[indexB] = tmp;
         }
 
+
+        public List<List<Articulo>> ordenes(string user)
+        {
+            conexionMySQL con = new conexionMySQL();
+            conexionMongoDB mong = new conexionMongoDB();
+            List<List<Articulo>> ordenes = con.ordenes(user);
+            // faltan imagenes y mas datos
+            foreach (var orden in ordenes)
+            {
+                foreach (var item in orden)
+                {
+                    item.Ima = mong.obtenerBD(item.ID);
+                }
+            }
+            return ordenes;
+        }
+
+
+
     }
 }

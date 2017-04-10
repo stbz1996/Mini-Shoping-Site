@@ -294,6 +294,56 @@ namespace Shoping_Site.Models
         }
 
 
+        public List<Articulo> productosPorOrden(int idorden)
+        {
+            abrirConexion();
+            cmd.CommandText = "productosPorOrden";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = conn;
+            List<Articulo> orden = new List<Articulo>();
+                cmd.Parameters.AddWithValue("orden", idorden);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    int id = Int32.Parse(reader["id"].ToString());
+                    string nombreProducto = reader["nombre"].ToString();
+                    int precio = Int32.Parse(reader["precio"].ToString());
+                    int cantidad = Int32.Parse(reader["cantidad"].ToString());
+                    orden.Add(new Articulo(id, nombreProducto, precio, "", cantidad, 0));
+                }
+            cerrarConexion();
+            return orden;
+        }
+
+
+        public List<List<Articulo>> buscarProductosEnOrden(List<int> list){
+            List<List<Articulo>> ordenes = new List<List<Articulo>>();
+            foreach (var item in list)
+            {
+                ordenes.Add(productosPorOrden(item));
+            }
+            return ordenes;
+        }
+
+
+
+
+        public List<List<Articulo>> ordenes(string user)
+        {
+            abrirConexion();
+            cmd.CommandText = "todasLasOrdenesPorUsuario";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = conn;
+            cmd.Parameters.AddWithValue("pUsername", user);
+            MySqlDataReader reader = cmd.ExecuteReader();
+            List<int> idsOrden = new List<int>();
+            while (reader.Read()){
+                int idorden = Int32.Parse(reader["idOrden"].ToString());
+                idsOrden.Add(idorden);
+            }
+            cerrarConexion();
+            return buscarProductosEnOrden(idsOrden);
+        }
     }
 }
 

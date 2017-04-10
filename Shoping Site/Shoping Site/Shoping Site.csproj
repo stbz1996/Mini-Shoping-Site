@@ -188,6 +188,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\estilos.css" />
     <Content Include="Content\login.css" />
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -265,6 +266,7 @@
     <Content Include="Views\Tienda\errorAdmin.cshtml" />
     <Content Include="Views\Login\errorLogin.cshtml" />
     <Content Include="Views\Login\errorAdmin.cshtml" />
+    <Content Include="Views\Login\verOrdenes.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

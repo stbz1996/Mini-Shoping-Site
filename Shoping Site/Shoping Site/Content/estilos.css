@@ -1,0 +1,31 @@
+﻿.contenidoorden{
+	background: rgba(255, 255, 255, 0.5);
+	text-align: center;
+	width: 90%;
+	border-radius: 20px;
+	padding: 25px;
+	margin: 1% 1% 1% 5%;
+	box-sizing: border-box;
+	border: white 2px ridge;
+	float: left;
+    
+}
+
+#formOrden{
+    background: rgba(255, 0, 0, 0.5);
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    
+}
+
+#articuloOrden {
+    width: 14.6%;
+    margin: 1% 1% 1% 1%;
+    background: rgba(255, 255, 255, 0.5);
+    overflow:hidden;
+    float:left;
+    border-radius: 20px;
+    
+}
+

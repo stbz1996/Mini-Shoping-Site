@@ -1,0 +1,48 @@
+﻿
+
+    @model List<Shoping_Site.Models.Secundarias.Articulo>
+    <div class="contenedorPrimario" id="pagInicio">
+        <section class="navBar" id="navBar">
+            <ul>
+                <li id="etiquetasMenu">
+                    <a>@Html.ActionLink("Tienda", "Index", "Tienda", new { area = "" }, new { @class = "navbar-brand" })</a>
+                </li>
+                <li id="etiquetasMenu">
+                    <a> @Html.ActionLink("Carrito", "Carrito", "Tienda", new { area = "" }, new { @class = "navbar-brand" })</a>
+                </li>
+                <li id="etiquetasMenu">
+                    <a>@Html.ActionLink("Ingresar", "Index", "Login", new { area = "" }, new { @class = "navbar-brand" })</a>
+                </li>
+            </ul>
+        </section>
+    </div>
+
+
+<section class="contenidoorden">
+    <h1> Mis Ordenes </h1><br>
+    <h4>(cada sección es una orden diferente)</h4>
+    @foreach (var orden in ViewBag.ordenes)
+    {
+        <div id="formOrden">
+            <br>
+            @foreach (var item in orden){
+                <form action="../Tienda/VerArticuloEspecifico" method="POST" id="articuloOrden">
+                    <p style="font-size: 14px;">@item.Nombre</p>
+                    <p style="font-size: 14px;">Precio: @item.Precio</p>
+                    <p style="font-size: 14px;">Cantidad: @item.Cantidad</p>
+                    <img src=@item.Ima id="imagenVenta" />
+                    <!-- elemento oculto para el paso de datos -->
+                    <input id="oculto" name="articulo" type="text" value=@item.ID />
+                    <p style="font-size: 14px;"><input id="botonCentrado" type="submit" value="Ver" /></p>
+                </form>
+            }  
+        </div><br>
+    }
+    
+    
+
+
+
+
+</section>
+
