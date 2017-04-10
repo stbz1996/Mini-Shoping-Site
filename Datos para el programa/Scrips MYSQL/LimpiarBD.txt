@@ -1,0 +1,8 @@
+
+set sql_safe_updates = 0;
+delete from productoxorden;
+delete from inventario;
+delete from producto;
+delete from orden;
+delete from administrador;
+delete from usuario;
