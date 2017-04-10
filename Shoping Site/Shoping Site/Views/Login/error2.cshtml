@@ -1,0 +1,26 @@
+﻿
+
+<body onload="mostrarCrearCuenta()">
+    <div class="contenedorPrimario" id="pagInicio" style="margin-left:25%;">
+        <section class="navBar" id="navBar">
+            <ul>
+                <li id="etiquetasMenu" style="margin-top: 0%;">
+                    <a> @Html.ActionLink("Menú Admin", "VerificAdmin", "Login", new { area = "" }, new { @class = "navbar-brand" })</a>
+                </li>
+            </ul>
+        </section>
+    </div>
+
+    <section class="contenido" id="pagCrearCuenta">
+        <h1> Crear Cuenta De Administrador</h1>
+        <form action="../Login/estableceNuevoAdmin" method="POST">
+            <p>
+                Usuario <input type="text" maxlength="25" value="" id="textspace" name="txtuser" />
+                Contraseña <input type="password" maxlength="12" value="" id="textspace" name="cont" />
+                Confirme Contraseña <input type="password" maxlength="12" value="" id="textspace" name="rcont" />
+                <input type="submit" value="Crear" id="botonCentrado" /><br>
+            </p>
+        </form>
+        <h3 id="error">@ViewBag.error</h3>
+    </section>
+</body>

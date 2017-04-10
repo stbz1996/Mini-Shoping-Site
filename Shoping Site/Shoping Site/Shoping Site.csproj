@@ -268,6 +268,7 @@
     <Content Include="Views\Login\errorLogin.cshtml" />
     <Content Include="Views\Login\verOrdenes.cshtml" />
     <Content Include="Views\Login\error.cshtml" />
+    <Content Include="Views\Login\error2.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

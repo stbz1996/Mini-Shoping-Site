@@ -228,8 +228,6 @@ namespace Shoping_Site.Controllers
                 Session["error"] = "Los espacios deben estar llenos";
                 return Redirect("../Login/error");
             }
-
-
             Session["error"] = "No existe el Administrador";
             return Redirect("../Login/error");
         }
@@ -242,13 +240,13 @@ namespace Shoping_Site.Controllers
             // debe retornar las vistas especiales
             if ((usuario == "") || (cont == "") || (confirmarCont == ""))
             {
-                Session["msj"] = "Todos los datos deben estar llenos";
-                return Redirect("../Login/errorAdmin");
+                Session["error"] = "Todos los datos deben estar llenos";
+                return Redirect("../Login/error2");
             }
             if (cont != confirmarCont)
             {
-                Session["msj"] = "Las contraseñas no son iguales";
-                return Redirect("../Login/errorAdmin");
+                Session["error"] = "Las contraseñas no son iguales";
+                return Redirect("../Login/error2");
             }
             // manda a crear la cuenta a la base 
             if (log.crearCuentaAdministrador(usuario, cont))
@@ -259,8 +257,8 @@ namespace Shoping_Site.Controllers
                 return View();
             }
             // si no se creo la cuenta
-            Session["msj"] = "Lo sentimos, Su cuenta no pudo ser creada, intentelo de nuevo mas tarde";
-            return Redirect("../Login/errorAdmin");
+            Session["error"] = "Lo sentimos, Su cuenta no pudo ser creada, intentelo de nuevo mas tarde";
+            return Redirect("../Login/error2");
         }
 
         public ActionResult creaNuevoAdmin()
@@ -291,6 +289,12 @@ namespace Shoping_Site.Controllers
         public ActionResult errorLogin()
         {
             ViewBag.msj = Session["msj"].ToString();
+            return View();
+        }
+        
+        public ActionResult error2()
+        {
+            ViewBag.error = Session["error"].ToString();
             return View();
         }
         ////////////////
