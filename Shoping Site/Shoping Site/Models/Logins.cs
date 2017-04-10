@@ -16,6 +16,7 @@ namespace Shoping_Site.Models
         public Boolean verificarUsuario(string user, string contrasena)
         {
             // conecta con base y retorna true si es un usuario o false si no es un usuario
+            contrasena = Encriptacion.encriptar(contrasena);
             if (conexionmysql.abrirConexion()){
                 datos = new Parametros[2];
                 datos[0] = new Parametros("pUsername", user);
@@ -33,6 +34,7 @@ namespace Shoping_Site.Models
                 conexionmysql.abrirConexion();
                 if (verificarUsuario(user, contrasena)){return false;}
                 else{
+                    contrasena = Encriptacion.encriptar(contrasena);
                     usuario = new Usuario { Name = nombre, Username = user };
                     //conexionNeo.crearUsuario(pNombre, pUsername, pContrasena);
                     datos = new Parametros[3];
@@ -61,6 +63,7 @@ namespace Shoping_Site.Models
             // conecta con base y retorna true si es un admin o false si no es un admin
             if (conexionmysql.abrirConexion())
             {
+                contrasena = Encriptacion.encriptar(contrasena);
                 datos = new Parametros[2];
                 datos[0] = new Parametros("pUsername", user);
                 datos[1] = new Parametros("pPassword", contrasena);
@@ -80,16 +83,18 @@ namespace Shoping_Site.Models
             }
         }
 
-        public Boolean crearCuentaAdministrador(string user, string password){
+        public Boolean crearCuentaAdministrador(string user, string contrasena)
+        {
             try {
                 conexionmysql.abrirConexion();
-                if(verificarAdmin(user, password)) {
+                if(verificarAdmin(user, contrasena)) {
                     return false;
                 }
                 else{
+                    contrasena = Encriptacion.encriptar(contrasena);
                     datos = new Parametros[2];
                     datos[0] = new Parametros("pUsernameAdmin", user);
-                    datos[1] = new Parametros("pPassword", password);
+                    datos[1] = new Parametros("pPassword", contrasena);
                     conexionmysql.crearAdministrador(datos);
                     return true;
                 }
@@ -113,9 +118,6 @@ namespace Shoping_Site.Models
             conexionNeo4j conect = new conexionNeo4j();
             return conect.retornarRelaciones(user);
         }
-
-
-
 
         public List<Articulo> mostrarProductosAmigo(string amigo){
             Tienda tienda = new Tienda();
