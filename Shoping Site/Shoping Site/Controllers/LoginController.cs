@@ -222,8 +222,16 @@ namespace Shoping_Site.Controllers
                 Session["user"] = user;
                 return View();
             }
-            Session["msj"] = "No existe el Administrador";
-            return Redirect("../Login/errorAdmin");
+
+            if ((user == "") || (contrasena == ""))
+            {
+                Session["error"] = "Los espacios deben estar llenos";
+                return Redirect("../Login/error");
+            }
+
+
+            Session["error"] = "No existe el Administrador";
+            return Redirect("../Login/error");
         }
 
         public ActionResult estableceNuevoAdmin(FormCollection form)
@@ -268,6 +276,12 @@ namespace Shoping_Site.Controllers
         ////////////////
         /// Errores  ///
         ////////////////
+        public ActionResult error()
+        {
+            ViewBag.error = Session["error"].ToString() ;
+            return View();
+        }
+
         public ActionResult errorDatos() {
             try{ ViewBag.msjError = Session["error"].ToString();}
             catch (Exception){ViewBag.msjError ="";}
@@ -275,12 +289,6 @@ namespace Shoping_Site.Controllers
         }
         
         public ActionResult errorLogin()
-        {
-            ViewBag.msj = Session["msj"].ToString();
-            return View();
-        }
-
-        public ActionResult errorAdmin()
         {
             ViewBag.msj = Session["msj"].ToString();
             return View();

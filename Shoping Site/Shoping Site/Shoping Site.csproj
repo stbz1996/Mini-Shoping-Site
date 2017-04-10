@@ -266,8 +266,8 @@
     <Content Include="Views\Login\buscarUsuario.cshtml" />
     <Content Include="Views\Tienda\errorAdmin.cshtml" />
     <Content Include="Views\Login\errorLogin.cshtml" />
-    <Content Include="Views\Login\errorAdmin.cshtml" />
     <Content Include="Views\Login\verOrdenes.cshtml" />
+    <Content Include="Views\Login\error.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
